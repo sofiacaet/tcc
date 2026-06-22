@@ -2,7 +2,7 @@
 <html lang="pt-br">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>Relatório de Dietas - Sistema Pre-Natal </title>
+    <title>Relatório de Consultas - Sistema Pre-Natal </title>
     <style>
         body {
             font-family: Arial, Helvetica, sans-serif;
@@ -62,7 +62,7 @@
             <td style="text-align: center;">
                 <div style="font-size: 18px;">GOVERNO FEDERAL DO BRASIL</div>
                 <div style="font-size: 18px;">MINISTÉRIO DA SAÚDE</div>
-                <div style="font-size: 18px; font-weight: bold;">INSTITUTO NUTRITIONIST</div>
+                <div style="font-size: 18px; font-weight: bold;">INSTITUTO GESTA PGUA</div>
                 <div style="font-size: 18px; font-weight: bold;">PARANÁ</div>
             </td>
             <td style="width: 75px;">
@@ -73,20 +73,20 @@
 
     <hr>
 
-    <h3 style="text-align:center; margin-top:10px;">Relatório de Dietas</h3>
+    <h3 style="text-align:center; margin-top:10px;">Relatório de Consultas</h3>
 
     <table>
         <thead>
             <tr>
-                <th>Nome da Dieta</th>
+                <th>Nome da Consulta</th>
                 <th>Objetivo</th>
             </tr>
         </thead>
         <tbody>
-            @foreach($dietas as $dieta)
+            @foreach($consultas as $consulta)
                 <tr>
-                    <td>{{ $dieta->nome }}</td>
-                    <td>{{ $dieta->objetivo }}</td>
+                    <td>{{ $consulta->nome }}</td>
+                    <td>{{ $consulta->objetivo }}</td>
                 </tr>
             @endforeach
         </tbody>

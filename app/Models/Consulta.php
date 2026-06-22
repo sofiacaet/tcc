@@ -8,7 +8,7 @@ use App\Models\Gestante;
 
 
 use \Illuminate\Database\Eloquent\SoftDeletes;
-class Dieta extends Model {
+class Consulta extends Model {
 use SoftDeletes;
 public function gestante() {
 return $this->hasMany('\App\Models\Gestante');

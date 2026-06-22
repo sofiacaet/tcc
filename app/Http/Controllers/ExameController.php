@@ -3,33 +3,33 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Plano;
+use App\Models\Exame;
 use App\Models\Gestante;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\Gate;
 
-class PlanoController extends Controller
+class ExameController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        Gate::authorize('viewAny', Plano::class);
+        Gate::authorize('viewAny', Exame::class);
 
         // COORDENADOR = role_id 2 → vê todos
         if (auth()->user()->role_id == 2) {
-            $planos = Plano::all();
+            $exames = Exame::all();
         } 
         // PROFESSOR = role_id 1 → vê somente o gestante com o mesmo email do login
         else {
             $email = auth()->user()->email;
-            $planos = Plano::whereHas('gestante', function ($q) use ($email) {
+            $exames = Exame::whereHas('gestante', function ($q) use ($email) {
             $q->where('email', $email);
             })->get();
         }
 
-        return view('plano.index', compact('planos'));
+        return view('exame.index', compact('exames'));
     }
 
     /**
@@ -37,9 +37,9 @@ class PlanoController extends Controller
      */
     public function create()
     {
-        Gate::authorize('create', Plano::class);
+        Gate::authorize('create', Exame::class);
         $gestantes = Gestante::all();
-        return view('plano.create', compact('gestantes'));
+        return view('exame.create', compact('gestantes'));
     }
 
     /**
@@ -47,23 +47,23 @@ class PlanoController extends Controller
      */
     public function store(Request $request)
     {
-        Gate::authorize('create', Plano::class);
+        Gate::authorize('create', Exame::class);
         $gestante = Gestante::find($request->gestante);
 
         if(isset($gestante)) {
-            $plano = new Plano();
-            $plano->nome = mb_strtoupper($request->nome, 'UTF-8');
-            $plano->kcal_dia = $request->kcal_dia;
-            $plano->ref_dia = $request->ref_dia;
-            $plano->observacoes = $request->observacoes;
+            $exame = new Exame();
+            $exame->nome = mb_strtoupper($request->nome, 'UTF-8');
+            $exame->kcal_dia = $request->kcal_dia;
+            $exame->ref_dia = $request->ref_dia;
+            $exame->observacoes = $request->observacoes;
            
-            $plano->gestante()->associate($gestante);
-            $plano->save();
+            $exame->gestante()->associate($gestante);
+            $exame->save();
 
             
         }
 
-        return redirect()->route('plano.index');
+        return redirect()->route('exame.index');
     }
 
     /**
@@ -71,7 +71,7 @@ class PlanoController extends Controller
      */
     public function show(string $id)
     {
-        Gate::authorize('view', Plano::class);
+        Gate::authorize('view', Exame::class);
     }
 
     /**
@@ -79,15 +79,15 @@ class PlanoController extends Controller
      */
     public function edit(string $id)
     {
-        $plano = Plano::find($id);
-        Gate::authorize('update', $plano);
+        $exame = Exame::find($id);
+        Gate::authorize('update', $exame);
 
-        if(isset($plano)) {
+        if(isset($exame)) {
             $gestantes = Gestante::all();
-            return view('plano.edit', compact(['plano', 'gestantes']));
+            return view('exame.edit', compact(['exame', 'gestantes']));
         }
 
-        return redirect()->route('plano.index');
+        return redirect()->route('exame.index');
     }
 
     /**
@@ -95,23 +95,23 @@ class PlanoController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $plano = Plano::find($id);
-        Gate::authorize('update', $plano);
+        $exame = Exame::find($id);
+        Gate::authorize('update', $exame);
         $gestante = Gestante::find($request->gestante);
 
-        if(isset($gestante) && isset($plano)) {
-            $plano->nome = mb_strtoupper($request->nome, 'UTF-8');
-            $plano->kcal_dia = $request->kcal_dia;
-            $plano->ref_dia = $request->ref_dia;
-            $plano->observacoes = $request->observacoes;
+        if(isset($gestante) && isset($exame)) {
+            $exame->nome = mb_strtoupper($request->nome, 'UTF-8');
+            $exame->kcal_dia = $request->kcal_dia;
+            $exame->ref_dia = $request->ref_dia;
+            $exame->observacoes = $request->observacoes;
            
-            $plano->gestante()->associate($gestante);
+            $exame->gestante()->associate($gestante);
 
             
-            $plano->save();
+            $exame->save();
         }
 
-        return redirect()->route('plano.index');
+        return redirect()->route('exame.index');
     }
 
     /**
@@ -119,32 +119,32 @@ class PlanoController extends Controller
      */
     public function destroy(string $id)
     {
-        $plano = Plano::find($id);
-        Gate::authorize('delete', $plano);
+        $exame = Exame::find($id);
+        Gate::authorize('delete', $exame);
 
-        if(isset($plano)) {
-            $plano->delete();
+        if(isset($exame)) {
+            $exame->delete();
         }
 
-        return redirect()->route('plano.index');
+        return redirect()->route('exame.index');
     }
 
     public function report() {
          // COORDENADOR vê todos
     if (auth()->user()->role_id == 2) {
-        $planos = Plano::with('gestante')->get();
+        $exames = Exame::with('gestante')->get();
     } 
     // PROFESSOR vê somente seu próprio gestante
     else {
         $email = auth()->user()->email;
-        $planos = Plano::with('gestante')
+        $exames = Exame::with('gestante')
         ->whereHas('gestante', function ($q) use ($email) {
         $q->where('email', $email);
         })
         ->get();
     }
 
-    $pdf = Pdf::loadView('plano.report', ['planos' => $planos]);
+    $pdf = Pdf::loadView('exame.report', ['exames' => $exames]);
 
     return $pdf->stream('document.pdf');
 

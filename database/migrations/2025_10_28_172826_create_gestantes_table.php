@@ -22,8 +22,8 @@ return new class extends Migration
 
             // linhas adicionadas
             $table->string('foto')->nullable();
-            $table->unsignedBigInteger('dieta_id');
-            $table->foreign('dieta_id')->references('id')->on('dietas');
+            $table->unsignedBigInteger('consulta_id');
+            $table->foreign('consulta_id')->references('id')->on('consultas');
 
             $table->softDeletes();
             $table->timestamps();

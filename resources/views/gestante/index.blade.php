@@ -133,7 +133,7 @@ $quantidade = 22;
         <thead>
             <tr>
                 <th>NOME</th>
-                <th class="d-none d-md-table-cell">DIETA</th>
+                <th class="d-none d-md-table-cell">CONSULTA</th>
                 <th class="d-none d-md-table-cell">EMAIL</th>
                 <th class="d-none d-md-table-cell">TELEFONE</th>
                 <th class="d-none d-md-table-cell">ALTURA</th>
@@ -146,7 +146,7 @@ $quantidade = 22;
             @foreach ($gestantes as $item)
                 <tr>
                     <td>{{ $item->nome }}</td>
-                    <td class="d-none d-md-table-cell">{{ $item->dieta->nome }}</td>
+                    <td class="d-none d-md-table-cell">{{ $item->consulta->nome }}</td>
                     <td class="d-none d-md-table-cell">{{ $item->email }}</td>
                     <td class="d-none d-md-table-cell">{{ $item->telefone }}</td>
                     <td class="d-none d-md-table-cell">{{ $item->altura }}</td>
@@ -160,7 +160,7 @@ $quantidade = 22;
                         @endcan
                         
                         @can('delete', $item)
-                            <a nohref style="cursor:pointer" onclick="showRemoveModal('{{ $item->id }}', '{{ $item->nome }} - {{ $item->dieta->nome }}')" class="btn btn-delete">🗑️ Excluir</a>
+                            <a nohref style="cursor:pointer" onclick="showRemoveModal('{{ $item->id }}', '{{ $item->nome }} - {{ $item->consulta->nome }}')" class="btn btn-delete">🗑️ Excluir</a>
                             <form action="{{route('gestante.destroy', $item->id)}}" method="POST" id="form_{{$item->id}}">
                                 @csrf
                                 @method('delete')

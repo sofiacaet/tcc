@@ -1,7 +1,7 @@
 @extends('templates/main',
 [
     'titulo'=>"Sistema Pre-Natal",
-    'cabecalho' => 'Novo Plano',
+    'cabecalho' => 'Novo Exame',
     'rota' => '',
     'relatorio' => '',
 ])
@@ -130,7 +130,7 @@ $quantidade = 18;
 
 {{-- FORMULÁRIO --}}
 <div class="form-card">
-<form action="{{route('plano.store')}}" method="POST" enctype="multipart/form-data">
+<form action="{{route('exame.store')}}" method="POST" enctype="multipart/form-data">
     @csrf
 
     {{-- NOME --}}
@@ -189,7 +189,7 @@ $quantidade = 18;
     {{-- BOTÕES --}}
     <div class="row mt-4">
         <div class="col d-flex gap-3">
-            <a href="{{route('plano.index')}}" class="btn btn-custom-back">⬅️ Voltar</a>
+            <a href="{{route('exame.index')}}" class="btn btn-custom-back">⬅️ Voltar</a>
             <button type="submit" class="btn btn-custom-confirm ms-auto">✔️ Confirmar</button>
         </div>
     </div>

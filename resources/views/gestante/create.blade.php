@@ -153,14 +153,14 @@ $quantidade = 18;
         </div>
     </div>
 
-    {{-- DIETA --}}
+    {{-- CONSULTA --}}
     <div class="row mb-3">
         <div class="col">
             <div class="input-group">
-                <span class="input-group-text bg-secondary text-white">Dieta</span>
-                <select name="dieta" class="form-select form-control">
-                    @foreach ($dietas as $item)
-                        <option value="{{$item->id}}" @if($item->id == old('dieta')) selected @endif>
+                <span class="input-group-text bg-secondary text-white">Consulta</span>
+                <select name="consulta" class="form-select form-control">
+                    @foreach ($consultas as $item)
+                        <option value="{{$item->id}}" @if($item->id == old('consulta')) selected @endif>
                             {{ $item->nome }}
                         </option>
                     @endforeach

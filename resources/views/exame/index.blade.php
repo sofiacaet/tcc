@@ -1,12 +1,11 @@
 @extends('templates/main',
 [
     'titulo'=>"Sistema Pre-Natal",
-    'cabecalho' => 'Lista de Dietas',
-    'rota' => 'dieta.create',
-    'relatorio' => 'report.dieta',
-    'class' => App\Models\Dieta::class,
+    'cabecalho' => 'Lista de Exames',
+    'rota' => 'exame.create',
+    'relatorio' => 'report.exame',
+    'class' => App\Models\Exame::class,
 ])
-
 @section('conteudo')
 
 <style>
@@ -36,7 +35,6 @@ body {
     filter: drop-shadow(0 3px 6px rgba(0,0,0,0.25));
 }
 
-/* animação geral */
 @keyframes floatNutri {
     0% { transform: translateY(110vh) rotate(0deg) scale(0.9); opacity: .25; }
     40% { opacity: 1; }
@@ -51,11 +49,13 @@ body {
     padding: 22px;
     border-radius: 16px;
     box-shadow: 0 12px 40px rgba(0,0,0,0.22);
+     overflow-x: auto;
 }
 
 /* TABELA */
 table.modern-table {
     width: 100%;
+    max-width: 100%; /* GARANTE QUE NÃO ULTRAPASSE O CARD */
     border-radius: 12px;
     overflow: hidden;
     border-collapse: separate;
@@ -108,15 +108,13 @@ td, th {
 }
 
 .btn-delete:hover { background: var(--danger); color: #fff; }
-
 </style>
 
-{{-- ITENS NUTRICIONAIS FLUTUANDO --}}
+{{-- PARTICULAS --}}
 @php
 $icons = ['🍼'];
 $quantidade = 22;
 @endphp
-
 @for ($i = 0; $i < $quantidade; $i++)
     @php
         $emoji = $icons[array_rand($icons)];
@@ -124,53 +122,52 @@ $quantidade = 22;
         $delay = -($i * 0.8);
         $size = rand(22, 34);
     @endphp
-
-    <div class="nutri" style="
-        left: {{ $left }}%;
-        font-size: {{ $size }}px;
-        animation-delay: {{ $delay }}s;
-    ">
+    <div class="nutri" style="left: {{ $left }}%; font-size: {{ $size }}px; animation-delay: {{ $delay }}s;">
         {{ $emoji }}
     </div>
 @endfor
 
-
 {{-- CARD PRINCIPAL --}}
 <div class="table-wrapper">
-
     <table class="modern-table table align-middle">
         <thead>
             <tr>
                 <th>NOME</th>
-                <th class="d-none d-md-table-cell">OBJETIVO</th>
+                <th class="d-none d-md-table-cell">NOME DA GESTANTE</th>
+                <th class="d-none d-md-table-cell">CALORIAS P/DIA</th>
+                <th class="d-none d-md-table-cell">REFEIÇÕES P/DIA</th>
+                <th class="d-none d-md-table-cell">OBSERVAÇÕES</th>
                 <th>AÇÕES</th>
             </tr>
         </thead>
-
         <tbody>
-            @foreach ($dietas as $item)
+            @foreach ($exames as $item)
                 <tr>
                     <td>{{ $item->nome }}</td>
-                    <td class="d-none d-md-table-cell">{{ $item->objetivo }}</td>
-
+                    <td class="d-none d-md-table-cell">{{ $item->gestante->nome }}</td>
+                    <td class="d-none d-md-table-cell">{{ $item->kcal_dia }}</td>
+                    <td class="d-none d-md-table-cell">{{ $item->ref_dia }}</td>
+                    <td class="d-none d-md-table-cell">{{ $item->observacoes }}</td>
+    
                     <td class="text-nowrap">
-                        <a href="{{ route('dieta.edit', $item->id) }}"
-                           class="btn btn-sm btn-edit me-2">✏️ Editar</a>
-
-                        <a nohref onclick="showRemoveModal('{{ $item->id }}', '{{ $item->nome }}')"
-                           class="btn btn-sm btn-delete">🗑️ Excluir</a>
+                        
+                        
+                        @can('update', $item)
+                            <a href="{{route('exame.edit', $item->id)}}" class="btn btn-edit me-2">✏️ Editar</a>
+                        @endcan
+                        
+                        @can('delete', $item)
+                            <a nohref style="cursor:pointer" onclick="showRemoveModal('{{ $item->id }}', '{{ $item->nome }} - {{ $item->gestante->nome }}')" class="btn btn-delete">🗑️ Excluir</a>
+                            <form action="{{route('exame.destroy', $item->id)}}" method="POST" id="form_{{$item->id}}">
+                                @csrf
+                                @method('delete')
+                            </form>
+                        @endcan
                     </td>
-
-                    <form action="{{ route('dieta.destroy', $item->id) }}" method="POST" id="form_{{ $item->id }}">
-                        @csrf
-                        @method('delete')
-                    </form>
                 </tr>
             @endforeach
         </tbody>
-
     </table>
-
 </div>
 
 @endsection

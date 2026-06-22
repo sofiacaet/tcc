@@ -2,7 +2,7 @@
 <html lang="pt-br">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>Relatório de Planos - Sistema Pre-Natal </title>
+    <title>Relatório de Exames - Sistema Pre-Natal </title>
     <style>
 
         body {
@@ -155,23 +155,23 @@
         <span style="font-size: 18px; font-weight: bold; font-style: italic;"></span>
     </div>
     <hr>
-     <h3 style="text-align:center; margin-top:10px;">Relatório de Planos</h3>
+     <h3 style="text-align:center; margin-top:10px;">Relatório de Exames</h3>
 
     <div class="texto-restrito-baixo" style="position: absolute; bottom: 1px;"> DOCUMENTO GERADO PELO SISTEMA PRE-NATAL </div>
 
     <div class="identification-header">IDENTIFICAÇÃO</div>
-    @foreach($planos as $plano)
+    @foreach($exames as $exame)
         <table class="info-table identification-section">
             <tbody>
                 <tr>
                     
                     <td>
                         <table class="inner-table">
-                            <tr><td class="label table-label">NOME:</td><td style="width: 305px;">{{ $plano->nome }}</td></tr>
-                            <tr><td class="label">NOME DA GESTANTE:</td><td>{{ $plano->gestante->nome }}</td></tr>
-                            <tr><td class="label">CALORIAS POR DIA:</td><td>{{ $plano->kcal_dia}}</td></tr>
-                            <tr><td class="label">REFEICOES POR DIA:</td><td>{{ $plano->ref_dia }}</td></tr>
-                            <tr><td class="label">OBSERVAÇÕES:</td><td>{{ $plano->observacoes }}</td></tr>
+                            <tr><td class="label table-label">NOME:</td><td style="width: 305px;">{{ $exame->nome }}</td></tr>
+                            <tr><td class="label">NOME DA GESTANTE:</td><td>{{ $exame->gestante->nome }}</td></tr>
+                            <tr><td class="label">CALORIAS POR DIA:</td><td>{{ $exame->kcal_dia}}</td></tr>
+                            <tr><td class="label">REFEICOES POR DIA:</td><td>{{ $exame->ref_dia }}</td></tr>
+                            <tr><td class="label">OBSERVAÇÕES:</td><td>{{ $exame->observacoes }}</td></tr>
                         </table>
                     </td>
                 </tr>

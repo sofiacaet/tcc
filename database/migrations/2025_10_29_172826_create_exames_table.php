@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('planos', function (Blueprint $table) {
+        Schema::create('exames', function (Blueprint $table) {
             $table->id();
             $table->string('nome');
             $table->unsignedTinyInteger('ref_dia');
@@ -31,6 +31,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('planos');
+        Schema::dropIfExists('exames');
     }
 };

@@ -9,7 +9,7 @@ class Gestante extends Model
 {
     use SoftDeletes;
 
-    public function dieta() {
-        return $this->belongsTo('\App\Models\Dieta');
+    public function consulta() {
+        return $this->belongsTo('\App\Models\Consulta');
     }
 }

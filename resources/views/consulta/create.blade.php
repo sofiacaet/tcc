@@ -1,7 +1,7 @@
 @extends('templates/main',
 [
     'titulo'=>"Sistema Pre-Natal",
-    'cabecalho' => 'Nova Dieta',
+    'cabecalho' => 'Nova Consulta',
     'rota' => '',
     'relatorio' => '',
 ])
@@ -140,7 +140,7 @@ $quantidade = 18;
 
 <div class="form-card">
 
-<form action="{{route('dieta.store')}}" method="POST">
+<form action="{{route('consulta.store')}}" method="POST">
     @csrf
 
     <div class="row">
@@ -150,10 +150,10 @@ $quantidade = 18;
                     type="text"
                     class="form-control"
                     name="nome"
-                    placeholder="Nome da Dieta"
+                    placeholder="Nome da Consulta"
                     value="{{ old('nome') }}"
                 />
-                <label for="nome">Nome da Dieta</label>
+                <label for="nome">Nome da Consulta</label>
             </div>
         </div>
     </div>
@@ -175,7 +175,7 @@ $quantidade = 18;
 
     <div class="row mt-4">
         <div class="col d-flex gap-3">
-            <a href="{{route('dieta.index')}}" class="btn btn-custom-back">
+            <a href="{{route('consulta.index')}}" class="btn btn-custom-back">
                 ⬅️ Voltar
             </a>
 

@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Gestante;
-use App\Models\Dieta;
+use App\Models\Consulta;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\Gate;
 
@@ -36,8 +36,8 @@ class GestanteController extends Controller
     public function create()
     {
         Gate::authorize('create', Gestante::class);
-        $dietas = Dieta::all();
-        return view('gestante.create', compact('dietas'));
+        $consultas = Consulta::all();
+        return view('gestante.create', compact('consultas'));
     }
 
     /**
@@ -46,9 +46,9 @@ class GestanteController extends Controller
     public function store(Request $request)
     {
         Gate::authorize('create', Gestante::class);
-        $dieta = Dieta::find($request->dieta);
+        $consulta = Consulta::find($request->consulta);
 
-        if(isset($dieta)) {
+        if(isset($consulta)) {
             $gestante = new Gestante();
             $gestante->nome = mb_strtoupper($request->nome, 'UTF-8');
             $gestante->email = $request->email;
@@ -56,7 +56,7 @@ class GestanteController extends Controller
             $gestante->altura = $request->altura;
             $gestante->idade = $request->idade;
             $gestante->peso_atual = $request->peso_atual;
-            $gestante->dieta()->associate($dieta);
+            $gestante->consulta()->associate($consulta);
             $gestante->save();
 
             if($request->hasFile('foto')) {
@@ -89,8 +89,8 @@ class GestanteController extends Controller
         Gate::authorize('update', $gestante);
 
         if(isset($gestante)) {
-            $dietas = Dieta::all();
-            return view('gestante.edit', compact(['gestante', 'dietas']));
+            $consultas = Consulta::all();
+            return view('gestante.edit', compact(['gestante', 'consultas']));
         }
 
         return redirect()->route('gestante.index');
@@ -103,16 +103,16 @@ class GestanteController extends Controller
     {
         $gestante = Gestante::find($id);
         Gate::authorize('update', $gestante);
-        $dieta = Dieta::find($request->dieta);
+        $consulta = Consulta::find($request->consulta);
 
-        if(isset($dieta) && isset($gestante)) {
+        if(isset($consulta) && isset($gestante)) {
             $gestante->nome = mb_strtoupper($request->nome, 'UTF-8');
             $gestante->email = $request->email;
             $gestante->telefone = $request->telefone;
             $gestante->altura = $request->altura;
             $gestante->idade = $request->idade;
             $gestante->peso_atual = $request->peso_atual;
-            $gestante->dieta()->associate($dieta);
+            $gestante->consulta()->associate($consulta);
 
             if($request->hasFile('foto')) {
                 // Upload File
@@ -145,12 +145,12 @@ class GestanteController extends Controller
     public function report() {
          // COORDENADOR vê todos
     if (auth()->user()->role_id == 2) {
-        $gestantes = Gestante::with('dieta')->get();
+        $gestantes = Gestante::with('consulta')->get();
     } 
     // PROFESSOR vê somente seu próprio gestante
     else {
         $email = auth()->user()->email;
-        $gestantes = Gestante::with('dieta')
+        $gestantes = Gestante::with('consulta')
             ->where('email', $email)
             ->get();
     }

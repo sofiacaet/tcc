@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class CDietaSeeder extends Seeder
+class ConsultaSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -17,6 +17,6 @@ class CDietaSeeder extends Seeder
             ["nome" => "CUTTING", "objetivo" => "perder gordura"],
             ["nome" => "BULKING", "objetivo" => "ganhar massa muscular"],
         ];
-        DB::table('dietas')->insert($data);
+        DB::table('consultas')->insert($data);
     }
 }

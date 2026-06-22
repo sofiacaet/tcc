@@ -130,7 +130,7 @@ $quantidade = 18;
 
 {{-- FORMULÁRIO --}}
 <div class="form-card">
-<form action="{{route('plano.update', $plano->id)}}" method="POST" enctype="multipart/form-data">
+<form action="{{route('exame.update', $exame->id)}}" method="POST" enctype="multipart/form-data">
     @csrf
     @method('PUT')
 
@@ -138,7 +138,7 @@ $quantidade = 18;
     <div class="row mb-3">
         <div class="col">
             <div class="form-floating">
-                <input type="text" class="form-control" name="nome" placeholder="Nome" value="{{ $plano->nome }}"/>
+                <input type="text" class="form-control" name="nome" placeholder="Nome" value="{{ $exame->nome }}"/>
                 <label for="nome">Nome</label>
             </div>
         </div>
@@ -151,7 +151,7 @@ $quantidade = 18;
                 <span class="input-group-text bg-secondary text-white">Gestante</span>
                 <select name="gestante" class="form-select form-control">
                     @foreach ($gestantes as $item)
-                        <option value="{{$item->id}}" @if($item->id == $plano->gestante_id) selected @endif>
+                        <option value="{{$item->id}}" @if($item->id == $exame->gestante_id) selected @endif>
                             {{ $item->nome }}
                         </option>
                     @endforeach
@@ -164,13 +164,13 @@ $quantidade = 18;
     <div class="row mb-3">
         <div class="col-md-6">
             <div class="form-floating">
-                <input type="number" class="form-control" name="kcal_dia" placeholder="Calorias" value="{{ $plano->kcal_dia }}"/>
+                <input type="number" class="form-control" name="kcal_dia" placeholder="Calorias" value="{{ $exame->kcal_dia }}"/>
                 <label for="kcal_dia">Calorias por dia</label>
             </div>
         </div>
         <div class="col-md-6">
             <div class="form-floating">
-                <input type="number" class="form-control" name="ref_dia" placeholder="Refeicoes" value="{{ $plano->ref_dia }}"/>
+                <input type="number" class="form-control" name="ref_dia" placeholder="Refeicoes" value="{{ $exame->ref_dia }}"/>
                 <label for="ref_dia">Refeições por dia</label>
             </div>
         </div>
@@ -180,7 +180,7 @@ $quantidade = 18;
     <div class="row mb-4">
         <div class="col-md-4">
             <div class="form-floating">
-                <input type="text" class="form-control" name="observacoes" placeholder="Observacoes" value="{{ $plano->observacoes }}"/>
+                <input type="text" class="form-control" name="observacoes" placeholder="Observacoes" value="{{ $exame->observacoes }}"/>
                 <label for="observacoes">Observações</label>
             </div>
         </div>
@@ -189,7 +189,7 @@ $quantidade = 18;
     {{-- BOTÕES --}}
     <div class="row mt-4">
         <div class="col d-flex gap-3">
-            <a href="{{route('plano.index')}}" class="btn btn-custom-back">⬅️ Voltar</a>
+            <a href="{{route('exame.index')}}" class="btn btn-custom-back">⬅️ Voltar</a>
             <button type="submit" class="btn btn-custom-confirm ms-auto">✔️ Confirmar</button>
         </div>
     </div>
