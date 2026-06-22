@@ -1,6 +1,6 @@
 @extends('templates/main',
 [
-    'titulo'=>"Sistema Nutricional",
+    'titulo'=>"Sistema Pre-Natal",
     'cabecalho' => 'Lista de Dietas',
     'rota' => 'dieta.create',
     'relatorio' => 'report.dieta',
@@ -113,7 +113,7 @@ td, th {
 
 {{-- ITENS NUTRICIONAIS FLUTUANDO --}}
 @php
-$icons = ['🥑','🍎','🍋','🥕','🍃','🍉','🥦','🍇','🍓'];
+$icons = ['🍼'];
 $quantidade = 22;
 @endphp
 

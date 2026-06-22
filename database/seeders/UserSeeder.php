@@ -16,14 +16,14 @@ class UserSeeder extends Seeder
     {
         $data = [
             [
-                "name" => "ANTÔNIO MARCOS SILVA",
-                'email' => "antonio@gmail.com",
+                "name" => "AURORA CAETANO",
+                'email' => "aurora@gestante.com",
                 "password" => Hash::make('@1234@5678'),
                 "role_id" => 1,
             ],
             [
-                "name" => "RAFAELA SANTOS",
-                'email' => "rafaela@gmail.com",
+                "name" => "JOAO VICTOR LOUKACHAK",
+                'email' => "joao@nutricionista.com",
                 "password" => Hash::make('@1234@5678'),
                 "role_id" => 2,
             ],

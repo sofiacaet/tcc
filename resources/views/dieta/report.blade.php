@@ -2,7 +2,7 @@
 <html lang="pt-br">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>Relatório de Dietas - Sistema Nutricional </title>
+    <title>Relatório de Dietas - Sistema Pre-Natal </title>
     <style>
         body {
             font-family: Arial, Helvetica, sans-serif;
@@ -50,7 +50,7 @@
 <body>
 
     <div class="texto-marca-dagua"> NUTRITIONIST - PR </div>
-    <div class="texto-restrito-cima"> DOCUMENTO GERADO PELO SISTEMA NUTRICIONAL </div>
+    <div class="texto-restrito-cima"> DOCUMENTO GERADO PELO SISTEMA PRE-NATAL </div>
 
     <hr>
 
@@ -92,7 +92,7 @@
         </tbody>
     </table>
 
-    <div class="texto-restrito-baixo"> DOCUMENTO GERADO PELO SISTEMA NUTRICIONAL </div>
+    <div class="texto-restrito-baixo"> DOCUMENTO GERADO PELO SISTEMA PRE-NATAL </div>
 
 </body>
 </html>

@@ -2,8 +2,9 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\PacienteController;
+use App\Http\Controllers\GestanteController;
 use App\Http\Controllers\DietaController;
+use App\Http\Controllers\PlanoController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -16,9 +17,11 @@ Route::get('/home', function () {
 Route::resource('/dieta', DietaController::class)->middleware(['auth', 'verified']);
 Route::get('/report/dieta', [DietaController::class, 'report'])->name('report.dieta')->middleware(['auth', 'verified']);
 
+Route::resource('/gestante', GestanteController::class)->middleware(['auth', 'verified']);
+Route::get('/report/gestante', [GestanteController::class, 'report'])->name('report.gestante')->middleware(['auth', 'verified']);
 
-Route::resource('/paciente', PacienteController::class)->middleware(['auth', 'verified']);
-Route::get('/report/paciente', [PacienteController::class, 'report'])->name('report.paciente')->middleware(['auth', 'verified']);
+Route::resource('/plano', PlanoController::class)->middleware(['auth', 'verified']);
+Route::get('/report/plano', [PlanoController::class, 'report'])->name('report.plano')->middleware(['auth', 'verified']);
 
 Route::get('/dashboard', function () {
     return view('dashboard');

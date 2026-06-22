@@ -33,7 +33,7 @@
         <div class="container-fluid">
             <a href="{{ route('home') }}" class="navbar-brand">
                 <img src="{{ asset('assets/img/logo.png') }}" style="border-radius: 25%;" width="56" height="56">
-                <span class="ms-2 fs-4 fw-bold">Sistema Nutricional</span>
+                <span class="ms-2 fs-4 fw-bold">Sistema Pre-Natal</span>
             </a>
             <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#itens">
                 <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-menu-button-wide" viewBox="0 0 16 16">
@@ -44,11 +44,11 @@
             <div class="collapse navbar-collapse" id="itens">
                 <ul class="navbar-nav ms-auto">
 
-                    @can('viewAny', App\Models\Paciente::class)
+                    @can('viewAny', App\Models\Gestante::class)
                         <li class="nav-item me-2">
-                            <a href="{{ route('paciente.index') }}" class="nav-link">
+                            <a href="{{ route('gestante.index') }}" class="nav-link">
                                 <svg xmlns="http://www.w3.org/2000/svg" height="40px" viewBox="0 -960 960 960" width="40px" fill="#FFFFFF"><path d="M640-402q-50.67 0-84.67-34t-34-84.67q0-50.66 34-84.66t84.67-34q50.67 0 84.67 34t34 84.66q0 50.67-34 84.67T640-402ZM400-160v-69.33q0-19.58 9.33-37.29 9.34-17.71 25.34-26.05 45-30.33 97.5-45.16 52.5-14.84 107.83-14.84t107.5 15.84q52.17 15.83 97.83 44.16 15.34 10.34 25 27Q880-249 880-229.33V-160H400Zm65.33-74v7.33h349.34V-234Q777-258 730-272t-90-14q-43 0-90.33 14-47.34 14-84.34 38ZM640-468.67q23 0 37.5-14.5t14.5-37.5q0-23-14.5-37.5t-37.5-14.5q-23 0-37.5 14.5t-14.5 37.5q0 23 14.5 37.5t37.5 14.5Zm0-52Zm0 294Zm-520-180v-66.66h310.67v66.66H120Zm0-326.66V-800h475.33v66.67H120ZM460.67-570H120v-66.67h373.33q-12 14.34-19.98 30.95-7.99 16.61-12.68 35.72Z"/></svg>
-                                <span class="ps-1 text-white">Pacientes</span>
+                                <span class="ps-1 text-white">Gestantes</span>
                             </a>
                         </li>
                     @endcan
@@ -58,6 +58,15 @@
                             <a href="{{ route('dieta.index') }}" class="nav-link">
                                 <svg xmlns="http://www.w3.org/2000/svg" height="40px" viewBox="0 -960 960 960" width="40px" fill="#FFFFFF"><path d="M480-120q-117 0-198.5-81.5T200-400q0-98 59.5-173.83 59.5-75.84 154.17-98.5-24-5-46.34-14.5-22.33-9.5-40-27.17-29.66-30.33-39.16-70.83-9.5-40.5-7.84-82.84 15.67-5 30.83-4.5 15.17.5 26.17 8.17 65 6.33 109.84 55 44.83 48.67 45.16 116 13.67-39 36.84-72.83 23.16-33.84 52.16-62.84 9.67-9.66 23.34-9.66 13.66 0 23.33 9.66 9.67 9.67 9.67 23.34 0 13.66-9.67 23.33-24 24-43 52.17-19 28.16-31 59.5Q646-645 703-570.17q57 74.84 57 170.17 0 117-81.5 198.5T480-120Zm0-66.67q89 0 151.17-62.16Q693.33-311 693.33-400q0-89-62.16-151.17Q569-613.33 480-613.33q-89 0-151.17 62.16Q266.67-489 266.67-400q0 89 62.16 151.17Q391-186.67 480-186.67ZM480-400Z"/></svg>
                                 <span class="ps-1 text-white">Dietas</span>
+                            </a>
+                        </li>
+                    @endcan
+
+                    @can('viewAny', App\Models\Plano::class)
+                        <li class="nav-item me-2">
+                            <a href="{{ route('plano.index') }}" class="nav-link">
+                                <svg xmlns="http://www.w3.org/2000/svg" height="40px" viewBox="0 -960 960 960" width="40px" fill="#FFFFFF"><path d="M306.67-284q13.66 0 23.5-9.83 9.83-9.84 9.83-23.5 0-13.67-9.83-23.5-9.84-9.84-23.5-9.84-13.67 0-23.5 9.84-9.84 9.83-9.84 23.5 0 13.66 9.84 23.5Q293-284 306.67-284Zm0-162.67q13.66 0 23.5-9.83Q340-466.33 340-480t-9.83-23.5q-9.84-9.83-23.5-9.83-13.67 0-23.5 9.83-9.84 9.83-9.84 23.5t9.84 23.5q9.83 9.83 23.5 9.83Zm0-162.66q13.66 0 23.5-9.84Q340-629 340-642.67q0-13.66-9.83-23.5-9.84-9.83-23.5-9.83-13.67 0-23.5 9.83-9.84 9.84-9.84 23.5 0 13.67 9.84 23.5 9.83 9.84 23.5 9.84Zm128 325.33h242.66v-66.67H434.67V-284Zm0-162.67h242.66v-66.66H434.67v66.66Zm0-162.66h242.66V-676H434.67v66.67ZM186.67-120q-27 0-46.84-19.83Q120-159.67 120-186.67v-586.66q0-27 19.83-46.84Q159.67-840 186.67-840h586.66q27 0 46.84 19.83Q840-800.33 840-773.33v586.66q0 27-19.83 46.84Q800.33-120 773.33-120H186.67Zm0-66.67h586.66v-586.66H186.67v586.66Zm0-586.66v586.66-586.66Z"/></svg>
+                                <span class="ps-1 text-white">Planos</span>
                             </a>
                         </li>
                     @endcan

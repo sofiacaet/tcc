@@ -1,10 +1,10 @@
 @extends('templates/main',
 [
-    'titulo'=>"Sistema Nutricional",
-    'cabecalho' => 'Lista de Pacientes',
-    'rota' => 'paciente.create',
-    'relatorio' => 'report.paciente',
-    'class' => App\Models\Paciente::class,
+    'titulo'=>"Sistema Pre-Natal",
+    'cabecalho' => 'Lista de Planos',
+    'rota' => 'plano.create',
+    'relatorio' => 'report.plano',
+    'class' => App\Models\Plano::class,
 ])
 @section('conteudo')
 
@@ -112,7 +112,7 @@ td, th {
 
 {{-- PARTICULAS --}}
 @php
-$icons = ['🥑','🍎','🍋','🥕','🍃','🍉','🥦','🍇','🍓'];
+$icons = ['🍼'];
 $quantidade = 22;
 @endphp
 @for ($i = 0; $i < $quantidade; $i++)
@@ -133,35 +133,32 @@ $quantidade = 22;
         <thead>
             <tr>
                 <th>NOME</th>
-                <th class="d-none d-md-table-cell">DIETA</th>
-                <th class="d-none d-md-table-cell">EMAIL</th>
-                <th class="d-none d-md-table-cell">TELEFONE</th>
-                <th class="d-none d-md-table-cell">ALTURA</th>
-                <th class="d-none d-md-table-cell">IDADE</th>
-                <th class="d-none d-md-table-cell">PESO </th>
+                <th class="d-none d-md-table-cell">NOME DA GESTANTE</th>
+                <th class="d-none d-md-table-cell">CALORIAS P/DIA</th>
+                <th class="d-none d-md-table-cell">REFEIÇÕES P/DIA</th>
+                <th class="d-none d-md-table-cell">OBSERVAÇÕES</th>
                 <th>AÇÕES</th>
             </tr>
         </thead>
         <tbody>
-            @foreach ($pacientes as $item)
+            @foreach ($planos as $item)
                 <tr>
                     <td>{{ $item->nome }}</td>
-                    <td class="d-none d-md-table-cell">{{ $item->dieta->nome }}</td>
-                    <td class="d-none d-md-table-cell">{{ $item->email }}</td>
-                    <td class="d-none d-md-table-cell">{{ $item->telefone }}</td>
-                    <td class="d-none d-md-table-cell">{{ $item->altura }}</td>
-                    <td class="d-none d-md-table-cell">{{ $item->idade }}</td>
-                    <td class="d-none d-md-table-cell">{{ $item->peso_atual }}</td>
+                    <td class="d-none d-md-table-cell">{{ $item->gestante->nome }}</td>
+                    <td class="d-none d-md-table-cell">{{ $item->kcal_dia }}</td>
+                    <td class="d-none d-md-table-cell">{{ $item->ref_dia }}</td>
+                    <td class="d-none d-md-table-cell">{{ $item->observacoes }}</td>
+    
                     <td class="text-nowrap">
-                        <a href="{{ asset('storage/'.$item->foto) }}" target="_blank" class="btn btn-outline-dark me-2">👤</a>
+                        
                         
                         @can('update', $item)
-                            <a href="{{route('paciente.edit', $item->id)}}" class="btn btn-edit me-2">✏️ Editar</a>
+                            <a href="{{route('plano.edit', $item->id)}}" class="btn btn-edit me-2">✏️ Editar</a>
                         @endcan
                         
                         @can('delete', $item)
-                            <a nohref style="cursor:pointer" onclick="showRemoveModal('{{ $item->id }}', '{{ $item->nome }} - {{ $item->dieta->nome }}')" class="btn btn-delete">🗑️ Excluir</a>
-                            <form action="{{route('paciente.destroy', $item->id)}}" method="POST" id="form_{{$item->id}}">
+                            <a nohref style="cursor:pointer" onclick="showRemoveModal('{{ $item->id }}', '{{ $item->nome }} - {{ $item->gestante->nome }}')" class="btn btn-delete">🗑️ Excluir</a>
+                            <form action="{{route('plano.destroy', $item->id)}}" method="POST" id="form_{{$item->id}}">
                                 @csrf
                                 @method('delete')
                             </form>

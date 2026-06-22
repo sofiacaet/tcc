@@ -1,5 +1,5 @@
 @extends('templates/main', [
-    'titulo' => "Sistema Nutricional",
+    'titulo' => "Sistema Pre-Natal",
     'cabecalho' => "Home - Dashboard",
     'rota' => '',
     'relatorio' => '',

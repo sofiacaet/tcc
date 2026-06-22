@@ -2,7 +2,7 @@
 <html lang="pt-br">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>Relatório de Pacientes - Sistema Nutricional </title>
+    <title>Relatório de Gestantes - Sistema Pré-Natal </title>
     <style>
 
         body {
@@ -131,7 +131,7 @@
 </head>
 <body>
     <div class="texto-marca-dagua"> NUTRITIONIST - PR</div>
-    <div class="texto-restrito-cima"> DOCUMENTO GERADO PELO SISTEMA NUTRICIONAL </div>
+    <div class="texto-restrito-cima"> DOCUMENTO GERADO PELO SISTEMA DE PRÉ-NATAL </div>
     <hr>
     <table style="margin: 0px auto; width: 100%; ">
         <tbody>
@@ -155,31 +155,31 @@
         <span style="font-size: 18px; font-weight: bold; font-style: italic;"></span>
     </div>
     <hr>
-     <h3 style="text-align:center; margin-top:10px;">Relatório de Pacientes</h3>
+     <h3 style="text-align:center; margin-top:10px;">Relatório de Gestantes</h3>
 
-    <div class="texto-restrito-baixo" style="position: absolute; bottom: 1px;"> DOCUMENTO GERADO PELO SISTEMA NUTRICIONAL </div>
+    <div class="texto-restrito-baixo" style="position: absolute; bottom: 1px;"> DOCUMENTO GERADO PELO SISTEMA DE PRÉ-NATAL </div>
 
     <div class="identification-header">IDENTIFICAÇÃO</div>
-    @foreach($pacientes as $paciente)
+    @foreach($gestantes as $gestante)
         <table class="info-table identification-section">
             <tbody>
                 <tr>
                     <td class="photo-cell" >
-                        @if($paciente->foto)
-                            <img src="{{ public_path('storage/' . $paciente->foto) }}" style="width: 120px; height: auto;">
+                        @if($gestante->foto)
+                            <img src="{{ public_path('storage/' . $gestante->foto) }}" style="width: 120px; height: auto;">
                         @else
                             FOTO
                         @endif
                     </td>
                     <td>
                         <table class="inner-table">
-                            <tr><td class="label table-label">NOME:</td><td style="width: 305px;">{{ $paciente->nome }}</td></tr>
-                            <tr><td class="label">TIPO DIETA:</td><td>{{ $paciente->dieta->nome }}</td></tr>
-                            <tr><td class="label">EMAIL:</td><td>{{ $paciente->email }}</td></tr>
-                            <tr><td class="label">TELEFONE:</td><td>{{ $paciente->telefone }}</td></tr>
-                            <tr><td class="label">ALTURA:</td><td>{{ $paciente->altura }}</td></tr>
-                            <tr><td class="label">IDADE:</td><td>{{ $paciente->idade }}</td></tr>
-                            <tr><td class="label">PESO ATUAL:</td><td>{{ $paciente->peso_atual }}</td></tr>
+                            <tr><td class="label table-label">NOME:</td><td style="width: 305px;">{{ $gestante->nome }}</td></tr>
+                            <tr><td class="label">TIPO DIETA:</td><td>{{ $gestante->dieta->nome }}</td></tr>
+                            <tr><td class="label">EMAIL:</td><td>{{ $gestante->email }}</td></tr>
+                            <tr><td class="label">TELEFONE:</td><td>{{ $gestante->telefone }}</td></tr>
+                            <tr><td class="label">ALTURA:</td><td>{{ $gestante->altura }}</td></tr>
+                            <tr><td class="label">IDADE:</td><td>{{ $gestante->idade }}</td></tr>
+                            <tr><td class="label">PESO ATUAL:</td><td>{{ $gestante->peso_atual }}</td></tr>
                         </table>
                     </td>
                 </tr>

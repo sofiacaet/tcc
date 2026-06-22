@@ -1,6 +1,6 @@
 @extends('templates/main',
 [
-    'titulo'=>"Sistema Nutricional",
+    'titulo'=>"Sistema Pre-Natal",
     'cabecalho' => 'Nova Dieta',
     'rota' => '',
     'relatorio' => '',
@@ -115,7 +115,7 @@ body {
 
 {{-- PARTICULAS EXATAMENTE IGUAIS AO EDIT --}}
 @php
-$icons = ['🥑','🍎','🍋','🥕','🍃','🍉','🥦','🍇','🍓'];
+$icons = ['🍼'];
 $quantidade = 18;
 @endphp
 

@@ -4,13 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Paciente;
+use App\Models\Gestante;
 
 
 use \Illuminate\Database\Eloquent\SoftDeletes;
 class Dieta extends Model {
 use SoftDeletes;
-public function paciente() {
-return $this->hasMany('\App\Models\Paciente');
+public function gestante() {
+return $this->hasMany('\App\Models\Gestante');
 }
 }

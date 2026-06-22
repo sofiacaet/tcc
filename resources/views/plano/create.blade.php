@@ -1,7 +1,7 @@
 @extends('templates/main',
 [
-    'titulo'=>"Sistema Nutricional",
-    'cabecalho' => 'Novo Paciente',
+    'titulo'=>"Sistema Pre-Natal",
+    'cabecalho' => 'Novo Plano',
     'rota' => '',
     'relatorio' => '',
 ])
@@ -113,7 +113,7 @@ body {
 
 {{-- PARTICULAS --}}
 @php
-$icons = ['🥑','🍎','🍋','🥕','🍃','🍉','🥦','🍇','🍓'];
+$icons = ['🍼'];
 $quantidade = 18;
 @endphp
 @for ($i = 0; $i < $quantidade; $i++)
@@ -130,18 +130,8 @@ $quantidade = 18;
 
 {{-- FORMULÁRIO --}}
 <div class="form-card">
-<form action="{{route('paciente.store')}}" method="POST" enctype="multipart/form-data">
+<form action="{{route('plano.store')}}" method="POST" enctype="multipart/form-data">
     @csrf
-
-    {{-- FOTO --}}
-    <div class="row mb-3">
-        <div class="col">
-            <div class="input-group">
-                <span class="input-group-text bg-secondary text-white">Foto</span>
-                <input class="form-control text-secondary" type="file" name="foto"/>
-            </div>
-        </div>
-    </div>
 
     {{-- NOME --}}
     <div class="row mb-3">
@@ -153,14 +143,14 @@ $quantidade = 18;
         </div>
     </div>
 
-    {{-- DIETA --}}
+    {{-- GESTANTE --}}
     <div class="row mb-3">
         <div class="col">
             <div class="input-group">
-                <span class="input-group-text bg-secondary text-white">Dieta</span>
-                <select name="dieta" class="form-select form-control">
-                    @foreach ($dietas as $item)
-                        <option value="{{$item->id}}" @if($item->id == old('dieta')) selected @endif>
+                <span class="input-group-text bg-secondary text-white">Gestante</span>
+                <select name="gestante" class="form-select form-control">
+                    @foreach ($gestantes as $item)
+                        <option value="{{$item->id}}" @if($item->id == old('gestante')) selected @endif>
                             {{ $item->nome }}
                         </option>
                     @endforeach
@@ -169,48 +159,37 @@ $quantidade = 18;
         </div>
     </div>
 
-    {{-- EMAIL E TELEFONE --}}
+    {{-- KCAL E REF --}}
     <div class="row mb-3">
         <div class="col-md-6">
             <div class="form-floating">
-                <input type="email" class="form-control" name="email" placeholder="E-mail" value="{{ old('email') }}"/>
-                <label for="email">E-mail</label>
+                <input type="number" class="form-control" name="kcal_dia" placeholder="Calorias" value="{{ old('kcal_dia') }}"/>
+                <label for="kcal_dia">Calorias por dia</label>
             </div>
         </div>
         <div class="col-md-6">
             <div class="form-floating">
-                <input type="text" class="form-control" name="telefone" placeholder="Telefone" value="{{ old('telefone') }}"/>
-                <label for="telefone">Telefone</label>
+                <input type="number" class="form-control" name="ref_dia" placeholder="Refeicoes" value="{{ old('ref_dia') }}"/>
+                <label for="ref_dia">Refeições por dia</label>
             </div>
         </div>
     </div>
 
-    {{-- IDADE, ALTURA, PESO --}}
+    {{-- OBSERVACOES --}}
     <div class="row mb-4">
         <div class="col-md-4">
             <div class="form-floating">
-                <input type="number" class="form-control" name="idade" placeholder="Idade" value="{{ old('idade') }}"/>
-                <label for="idade">Idade</label>
+                <input type="text" class="form-control" name="observacoes" placeholder="Observacoes" value="{{ old('observacoes') }}"/>
+                <label for="observacoes">Observações</label>
             </div>
         </div>
-        <div class="col-md-4">
-            <div class="form-floating">
-                <input type="number" step="0.01" class="form-control" name="altura" placeholder="Altura" value="{{ old('altura') }}"/>
-                <label for="altura">Altura</label>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="form-floating">
-                <input type="number" step="0.01" class="form-control" name="peso_atual" placeholder="Peso Atual" value="{{ old('peso_atual') }}"/>
-                <label for="peso_atual">Peso Atual</label>
-            </div>
-        </div>
+       
     </div>
 
     {{-- BOTÕES --}}
     <div class="row mt-4">
         <div class="col d-flex gap-3">
-            <a href="{{route('paciente.index')}}" class="btn btn-custom-back">⬅️ Voltar</a>
+            <a href="{{route('plano.index')}}" class="btn btn-custom-back">⬅️ Voltar</a>
             <button type="submit" class="btn btn-custom-confirm ms-auto">✔️ Confirmar</button>
         </div>
     </div>

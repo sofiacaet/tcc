@@ -26,6 +26,12 @@ class PermissionSeeder extends Seeder
             ["role_id" => 1, "resource_id" => 8, "permission" => 1],
             ["role_id" => 1, "resource_id" => 9, "permission" => 0],
             ["role_id" => 1, "resource_id" => 10, "permission" => 0],
+             // PROFESSOR - ALUNO
+            ["role_id" => 1, "resource_id" => 11, "permission" => 1],
+            ["role_id" => 1, "resource_id" => 12, "permission" => 0],
+            ["role_id" => 1, "resource_id" => 13, "permission" => 1],
+            ["role_id" => 1, "resource_id" => 14, "permission" => 0],
+            ["role_id" => 1, "resource_id" => 15, "permission" => 0],
             //  COORDENADOR - CURSO
             ["role_id" => 2, "resource_id" => 1, "permission" => 1],
             ["role_id" => 2, "resource_id" => 2, "permission" => 1],
@@ -38,6 +44,12 @@ class PermissionSeeder extends Seeder
             ["role_id" => 2, "resource_id" => 8, "permission" => 1],
             ["role_id" => 2, "resource_id" => 9, "permission" => 1],
             ["role_id" => 2, "resource_id" => 10, "permission" => 1],
+             // COORDENADOR - ALUNO
+            ["role_id" => 2, "resource_id" => 11, "permission" => 1],
+            ["role_id" => 2, "resource_id" => 12, "permission" => 1],
+            ["role_id" => 2, "resource_id" => 13, "permission" => 1],
+            ["role_id" => 2, "resource_id" => 14, "permission" => 1],
+            ["role_id" => 2, "resource_id" => 15, "permission" => 1],
         ];
 
         DB::table('permissions')->insert($data);

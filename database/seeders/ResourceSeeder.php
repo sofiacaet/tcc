@@ -21,11 +21,17 @@ class ResourceSeeder extends Seeder
             ["name" => "dieta.edit"],       // 4
             ["name" => "dieta.delete"],     // 5
             // ALUNO
-            ["name" => "paciente.index"],      // 6
-            ["name" => "paciente.create"],     // 7
-            ["name" => "paciente.show"],       // 8
-            ["name" => "paciente.edit"],       // 9
-            ["name" => "paciente.delete"],     // 10
+            ["name" => "gestante.index"],      // 6
+            ["name" => "gestante.create"],     // 7
+            ["name" => "gestante.show"],       // 8
+            ["name" => "gestante.edit"],       // 9
+            ["name" => "gestante.delete"],     // 10
+
+             ["name" => "plano.index"],      // 6
+            ["name" => "plano.create"],     // 7
+            ["name" => "plano.show"],       // 8
+            ["name" => "plano.edit"],       // 9
+            ["name" => "plano.delete"],     // 10
         ];
         DB::table('resources')->insert($data);
     }
