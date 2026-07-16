@@ -10,15 +10,15 @@
 
 <style>
 :root{
-    --green: #41d97b;
-    --green-strong: #2fbe66;
-    --green-light: #7fffc0;
-    --danger: #ff5c5c;
+    --green: #21867d;
+    --green-strong: #70a1de;
+    --green-light: #44df91;
+    --danger: #f52424;
 }
 
 /* FUNDO */
 body {
-    background: linear-gradient(135deg, #b2ffd6 0%, #4ccf8a 50%, #239864 100%);
+    background: linear-gradient(135deg, #75c8ff 0%, #4dabf8 50%, #193b68 100%);
     min-height: 100vh;
     padding: 22px;
     overflow: hidden;
@@ -77,7 +77,7 @@ table.modern-table tbody tr {
 table.modern-table tbody tr:hover {
     transform: translateY(-4px) scale(1.01);
     background: rgba(255,255,255,0.34);
-    box-shadow: 0 10px 30px rgba(0,0,0,0.18), 0 0 12px rgba(65,217,123,0.18) inset;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.18), 0 0 12px rgb(88, 185, 254) inset;
 }
 
 td, th {
@@ -110,22 +110,7 @@ td, th {
 .btn-delete:hover { background: var(--danger); color: #fff; }
 </style>
 
-{{-- PARTICULAS --}}
-@php
-$icons = ['🍼'];
-$quantidade = 22;
-@endphp
-@for ($i = 0; $i < $quantidade; $i++)
-    @php
-        $emoji = $icons[array_rand($icons)];
-        $left = rand(2, 95);
-        $delay = -($i * 0.8);
-        $size = rand(22, 34);
-    @endphp
-    <div class="nutri" style="left: {{ $left }}%; font-size: {{ $size }}px; animation-delay: {{ $delay }}s;">
-        {{ $emoji }}
-    </div>
-@endfor
+
 
 {{-- CARD PRINCIPAL --}}
 <div class="table-wrapper">
@@ -136,9 +121,7 @@ $quantidade = 22;
                 <th class="d-none d-md-table-cell">CONSULTA</th>
                 <th class="d-none d-md-table-cell">EMAIL</th>
                 <th class="d-none d-md-table-cell">TELEFONE</th>
-                <th class="d-none d-md-table-cell">ALTURA</th>
-                <th class="d-none d-md-table-cell">IDADE</th>
-                <th class="d-none d-md-table-cell">PESO </th>
+                <th class="d-none d-md-table-cell">CPF</th>
                 <th>AÇÕES</th>
             </tr>
         </thead>
@@ -149,18 +132,26 @@ $quantidade = 22;
                     <td class="d-none d-md-table-cell">{{ $item->consulta->nome }}</td>
                     <td class="d-none d-md-table-cell">{{ $item->email }}</td>
                     <td class="d-none d-md-table-cell">{{ $item->telefone }}</td>
-                    <td class="d-none d-md-table-cell">{{ $item->altura }}</td>
-                    <td class="d-none d-md-table-cell">{{ $item->idade }}</td>
-                    <td class="d-none d-md-table-cell">{{ $item->peso_atual }}</td>
+                    <td class="d-none d-md-table-cell">{{ $item->cpf }}</td>
+                   
+
                     <td class="text-nowrap">
-                        <a href="{{ asset('storage/'.$item->foto) }}" target="_blank" class="btn btn-outline-dark me-2">👤</a>
+                        <a href="{{ asset('storage/'.$item->foto) }}" target="_blank" class="btn btn-outline-dark me-2">
+                            <span class="material-symbols-outlined align-middle">photo_camera</span>
+                        </a>
                         
                         @can('update', $item)
-                            <a href="{{route('gestante.edit', $item->id)}}" class="btn btn-edit me-2">✏️ Editar</a>
+                            <a href="{{ route('gestante.edit', $item->id) }}" class="btn btn-edit me-2">
+                                <span class="material-symbols-outlined align-middle">edit</span>
+                                Editar
+                            </a>
                         @endcan
                         
                         @can('delete', $item)
-                            <a nohref style="cursor:pointer" onclick="showRemoveModal('{{ $item->id }}', '{{ $item->nome }} - {{ $item->consulta->nome }}')" class="btn btn-delete">🗑️ Excluir</a>
+                            <a nohref style="cursor:pointer" onclick="showRemoveModal('{{ $item->id }}', '{{ $item->nome }} - {{ $item->consulta->nome }}')" class="btn btn-delete"> 
+                                <span class="material-symbols-outlined align-middle">delete</span> 
+                                    Excluir
+                            </a>
                             <form action="{{route('gestante.destroy', $item->id)}}" method="POST" id="form_{{$item->id}}">
                                 @csrf
                                 @method('delete')

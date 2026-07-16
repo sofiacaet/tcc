@@ -11,15 +11,15 @@
 
 <style>
 :root{
-    --green: #41d97b;
-    --green-strong: #2fbe66;
+    --green: #4197d9;
+    --green-strong: #70a1de;
     --green-light: #7fffc0;
     --danger: #ff5c5c;
 }
 
 /* FUNDO */
 body {
-    background: linear-gradient(135deg, #b2ffd6 0%, #4ccf8a 50%, #239864 100%);
+    background: linear-gradient(135deg, #75c8ff 0%, #4dabf8 50%, #193b68 100%);
     min-height: 100vh;
     padding: 22px;
     overflow: hidden;
@@ -77,7 +77,7 @@ table.modern-table tbody tr {
 table.modern-table tbody tr:hover {
     transform: translateY(-4px) scale(1.01);
     background: rgba(255,255,255,0.34);
-    box-shadow: 0 10px 30px rgba(0,0,0,0.18), 0 0 12px rgba(65,217,123,0.18) inset;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.18), 0 0 12px rgb(88, 185, 254) inset;
 }
 
 td, th {
@@ -111,28 +111,7 @@ td, th {
 
 </style>
 
-{{-- ITENS NUTRICIONAIS FLUTUANDO --}}
-@php
-$icons = ['🍼'];
-$quantidade = 22;
-@endphp
 
-@for ($i = 0; $i < $quantidade; $i++)
-    @php
-        $emoji = $icons[array_rand($icons)];
-        $left = rand(2, 95);
-        $delay = -($i * 0.8);
-        $size = rand(22, 34);
-    @endphp
-
-    <div class="nutri" style="
-        left: {{ $left }}%;
-        font-size: {{ $size }}px;
-        animation-delay: {{ $delay }}s;
-    ">
-        {{ $emoji }}
-    </div>
-@endfor
 
 
 {{-- CARD PRINCIPAL --}}

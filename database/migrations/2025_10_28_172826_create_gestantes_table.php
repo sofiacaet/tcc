@@ -17,7 +17,9 @@ return new class extends Migration
             $table->string('email')->unique();//
             $table->string('telefone');//
             $table->decimal('altura', 4, 2);//4 digitos (total), 2 deles dps da virgula
-            $table->integer('idade');//
+            $table->date('data_nascimento');
+            $table->string('cpf', 14)->unique();
+            $table->string('estado_civil');
             $table->decimal('peso_atual', 5, 2);//
 
             // linhas adicionadas

@@ -10,15 +10,15 @@
 
 <style>
 :root{
-    --green: #41d97b;
-    --green-strong: #2fbe66;
+    --green: #4197d9;
+    --green-strong: #70a1de;
     --green-light: #7fffc0;
     --danger: #ff5c5c;
 }
 
 /* FUNDO IGUAL AO EDIT */
 body {
-    background: linear-gradient(135deg, #b2ffd6 0%, #4ccf8a 50%, #239864 100%);
+    background: linear-gradient(135deg, #75c8ff 0%, #4dabf8 50%, #193b68 100%);
     min-height: 100vh;
     padding: 22px;
     overflow: hidden;
@@ -69,7 +69,7 @@ body {
 .form-floating > .form-control:focus {
     border-color: var(--green-light);
     background: rgba(255, 255, 255, 1) !important;
-    box-shadow: 0 0 12px rgba(65, 217, 123, 0.35);
+    box-shadow: 0 0 12px rgb(88, 185, 254);
     color: #222;
 }
 
@@ -102,39 +102,17 @@ body {
     color: #fff;
     font-weight: 700;
     transition: .2s;
-    box-shadow: 0 0 10px rgba(65,217,123,0.28);
+    box-shadow: 0 0 10px rgb(88, 185, 254);
 }
 
 .btn-custom-confirm:hover {
     background: var(--green-strong);
-    box-shadow: 0 0 18px rgba(65,217,123,0.45);
+    box-shadow: 0 0 18px rgb(88, 185, 254);
 }
 
 </style>
 
 
-{{-- PARTICULAS EXATAMENTE IGUAIS AO EDIT --}}
-@php
-$icons = ['🍼'];
-$quantidade = 18;
-@endphp
-
-@for ($i = 0; $i < $quantidade; $i++)
-    @php
-        $emoji = $icons[array_rand($icons)];
-        $left = rand(2, 95);
-        $delay = -($i * 0.7);
-        $size = rand(20, 34);
-    @endphp
-
-    <div class="nutri" style="
-        left: {{ $left }}%;
-        font-size: {{ $size }}px;
-        animation-delay: {{ $delay }}s;
-    ">
-        {{ $emoji }}
-    </div>
-@endfor
 
 
 

@@ -2,7 +2,7 @@
 <html lang="pt-br">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>Relatório de Consultas - Sistema Pre-Natal </title>
+    <title>Relatório de Consultas - Sistema Pré-Natal </title>
     <style>
         body {
             font-family: Arial, Helvetica, sans-serif;
@@ -49,8 +49,8 @@
 </head>
 <body>
 
-    <div class="texto-marca-dagua"> NUTRITIONIST - PR </div>
-    <div class="texto-restrito-cima"> DOCUMENTO GERADO PELO SISTEMA PRE-NATAL </div>
+    <div class="texto-marca-dagua"> GESTAPGUA - PR </div>
+    <div class="texto-restrito-cima"> DOCUMENTO GERADO PELO SISTEMA PRÉ-NATAL </div>
 
     <hr>
 
@@ -62,7 +62,7 @@
             <td style="text-align: center;">
                 <div style="font-size: 18px;">GOVERNO FEDERAL DO BRASIL</div>
                 <div style="font-size: 18px;">MINISTÉRIO DA SAÚDE</div>
-                <div style="font-size: 18px; font-weight: bold;">INSTITUTO GESTA PGUA</div>
+                <div style="font-size: 18px; font-weight: bold;">GESTAPGUA</div>
                 <div style="font-size: 18px; font-weight: bold;">PARANÁ</div>
             </td>
             <td style="width: 75px;">
@@ -92,7 +92,7 @@
         </tbody>
     </table>
 
-    <div class="texto-restrito-baixo"> DOCUMENTO GERADO PELO SISTEMA PRE-NATAL </div>
+    <div class="texto-restrito-baixo"> DOCUMENTO GERADO PELO SISTEMA PRÉ-NATAL </div>
 
 </body>
 </html>

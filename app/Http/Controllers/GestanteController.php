@@ -54,7 +54,9 @@ class GestanteController extends Controller
             $gestante->email = $request->email;
             $gestante->telefone = $request->telefone;
             $gestante->altura = $request->altura;
-            $gestante->idade = $request->idade;
+            $gestante->data_nascimento = $request->data_nascimento;
+            $gestante->cpf = $request->cpf;
+            $gestante->estado_civil = $request->estado_civil;
             $gestante->peso_atual = $request->peso_atual;
             $gestante->consulta()->associate($consulta);
             $gestante->save();
@@ -110,7 +112,9 @@ class GestanteController extends Controller
             $gestante->email = $request->email;
             $gestante->telefone = $request->telefone;
             $gestante->altura = $request->altura;
-            $gestante->idade = $request->idade;
+            $gestante->data_nascimento = $request->data_nascimento;
+            $gestante->cpf = $request->cpf;
+            $gestante->estado_civil = $request->estado_civil;
             $gestante->peso_atual = $request->peso_atual;
             $gestante->consulta()->associate($consulta);
 

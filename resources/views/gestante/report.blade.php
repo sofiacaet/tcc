@@ -130,7 +130,7 @@
     </style>
 </head>
 <body>
-    <div class="texto-marca-dagua"> NUTRITIONIST - PR</div>
+    <div class="texto-marca-dagua"> GESTAPGUA - PR</div>
     <div class="texto-restrito-cima"> DOCUMENTO GERADO PELO SISTEMA DE PRÉ-NATAL </div>
     <hr>
     <table style="margin: 0px auto; width: 100%; ">
@@ -142,7 +142,7 @@
                 <td style="width: 1fr; text-align: center;">
                     <span style="font-size: 18px;">GOVERNO FEDERAL DO BRASIL</span>
                     <div style="font-size: 18px;">MINISTÉRIO DA SAÚDE</div>
-                    <div style="font-size: 18px; font-weight: bold;">INSTITUTO NUTRITIONIST</div>
+                    <div style="font-size: 18px; font-weight: bold;">GESTAPGUA</div>
                     <div style="font-size: 18px; font-weight: bold;">PARANÁ</div>
                 </td>
                 <td style="width: 75px; text-align: right;">
@@ -178,7 +178,9 @@
                             <tr><td class="label">EMAIL:</td><td>{{ $gestante->email }}</td></tr>
                             <tr><td class="label">TELEFONE:</td><td>{{ $gestante->telefone }}</td></tr>
                             <tr><td class="label">ALTURA:</td><td>{{ $gestante->altura }}</td></tr>
-                            <tr><td class="label">IDADE:</td><td>{{ $gestante->idade }}</td></tr>
+                            <tr><td class="label">DATA DE NASCIMENTO:</td><td>{{ $gestante->data_nascimento }}</td></tr>
+                            <tr><td class="label">CPF:</td><td>{{ $gestante->cpf }}</td></tr>
+                            <tr><td class="label">ESTADO CIVIL:</td><td>{{ $gestante->estado_civil }}</td></tr>
                             <tr><td class="label">PESO ATUAL:</td><td>{{ $gestante->peso_atual }}</td></tr>
                         </table>
                     </td>

@@ -9,15 +9,15 @@
 
 <style>
 :root{
-    --green: #41d97b;
-    --green-strong: #2fbe66;
+    --green: #4197d9;
+    --green-strong: #70a1de;
     --green-light: #7fffc0;
     --danger: #ff5c5c;
 }
 
 /* FUNDO */
 body {
-    background: linear-gradient(135deg, #b2ffd6 0%, #4ccf8a 50%, #239864 100%);
+    background: linear-gradient(135deg, #75c8ff 0%, #4dabf8 50%, #193b68 100%);
     min-height: 100vh;
     padding: 22px;
     overflow: auto; /* permite rolagem */
@@ -65,7 +65,7 @@ body {
 .form-floating > .form-control:focus {
     border-color: var(--green-light);
     background: rgba(255,255,255,1) !important;
-    box-shadow: 0 0 12px rgba(65,217,123,0.35);
+    box-shadow: 0 0 12px rgb(88, 185, 254);
     color: #222;
 }
 
@@ -96,12 +96,12 @@ body {
     color: #fff;
     font-weight: 700;
     transition: .2s;
-    box-shadow: 0 0 10px rgba(65,217,123,0.28);
+    box-shadow: 0 0 10px rgb(88, 185, 254);
 }
 
 .btn-custom-confirm:hover {
     background: var(--green-strong);
-    box-shadow: 0 0 18px rgba(65,217,123,0.45);
+    box-shadow: 0 0 18px rgb(88, 185, 254);
 }
 
 /* RESPONSIVO */
@@ -111,22 +111,7 @@ body {
 }
 </style>
 
-{{-- PARTICULAS --}}
-@php
-$icons = ['🍼'];
-$quantidade = 18;
-@endphp
-@for ($i = 0; $i < $quantidade; $i++)
-    @php
-        $emoji = $icons[array_rand($icons)];
-        $left = rand(2, 95);
-        $delay = -($i * 0.7);
-        $size = rand(20, 34);
-    @endphp
-    <div class="nutri" style="left: {{ $left }}%; font-size: {{ $size }}px; animation-delay: {{ $delay }}s;">
-        {{ $emoji }}
-    </div>
-@endfor
+
 
 {{-- FORMULÁRIO --}}
 <div class="form-card">
@@ -144,12 +129,25 @@ $quantidade = 18;
         </div>
     </div>
 
-    {{-- NOME --}}
-    <div class="row mb-3">
+    {{-- NOME, ALTURA E PESO --}}
+    <div class="row mb-4">
         <div class="col">
             <div class="form-floating">
                 <input type="text" class="form-control" name="nome" placeholder="Nome" value="{{ $gestante->nome }}"/>
                 <label for="nome">Nome</label>
+            </div>
+        </div>
+
+        <div class="col-md-2">
+            <div class="form-floating">
+                <input type="number" step="0.01" class="form-control" name="altura" placeholder="Altura" value="{{ $gestante->altura }}"/>
+                <label for="altura">Altura</label>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="form-floating">
+                <input type="number" step="0.01" class="form-control" name="peso_atual" placeholder="Peso Atual" value="{{ $gestante->peso_atual }}"/>
+                <label for="peso_atual">Peso Atual</label>
             </div>
         </div>
     </div>
@@ -186,33 +184,49 @@ $quantidade = 18;
         </div>
     </div>
 
-    {{-- IDADE, ALTURA, PESO --}}
-    <div class="row mb-4">
+   {{-- DATA DE NASCIMENTO,  CPF E ESTADO CIVIL --}}
+    <div class="row mb-3">
         <div class="col-md-4">
             <div class="form-floating">
-                <input type="number" class="form-control" name="idade" placeholder="Idade" value="{{ $gestante->idade }}"/>
-                <label for="idade">Idade</label>
+                <input type="date" class="form-control" name="data_nascimento"
+                    value="{{ $gestante->data_nascimento }}">
+                <label for="data_nascimento">Data de Nascimento</label>
             </div>
         </div>
+
         <div class="col-md-4">
             <div class="form-floating">
-                <input type="number" step="0.01" class="form-control" name="altura" placeholder="Altura" value="{{ $gestante->altura }}"/>
-                <label for="altura">Altura</label>
+                <input type="text" class="form-control" name="cpf"
+                    placeholder="CPF" value="{{ $gestante->cpf }}">
+                <label for="cpf">CPF</label>
             </div>
         </div>
+
         <div class="col-md-4">
             <div class="form-floating">
-                <input type="number" step="0.01" class="form-control" name="peso_atual" placeholder="Peso Atual" value="{{ $gestante->peso_atual }}"/>
-                <label for="peso_atual">Peso Atual</label>
+                <select class="form-select" name="estado_civil">
+                    <option value="Solteira" {{ $gestante->estado_civil == 'Solteira' ? 'selected' : '' }}>Solteira</option>
+                    <option value="Casada" {{ $gestante->estado_civil == 'Casada' ? 'selected' : '' }}>Casada</option>
+                    <option value="União Estável" {{ $gestante->estado_civil == 'União Estável' ? 'selected' : '' }}>União Estável</option>
+                    <option value="Divorciada" {{ $gestante->estado_civil == 'Divorciada' ? 'selected' : '' }}>Divorciada</option>
+                    <option value="Viúva" {{ $gestante->estado_civil == 'Viúva' ? 'selected' : '' }}>Viúva</option>
+                </select>
+                <label for="estado_civil">Estado Civil</label>
             </div>
         </div>
     </div>
 
+
     {{-- BOTÕES --}}
     <div class="row mt-4">
         <div class="col d-flex gap-3">
-            <a href="{{route('gestante.index')}}" class="btn btn-custom-back">⬅️ Voltar</a>
-            <button type="submit" class="btn btn-custom-confirm ms-auto">✔️ Confirmar</button>
+            <a href="{{route('gestante.index')}}" class="btn btn-custom-back">
+                <span class="material-symbols-outlined align-middle">arrow_back</span> Voltar
+            </a> 
+
+            <button type="submit" class="btn btn-custom-confirm ms-auto">
+                <span class="material-symbols-outlined align-middle">check_circle</span> Confirmar
+            </button>
         </div>
     </div>
 

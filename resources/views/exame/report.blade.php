@@ -2,7 +2,7 @@
 <html lang="pt-br">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>Relatório de Exames - Sistema Pre-Natal </title>
+    <title>Relatório de Exames - Sistema Pré-Natal </title>
     <style>
 
         body {
@@ -130,7 +130,7 @@
     </style>
 </head>
 <body>
-    <div class="texto-marca-dagua"> NUTRITIONIST - PR</div>
+    <div class="texto-marca-dagua"> GESTAPGUA - PR</div>
     <div class="texto-restrito-cima"> DOCUMENTO GERADO PELO SISTEMA DE PRÉ-NATAL </div>
     <hr>
     <table style="margin: 0px auto; width: 100%; ">
@@ -142,7 +142,7 @@
                 <td style="width: 1fr; text-align: center;">
                     <span style="font-size: 18px;">GOVERNO FEDERAL DO BRASIL</span>
                     <div style="font-size: 18px;">MINISTÉRIO DA SAÚDE</div>
-                    <div style="font-size: 18px; font-weight: bold;">INSTITUTO NUTRITIONIST</div>
+                    <div style="font-size: 18px; font-weight: bold;">GESTAPGUA</div>
                     <div style="font-size: 18px; font-weight: bold;">PARANÁ</div>
                 </td>
                 <td style="width: 75px; text-align: right;">
@@ -157,7 +157,7 @@
     <hr>
      <h3 style="text-align:center; margin-top:10px;">Relatório de Exames</h3>
 
-    <div class="texto-restrito-baixo" style="position: absolute; bottom: 1px;"> DOCUMENTO GERADO PELO SISTEMA PRE-NATAL </div>
+    <div class="texto-restrito-baixo" style="position: absolute; bottom: 1px;"> DOCUMENTO GERADO PELO SISTEMA PRÉ-NATAL </div>
 
     <div class="identification-header">IDENTIFICAÇÃO</div>
     @foreach($exames as $exame)
