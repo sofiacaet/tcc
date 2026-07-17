@@ -78,7 +78,8 @@
     <table>
         <thead>
             <tr>
-                <th>Nome da Consulta</th>
+                <th>Consulta</th>
+                <th>Nome da Gestante</th>
                 <th>Objetivo</th>
             </tr>
         </thead>
@@ -86,6 +87,7 @@
             @foreach($consultas as $consulta)
                 <tr>
                     <td>{{ $consulta->nome }}</td>
+                    <td>{{ $consulta->gestante->nome }}</td>
                     <td>{{ $consulta->objetivo }}</td>
                 </tr>
             @endforeach

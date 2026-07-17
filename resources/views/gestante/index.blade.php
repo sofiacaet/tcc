@@ -118,7 +118,6 @@ td, th {
         <thead>
             <tr>
                 <th>NOME</th>
-                <th class="d-none d-md-table-cell">CONSULTA</th>
                 <th class="d-none d-md-table-cell">EMAIL</th>
                 <th class="d-none d-md-table-cell">TELEFONE</th>
                 <th class="d-none d-md-table-cell">CPF</th>
@@ -129,7 +128,7 @@ td, th {
             @foreach ($gestantes as $item)
                 <tr>
                     <td>{{ $item->nome }}</td>
-                    <td class="d-none d-md-table-cell">{{ $item->consulta->nome }}</td>
+                    
                     <td class="d-none d-md-table-cell">{{ $item->email }}</td>
                     <td class="d-none d-md-table-cell">{{ $item->telefone }}</td>
                     <td class="d-none d-md-table-cell">{{ $item->cpf }}</td>
@@ -148,7 +147,7 @@ td, th {
                         @endcan
                         
                         @can('delete', $item)
-                            <a nohref style="cursor:pointer" onclick="showRemoveModal('{{ $item->id }}', '{{ $item->nome }} - {{ $item->consulta->nome }}')" class="btn btn-delete"> 
+                            <a nohref style="cursor:pointer" onclick="showRemoveModal('{{ $item->id }}', '{{ $item->nome }} ')" class="btn btn-delete"> 
                                 <span class="material-symbols-outlined align-middle">delete</span> 
                                     Excluir
                             </a>

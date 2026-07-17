@@ -131,25 +131,21 @@ class ExameController extends Controller
 
     public function report() {
          // COORDENADOR vê todos
-    if (auth()->user()->role_id == 2) {
-        $exames = Exame::with('gestante')->get();
-    } 
-    // PROFESSOR vê somente seu próprio gestante
-    else {
-        $email = auth()->user()->email;
-        $exames = Exame::with('gestante')
-        ->whereHas('gestante', function ($q) use ($email) {
-        $q->where('email', $email);
-        })
-        ->get();
+        if (auth()->user()->role_id == 2) {
+            $exames = Exame::with('gestante')->get();
+        } 
+        // PROFESSOR vê somente seu próprio gestante
+        else {
+            $email = auth()->user()->email;
+            $exames = Exame::with('gestante')
+            ->whereHas('gestante', function ($q) use ($email) {
+            $q->where('email', $email);
+            })
+            ->get();
+        }
+
+        $pdf = Pdf::loadView('exame.report', ['exames' => $exames]);
+
+        return $pdf->stream('document.pdf');
     }
-
-    $pdf = Pdf::loadView('exame.report', ['exames' => $exames]);
-
-    return $pdf->stream('document.pdf');
-
-
-
-        
-}
 }

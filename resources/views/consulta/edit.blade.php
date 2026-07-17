@@ -138,6 +138,22 @@ body {
         </div>
     </div>
 
+    {{-- GESTANTE --}}
+    <div class="row mb-3">
+        <div class="col">
+            <div class="input-group">
+                <span class="input-group-text bg-secondary text-white">Gestante</span>
+                <select name="gestante" class="form-select form-control">
+                    @foreach ($gestantes as $item)
+                        <option value="{{$item->id}}" @if($item->id == $consulta->gestante_id) selected @endif>
+                            {{ $item->nome }}
+                        </option>
+                    @endforeach
+                </select>
+            </div>
+        </div>
+    </div>
+    
     <div class="row">
         <div class="col">
             <div class="form-floating mb-4">

@@ -36,8 +36,7 @@ class GestanteController extends Controller
     public function create()
     {
         Gate::authorize('create', Gestante::class);
-        $consultas = Consulta::all();
-        return view('gestante.create', compact('consultas'));
+        return view('gestante.create');
     }
 
     /**
@@ -46,9 +45,9 @@ class GestanteController extends Controller
     public function store(Request $request)
     {
         Gate::authorize('create', Gestante::class);
-        $consulta = Consulta::find($request->consulta);
+      
 
-        if(isset($consulta)) {
+
             $gestante = new Gestante();
             $gestante->nome = mb_strtoupper($request->nome, 'UTF-8');
             $gestante->email = $request->email;
@@ -58,7 +57,6 @@ class GestanteController extends Controller
             $gestante->cpf = $request->cpf;
             $gestante->estado_civil = $request->estado_civil;
             $gestante->peso_atual = $request->peso_atual;
-            $gestante->consulta()->associate($consulta);
             $gestante->save();
 
             if($request->hasFile('foto')) {
@@ -69,7 +67,7 @@ class GestanteController extends Controller
                 $gestante->foto = 'fotos/'.$name;
                 $gestante->save();
             }
-        }
+        
 
         return redirect()->route('gestante.index');
     }
@@ -91,8 +89,7 @@ class GestanteController extends Controller
         Gate::authorize('update', $gestante);
 
         if(isset($gestante)) {
-            $consultas = Consulta::all();
-            return view('gestante.edit', compact(['gestante', 'consultas']));
+            return view('gestante.edit', compact(['gestante']));
         }
 
         return redirect()->route('gestante.index');
@@ -105,9 +102,8 @@ class GestanteController extends Controller
     {
         $gestante = Gestante::find($id);
         Gate::authorize('update', $gestante);
-        $consulta = Consulta::find($request->consulta);
 
-        if(isset($consulta) && isset($gestante)) {
+       
             $gestante->nome = mb_strtoupper($request->nome, 'UTF-8');
             $gestante->email = $request->email;
             $gestante->telefone = $request->telefone;
@@ -116,7 +112,7 @@ class GestanteController extends Controller
             $gestante->cpf = $request->cpf;
             $gestante->estado_civil = $request->estado_civil;
             $gestante->peso_atual = $request->peso_atual;
-            $gestante->consulta()->associate($consulta);
+            
 
             if($request->hasFile('foto')) {
                 // Upload File
@@ -126,7 +122,7 @@ class GestanteController extends Controller
                 $gestante->foto = 'fotos/'.$name;
             }
             $gestante->save();
-        }
+
 
         return redirect()->route('gestante.index');
     }
@@ -149,12 +145,12 @@ class GestanteController extends Controller
     public function report() {
          // COORDENADOR vê todos
     if (auth()->user()->role_id == 2) {
-        $gestantes = Gestante::with('consulta')->get();
+        $gestantes = Gestante::with('consultas')->get();
     } 
     // PROFESSOR vê somente seu próprio gestante
     else {
         $email = auth()->user()->email;
-        $gestantes = Gestante::with('consulta')
+        $gestantes = Gestante::with('consultas')
             ->where('email', $email)
             ->get();
     }

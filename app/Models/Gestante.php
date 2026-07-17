@@ -15,15 +15,17 @@ class Gestante extends Model
             // Se você usar forceDelete() na gestante, apaga os exames do banco de vez
             if ($gestante->isForceDeleting()) {
                 $gestante->exames()->forceDelete();
+                $gestante->consultas()->forceDelete();
             } else {
                 // Ao deletar a gestante (Soft Delete), os exames vão para a lixeira junto
                 $gestante->exames()->delete();
+                $gestante->consultas()->delete();
             }
         });
     }
 
-    public function consulta() {
-        return $this->belongsTo('\App\Models\Consulta');
+    public function consultas() {
+        return $this->hasMany('\App\Models\Consulta', 'gestante_id');
     }
 
      public function exames() {

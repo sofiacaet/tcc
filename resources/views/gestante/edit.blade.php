@@ -152,22 +152,6 @@ body {
         </div>
     </div>
 
-    {{-- CONSULTA --}}
-    <div class="row mb-3">
-        <div class="col">
-            <div class="input-group">
-                <span class="input-group-text bg-secondary text-white">Consulta</span>
-                <select name="consulta" class="form-select form-control">
-                    @foreach ($consultas as $item)
-                        <option value="{{$item->id}}" @if($item->id == $gestante->consulta_id) selected @endif>
-                            {{ $item->nome }}
-                        </option>
-                    @endforeach
-                </select>
-            </div>
-        </div>
-    </div>
-
     {{-- EMAIL E TELEFONE --}}
     <div class="row mb-3">
         <div class="col-md-6">

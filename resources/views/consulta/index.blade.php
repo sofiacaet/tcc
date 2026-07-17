@@ -121,6 +121,7 @@ td, th {
         <thead>
             <tr>
                 <th>NOME</th>
+                <th class="d-none d-md-table-cell">NOME DA GESTANTE</th>
                 <th class="d-none d-md-table-cell">OBJETIVO</th>
                 <th>AÇÕES</th>
             </tr>
@@ -130,6 +131,7 @@ td, th {
             @foreach ($consultas as $item)
                 <tr>
                     <td>{{ $item->nome }}</td>
+                    <td class="d-none d-md-table-cell">{{ $item->gestante->nome }}</td>
                     <td class="d-none d-md-table-cell">{{ $item->objetivo }}</td>
 
                     <td class="text-nowrap">

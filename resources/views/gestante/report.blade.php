@@ -174,7 +174,6 @@
                     <td>
                         <table class="inner-table">
                             <tr><td class="label table-label">NOME:</td><td style="width: 305px;">{{ $gestante->nome }}</td></tr>
-                            <tr><td class="label">TIPO CONSULTA:</td><td>{{ $gestante->consulta->nome }}</td></tr>
                             <tr><td class="label">EMAIL:</td><td>{{ $gestante->email }}</td></tr>
                             <tr><td class="label">TELEFONE:</td><td>{{ $gestante->telefone }}</td></tr>
                             <tr><td class="label">ALTURA:</td><td>{{ $gestante->altura }}</td></tr>

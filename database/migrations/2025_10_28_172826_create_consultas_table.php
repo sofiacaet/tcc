@@ -15,6 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('nome');
             $table->string('objetivo'); //duração
+            $table->unsignedBigInteger('gestante_id');
+            $table->foreign('gestante_id')->references('id')->on('gestantes');
             $table->softDeletes();
             $table->timestamps();
         });
