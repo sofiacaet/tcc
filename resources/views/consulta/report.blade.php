@@ -80,15 +80,19 @@
             <tr>
                 <th>Consulta</th>
                 <th>Nome da Gestante</th>
-                <th>Objetivo</th>
+                <th>Data</th>
+                <th>Horário</th>
+                <th>Instruções</th>
             </tr>
         </thead>
         <tbody>
             @foreach($consultas as $consulta)
                 <tr>
-                    <td>{{ $consulta->nome }}</td>
+                    <td>{{ $consulta->tipo_consulta }}</td>
                     <td>{{ $consulta->gestante->nome }}</td>
-                    <td>{{ $consulta->objetivo }}</td>
+                    <td>{{ \Carbon\Carbon::parse($consulta->data)->format('d/m/Y') }}</td>
+                    <td>{{ \Carbon\Carbon::parse($consulta->horario)->format('H:i') }}</td>
+                    <td>{{ $consulta->instrucao }}</td>
                 </tr>
             @endforeach
         </tbody>

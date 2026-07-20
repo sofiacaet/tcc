@@ -22,7 +22,7 @@ body {
     background: linear-gradient(135deg, #75c8ff 0%, #4dabf8 50%, #193b68 100%);
     min-height: 100vh;
     padding: 22px;
-    overflow: hidden;
+    overflow: auto;
     color: #fff;
 }
 
@@ -120,9 +120,11 @@ td, th {
     <table class="modern-table table align-middle">
         <thead>
             <tr>
-                <th>NOME</th>
+                <th>CONSULTA</th>
                 <th class="d-none d-md-table-cell">NOME DA GESTANTE</th>
-                <th class="d-none d-md-table-cell">OBJETIVO</th>
+                <th class="d-none d-md-table-cell">DATA</th>
+                <th class="d-none d-md-table-cell">HORÁRIO</th>
+                <th class="d-none d-md-table-cell">INSTRUÇÕES</th>
                 <th>AÇÕES</th>
             </tr>
         </thead>
@@ -130,22 +132,35 @@ td, th {
         <tbody>
             @foreach ($consultas as $item)
                 <tr>
-                    <td>{{ $item->nome }}</td>
+                    <td>{{ $item->tipo_consulta }}</td>
                     <td class="d-none d-md-table-cell">{{ $item->gestante->nome }}</td>
-                    <td class="d-none d-md-table-cell">{{ $item->objetivo }}</td>
+                    <td class="d-none d-md-table-cell">{{ \Carbon\Carbon::parse($item->data)->format('d/m/Y') }}</td>
+                    <td class="d-none d-md-table-cell">{{ \Carbon\Carbon::parse($item->horario)->format('H:i') }}</td>
+                    <td class="d-none d-md-table-cell">{{ $item->instrucao }}</td>
 
                     <td class="text-nowrap">
-                        <a href="{{ route('consulta.edit', $item->id) }}"
-                           class="btn btn-sm btn-edit me-2">✏️ Editar</a>
 
-                        <a nohref onclick="showRemoveModal('{{ $item->id }}', '{{ $item->nome }}')"
-                           class="btn btn-sm btn-delete">🗑️ Excluir</a>
+                         @can('update', $item)
+                            <a href="{{ route('consulta.edit', $item->id) }}" class="btn btn-edit me-2">
+                                <span class="material-symbols-outlined align-middle">edit</span>
+                                Editar
+                            </a>
+                        @endcan
+                        
+                        @can('delete', $item)
+                            <a nohref style="cursor:pointer" onclick="showRemoveModal('{{ $item->id }}', '{{ $item->tipo_consulta }} - {{ $item->gestante->nome }}')" class="btn btn-delete"> 
+                                <span class="material-symbols-outlined align-middle">delete</span> 
+                                    Excluir
+                            </a>
+                            <form action="{{route('consulta.destroy', $item->id)}}" method="POST" id="form_{{$item->id}}">
+                                @csrf
+                                @method('delete')
+                            </form>
+                        @endcan
+                    
+                       
                     </td>
 
-                    <form action="{{ route('consulta.destroy', $item->id) }}" method="POST" id="form_{{ $item->id }}">
-                        @csrf
-                        @method('delete')
-                    </form>
                 </tr>
             @endforeach
         </tbody>

@@ -25,7 +25,7 @@
 
         .left-side {
             flex: 1.2;
-            background: linear-gradient(160deg, #00c9a7, #009e87, #00bfa5);
+            background: linear-gradient(160deg, #75c8ff, #193b68, #4dabf8);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -60,20 +60,20 @@
             padding: 45px 40px;
             border-radius: 18px;
             box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
-            border: 2px solid #00c9a76b;
+            border: 2px solid #193b68;
         }
 
         .title {
             text-align: center;
             font-size: 32px;
             font-weight: bold;
-            color: #008f7a;
+            color: #193b68;
             margin-bottom: 25px;
         }
 
         label {
             font-weight: 600;
-            color: #009e87;
+            color: #193b68;
             margin-bottom: 6px;
             display: block;
         }
@@ -82,21 +82,21 @@
             width: 100%;
             padding: 12px 14px;
             border-radius: 12px;
-            border: 2px solid #00c2a2;
+            border: 2px solid #193b68;
             background: #f3fffb;
             margin-bottom: 15px;
             transition: 0.2s;
         }
 
         .input:focus {
-            border-color: #007f6e;
-            box-shadow: 0 0 8px #00bfa5;
+            border-color: #193b68;
+            box-shadow: 0 0 8px #193b68;
             outline: none;
         }
 
         .btn-login {
             width: 100%;
-            background: #00a88f;
+            background: #193b68;
             padding: 12px;
             border-radius: 12px;
             color: white;
@@ -109,21 +109,21 @@
         }
 
         .btn-login:hover {
-            background: #007f6e;
+            background: #193b68;
             transform: scale(1.02);
         }
 
         .muted-link {
             display: block;
             text-align: right;
-            color: #008f7a;
+            color: #193b68;
             margin-top: -5px;
             margin-bottom: 15px;
             font-size: 14px;
         }
 
         .muted-link:hover {
-            color: #005f51;
+            color: #193b68;
         }
     </style>
 

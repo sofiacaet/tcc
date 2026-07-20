@@ -21,7 +21,7 @@ body {
     background: linear-gradient(135deg, #75c8ff 0%, #4dabf8 50%, #193b68 100%);
     min-height: 100vh;
     padding: 22px;
-    overflow: hidden;
+    overflow: auto;
     color: #fff;
 }
 
@@ -121,21 +121,22 @@ body {
 <form action="{{route('consulta.store')}}" method="POST">
     @csrf
 
+    {{-- TIPO DE CONSULTA --}}
     <div class="row">
         <div class="col">
             <div class="form-floating mb-4">
-                <input
-                    type="text"
-                    class="form-control"
-                    name="nome"
-                    placeholder="Nome da Consulta"
-                    value="{{ old('nome') }}"
-                />
-                <label for="nome">Nome da Consulta</label>
+                <select name="tipo_consulta" id="tipo_consulta" class="form-select">
+                    <option value="" disabled selected>Selecione o tipo de consulta</option>
+                    <option value="Primeira Consulta" @if(old('tipo_consulta') == 'Primeira Consulta') selected @endif>1ª Consulta</option>
+                    <option value="Consulta de Rotina" @if(old('tipo_consulta') == 'Consulta de Rotina') selected @endif>Consulta de Rotina</option>
+                    <option value="Consulta de Retorno" @if(old('tipo_consulta') == 'Consulta de Retorno') selected @endif>Consulta de Retorno (Exames)</option>
+                    <option value="Consulta Especializada" @if(old('tipo_consulta') == 'Consulta Especializada') selected @endif>Consulta Especializada</option>
+                </select>
+                <label for="tipo_consulta">Tipo de Consulta</label>
             </div>
         </div>
     </div>
-
+    
     {{-- GESTANTE --}}
     <div class="row mb-3">
         <div class="col">
@@ -151,30 +152,61 @@ body {
             </div>
         </div>
     </div>
-    
+
+    {{-- DATA E HORÁRIO --}}
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-floating mb-4">
+                <input
+                    type="date"
+                    class="form-control"
+                    name="data"
+                    id="data"
+                    value="{{ old('data') }}"
+                />
+                <label for="data">Data da Consulta</label>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-floating mb-4">
+                <input
+                    type="time"
+                    class="form-control"
+                    name="horario"
+                    id="horario"
+                    value="{{ old('horario') }}"
+                />
+                <label for="horario">Horário</label>
+            </div>
+        </div>
+    </div>
+
+    {{-- INSTRUÇÕES --}}
     <div class="row">
         <div class="col">
             <div class="form-floating mb-4">
                 <input
                     type="text"
                     class="form-control"
-                    name="objetivo"
-                    placeholder="Objetivo"
-                    value="{{ old('objetivo') }}"
+                    name="instrucao"
+                    placeholder="Instruções"
+                    value="{{ old('instrucao') }}"
                 />
-                <label for="objetivo">Objetivo</label>
+                <label for="instrucao">Instruções</label>
             </div>
         </div>
     </div>
 
+
+    {{-- BOTÕES --}}
     <div class="row mt-4">
         <div class="col d-flex gap-3">
             <a href="{{route('consulta.index')}}" class="btn btn-custom-back">
-                ⬅️ Voltar
-            </a>
+                <span class="material-symbols-outlined align-middle">arrow_back</span> Voltar
+            </a> 
 
             <button type="submit" class="btn btn-custom-confirm ms-auto">
-                ✔️ Confirmar
+                <span class="material-symbols-outlined align-middle">check_circle</span> Confirmar
             </button>
         </div>
     </div>

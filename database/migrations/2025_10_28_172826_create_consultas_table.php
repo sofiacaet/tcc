@@ -13,8 +13,10 @@ return new class extends Migration
     {
         Schema::create('consultas', function (Blueprint $table) {
             $table->id();
-            $table->string('nome');
-            $table->string('objetivo'); //duração
+            $table->string('tipo_consulta');
+            $table->date('data');
+            $table->time('horario');
+            $table->string('instrucao');
             $table->unsignedBigInteger('gestante_id');
             $table->foreign('gestante_id')->references('id')->on('gestantes');
             $table->softDeletes();

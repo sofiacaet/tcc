@@ -52,8 +52,10 @@ class ConsultaController extends Controller
 
         if(isset($gestante)) {
             $consulta = new Consulta();
-            $consulta->nome = mb_strtoupper($request->nome, 'UTF-8');
-            $consulta->objetivo = $request->objetivo;
+            $consulta->tipo_consulta = mb_strtoupper($request->tipo_consulta, 'UTF-8');
+            $consulta->data = $request->data;
+            $consulta->horario = $request->horario;
+            $consulta->instrucao = $request->instrucao;
             $consulta->gestante()->associate($gestante);
             $consulta->save();
         }
@@ -88,8 +90,10 @@ class ConsultaController extends Controller
         $gestante = Gestante::find($request->gestante);
 
         if(isset($consulta) && isset($gestante)) {
-            $consulta->nome = mb_strtoupper($request->nome, 'UTF-8');
-            $consulta->objetivo = $request->objetivo;
+            $consulta->tipo_consulta = mb_strtoupper($request->tipo_consulta, 'UTF-8');
+            $consulta->data = $request->data;
+            $consulta->horario = $request->horario;
+            $consulta->instrucao = $request->instrucao;
             $consulta->gestante()->associate($gestante);
             $consulta->save();
         }
