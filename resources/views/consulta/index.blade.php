@@ -2,8 +2,8 @@
 [
     'titulo'=>"Sistema Pre-Natal",
     'cabecalho' => 'Lista de Consultas',
-    'rota' => 'consulta.create',
-    'relatorio' => 'report.consulta',
+    'rota' => '',       // Esconde o botão de "+" padrão
+    'relatorio' => '',   // Esconde o botão da impressora padrão lá de cima
     'class' => App\Models\Consulta::class,
 ])
 
@@ -13,7 +13,7 @@
 :root{
     --green: #4197d9;
     --green-strong: #70a1de;
-    --green-light: #7fffc0;
+    --green-light: #195a71;
     --danger: #ff5c5c;
 }
 
@@ -26,22 +26,37 @@ body {
     color: #fff;
 }
 
-/* PARTICULAS NUTRICIONAIS */
-.nutri {
-    position: absolute;
-    font-size: 26px;
-    opacity: 0.85;
-    animation: floatNutri 14s linear infinite;
-    pointer-events: none;
-    filter: drop-shadow(0 3px 6px rgba(0,0,0,0.25));
+/* NOVOS BOTÕES SUPERIORES MODERNOS */
+.btn-action-top {
+    backdrop-filter: blur(10px);
+    border-radius: 14px;
+    padding: 12px 26px;
+    font-size: 0.95rem;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.15);
 }
 
-/* animação geral */
-@keyframes floatNutri {
-    0% { transform: translateY(110vh) rotate(0deg) scale(0.9); opacity: .25; }
-    40% { opacity: 1; }
-    100% { transform: translateY(-20vh) rotate(360deg) scale(1.2); opacity: 0; }
+/* Estilo específico do Imprimir (Glass Clean) */
+.btn-print-top {
+    background: rgba(255, 255, 255, 0.12);
+    border: 2px solid rgba(255, 255, 255, 0.25);
+    color: #fff;
 }
+.btn-print-top:hover {
+    background: rgba(255, 255, 255, 0.25);
+    border-color: rgba(255, 255, 255, 0.5);
+    color: #fff;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+}
+
+
 
 /* CARD GLASS */
 .table-wrapper {
@@ -112,61 +127,141 @@ td, th {
 </style>
 
 
+{{-- Grupo de Botões Alinhados à Direita (Design Atualizado) --}}
+<div class="d-flex justify-content-end gap-3 mb-3">
+    
+    {{-- Botão de Impressão --}}
+    <a href="{{ route('report.consulta') }}" class="btn-action-top btn-print-top" target="_blank">
+        <span class="material-symbols-outlined">print</span>
+        Imprimir Relatório
+    </a>
 
+    {{-- Botão de Agendar Consulta --}}
+    @can('create', App\Models\Consulta::class)
+        <a href="{{ route('consulta.create') }}" class="btn-action-top btn-print-top">
+            <span class="material-symbols-outlined">calendar_month</span>
+            Agendar Consulta
+        </a>
+    @endcan
+    
+</div>
 
 {{-- CARD PRINCIPAL --}}
 <div class="table-wrapper">
 
-    <table class="modern-table table align-middle">
-        <thead>
-            <tr>
-                <th>CONSULTA</th>
-                <th class="d-none d-md-table-cell">NOME DA GESTANTE</th>
-                <th class="d-none d-md-table-cell">DATA</th>
-                <th class="d-none d-md-table-cell">HORÁRIO</th>
-                <th class="d-none d-md-table-cell">INSTRUÇÕES</th>
-                <th>AÇÕES</th>
-            </tr>
-        </thead>
+    
+   {{-- Menu de Abas --}}
+    <ul class="nav nav-tabs mb-4" id="consultaTabs" role="tablist">
+        <li class="nav-item" role="presentation">
+            <button class="nav-link active" id="agendadas-tab" data-bs-toggle="tab" data-bs-target="#agendadas" type="button" role="tab">
+                Consultas Agendadas
+            </button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="realizadas-tab" data-bs-toggle="tab" data-bs-target="#realizadas" type="button" role="tab">
+                Histórico de Realizadas
+            </button>
+        </li>
+    </ul>
 
-        <tbody>
-            @foreach ($consultas as $item)
-                <tr>
-                    <td>{{ $item->tipo_consulta }}</td>
-                    <td class="d-none d-md-table-cell">{{ $item->gestante->nome }}</td>
-                    <td class="d-none d-md-table-cell">{{ \Carbon\Carbon::parse($item->data)->format('d/m/Y') }}</td>
-                    <td class="d-none d-md-table-cell">{{ \Carbon\Carbon::parse($item->horario)->format('H:i') }}</td>
-                    <td class="d-none d-md-table-cell">{{ $item->instrucao }}</td>
+    {{-- Conteúdo das Abas --}}
+    <div class="tab-content" id="consultaTabsContent">
+        
+        {{-- ABA 1: CONSULTAS AGENDADAS --}}
+        <div class="tab-pane fade show active" id="agendadas" role="tabpanel">
+            <table class="modern-table table align-middle">
+                <thead>
+                    <tr>
+                        <th>CONSULTA</th>
+                        <th class="d-none d-md-table-cell">NOME DA GESTANTE</th>
+                        <th class="d-none d-md-table-cell">DATA/HORA</th>
+                        <th>AÇÕES</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @forelse ($agendadas as $item)
+                        <tr>
+                            <td>{{ $item->tipo_consulta }}</td>
+                            <td class="d-none d-md-table-cell">{{ $item->gestante->nome }}</td>
+                            <td class="d-none d-md-table-cell">
+                                {{ \Carbon\Carbon::parse($item->data)->format('d/m/Y') }} às {{ \Carbon\Carbon::parse($item->horario)->format('H:i') }}
+                            </td>
+                            <td class="text-nowrap">
+                                @can('update', $item)
+                                    <a href="{{ route('consulta.edit', $item->id) }}" class="btn btn-edit me-2">
+                                        <span class="material-symbols-outlined align-middle">clinical_notes</span>
+                                        Registrar
+                                    </a>
+                                @endcan
+                                
+                                @can('delete', $item)
+                                    <a nohref style="cursor:pointer" onclick="showRemoveModal('{{ $item->id }}', '{{ $item->tipo_consulta }} - {{ $item->gestante->nome }}')" class="btn btn-delete"> 
+                                        <span class="material-symbols-outlined align-middle">delete</span> 
+                                        Excluir
+                                    </a>
+                                    <form action="{{route('consulta.destroy', $item->id)}}" method="POST" id="form_{{$item->id}}">
+                                        @csrf
+                                        @method('delete')
+                                    </form>
+                                @endcan
+                            </td>
+                        </tr>
+                    @empty
+                        <tr>
+                            <td colspan="6" class="text-center py-4 text-white-50">Nenhuma consulta agendada no momento.</td>
+                        </tr>
+                    @endforelse
+                </tbody>
+            </table>
+        </div>
 
-                    <td class="text-nowrap">
+        {{-- ABA 2: HISTÓRICO DE REALIZADAS --}}
+        <div class="tab-pane fade" id="realizadas" role="tabpanel">
+            <table class="modern-table table align-middle">
+                <thead>
+                    <tr>
+                        <th>CONSULTA</th>
+                        <th>GESTANTE</th>
+                        <th class="d-none d-md-table-cell">DATA/HORA</th>
+                        <th>AÇÕES</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @forelse ($realizadas as $item)
+                        <tr>
+                            <td>{{ $item->tipo_consulta }}</td>
+                            <td>{{ $item->gestante->nome }}</td>
+                            <td class="d-none d-md-table-cell">
+                                {{ \Carbon\Carbon::parse($item->data)->format('d/m/Y') }} às {{ \Carbon\Carbon::parse($item->horario)->format('H:i') }}
+                            </td>
+                            
+                            <td class="text-nowrap">
+                                <a href="{{ route('consulta.show', $item->id) }}" class="btn btn-edit me-2">
+                                    <span class="material-symbols-outlined align-middle">visibility</span> 
+                                    Detalhar
+                                </a>
+                                @can('delete', $item)
+                                    <a nohref style="cursor:pointer" onclick="showRemoveModal('{{ $item->id }}', '{{ $item->tipo_consulta }} - {{ $item->gestante->nome }}')" class="btn btn-delete"> 
+                                        <span class="material-symbols-outlined align-middle">delete</span> 
+                                        Excluir
+                                    </a>
+                                    <form action="{{route('consulta.destroy', $item->id)}}" method="POST" id="form_{{$item->id}}">
+                                        @csrf
+                                        @method('delete')
+                                    </form>
+                                @endcan
+                            </td>
+                        </tr>
+                    @empty
+                        <tr>
+                            <td colspan="5" class="text-center py-4 text-white-50">Nenhuma consulta realizada no histórico.</td>
+                        </tr>
+                    @endforelse
+                </tbody>
+            </table>
+        </div>
 
-                         @can('update', $item)
-                            <a href="{{ route('consulta.edit', $item->id) }}" class="btn btn-edit me-2">
-                                <span class="material-symbols-outlined align-middle">edit</span>
-                                Editar
-                            </a>
-                        @endcan
-                        
-                        @can('delete', $item)
-                            <a nohref style="cursor:pointer" onclick="showRemoveModal('{{ $item->id }}', '{{ $item->tipo_consulta }} - {{ $item->gestante->nome }}')" class="btn btn-delete"> 
-                                <span class="material-symbols-outlined align-middle">delete</span> 
-                                    Excluir
-                            </a>
-                            <form action="{{route('consulta.destroy', $item->id)}}" method="POST" id="form_{{$item->id}}">
-                                @csrf
-                                @method('delete')
-                            </form>
-                        @endcan
-                    
-                       
-                    </td>
-
-                </tr>
-            @endforeach
-        </tbody>
-
-    </table>
-
+    </div>
 </div>
 
 @endsection

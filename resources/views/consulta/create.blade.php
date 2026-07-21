@@ -1,7 +1,7 @@
 @extends('templates/main',
 [
     'titulo'=>"Sistema Pre-Natal",
-    'cabecalho' => 'Nova Consulta',
+    'cabecalho' => 'Agendar Consulta',
     'rota' => '',
     'relatorio' => '',
 ])
@@ -75,7 +75,7 @@ body {
 
 /* LABEL IGUAL AO EDIT */
 .form-floating label {
-    color: #0a6c43 !important;
+    color: #195a71 !important;
     font-weight: 700;
     text-shadow: 0 0 2px rgba(255,255,255,0.4);
 }
@@ -181,21 +181,7 @@ body {
         </div>
     </div>
 
-    {{-- INSTRUÇÕES --}}
-    <div class="row">
-        <div class="col">
-            <div class="form-floating mb-4">
-                <input
-                    type="text"
-                    class="form-control"
-                    name="instrucao"
-                    placeholder="Instruções"
-                    value="{{ old('instrucao') }}"
-                />
-                <label for="instrucao">Instruções</label>
-            </div>
-        </div>
-    </div>
+   
 
 
     {{-- BOTÕES --}}

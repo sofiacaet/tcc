@@ -17,16 +17,27 @@ class ConsultaController extends Controller
     public function index()
     {
         Gate::authorize('viewAny', Consulta::class);
-        // COORDENADOR = role_id 2 → vê todos
-        if (auth()->user()->role_id == 2) {
-            $consultas = Consulta::all();
-        } else {
-            $email = auth()->user()->email;
-            $consultas = Consulta::whereHas('gestante', function ($q) use ($email) {
+
+    if (auth()->user()->role_id == 2) {
+        // Coordenador vê tudo, mas separado por status
+        $agendadas = Consulta::where('status', 'Agendada')->get();
+        $realizadas = Consulta::where('status', 'Realizada')->get();
+    } else {
+        // Professor vê apenas o dele, separado por status
+        $email = auth()->user()->email;
+        
+        $agendadas = Consulta::where('status', 'Agendada')
+            ->whereHas('gestante', function ($q) use ($email) {
                 $q->where('email', $email);
             })->get();
-        }
-        return view('consulta.index', compact('consultas'));
+
+        $realizadas = Consulta::where('status', 'Realizada')
+            ->whereHas('gestante', function ($q) use ($email) {
+                $q->where('email', $email);
+            })->get();
+    }
+
+    return view('consulta.index', compact('agendadas', 'realizadas'));
 
     }
 
@@ -55,14 +66,30 @@ class ConsultaController extends Controller
             $consulta->tipo_consulta = mb_strtoupper($request->tipo_consulta, 'UTF-8');
             $consulta->data = $request->data;
             $consulta->horario = $request->horario;
-            $consulta->instrucao = $request->instrucao;
+            
             $consulta->gestante()->associate($gestante);
             $consulta->save();
         }
         return redirect()->route('consulta.index');
     }
 
-     
+        /**
+     * Display the specified resource.
+     */
+    public function show(string $id)
+    {
+        $consulta = Consulta::with('gestante')->find($id);
+        
+        // Altere para a Policy correspondente se necessário (ex: view)
+        Gate::authorize('view', $consulta); 
+
+        if(isset($consulta)) {
+            return view('consulta.show', compact('consulta'));
+        }
+        
+        return redirect()->route('consulta.index');
+    }
+        
 
 
     /**
@@ -85,20 +112,23 @@ class ConsultaController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $consulta = Consulta::find($id);
-        Gate::authorize('update', $consulta);
-        $gestante = Gestante::find($request->gestante);
+       $consulta = Consulta::find($id);
+    Gate::authorize('update', $consulta);
 
-        if(isset($consulta) && isset($gestante)) {
-            $consulta->tipo_consulta = mb_strtoupper($request->tipo_consulta, 'UTF-8');
-            $consulta->data = $request->data;
-            $consulta->horario = $request->horario;
-            $consulta->instrucao = $request->instrucao;
-            $consulta->gestante()->associate($gestante);
-            $consulta->save();
-        }
+    if(isset($consulta)) {
+        // Atualiza e salva os novos dados clínicos informados no registro
+        $consulta->peso_atual = $request->peso_atual;
+        $consulta->pressao_arterial = $request->pressao_arterial;
+        $consulta->batimentos_fetais = $request->batimentos_fetais;
+        $consulta->evolucao_clinica = $request->evolucao_clinica;
+        
+        // Altera o status mudando de Agendada para Realizada
+        $consulta->status = 'Realizada';
+        
+        $consulta->save();
+    }
 
-        return redirect()->route('consulta.index');
+    return redirect()->route('consulta.index');
     }
 
     /**

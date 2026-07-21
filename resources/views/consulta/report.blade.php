@@ -82,7 +82,7 @@
                 <th>Nome da Gestante</th>
                 <th>Data</th>
                 <th>Horário</th>
-                <th>Instruções</th>
+               
             </tr>
         </thead>
         <tbody>
@@ -92,7 +92,7 @@
                     <td>{{ $consulta->gestante->nome }}</td>
                     <td>{{ \Carbon\Carbon::parse($consulta->data)->format('d/m/Y') }}</td>
                     <td>{{ \Carbon\Carbon::parse($consulta->horario)->format('H:i') }}</td>
-                    <td>{{ $consulta->instrucao }}</td>
+                   
                 </tr>
             @endforeach
         </tbody>

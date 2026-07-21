@@ -16,9 +16,17 @@ return new class extends Migration
             $table->string('tipo_consulta');
             $table->date('data');
             $table->time('horario');
-            $table->string('instrucao');
+           
             $table->unsignedBigInteger('gestante_id');
             $table->foreign('gestante_id')->references('id')->on('gestantes');
+
+            // --- NOVOS CAMPOS ADICIONADOS ---
+            $table->string('status')->default('Agendada'); // Agendada / Realizada
+            $table->decimal('peso_atual', 5, 2)->nullable();
+            $table->string('pressao_arterial')->nullable();
+            $table->integer('batimentos_fetais')->nullable();
+            $table->text('evolucao_clinica')->nullable();
+
             $table->softDeletes();
             $table->timestamps();
         });
