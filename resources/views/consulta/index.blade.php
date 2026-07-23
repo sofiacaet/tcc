@@ -157,11 +157,14 @@ td, th {
                 Consultas Agendadas
             </button>
         </li>
-        <li class="nav-item" role="presentation">
-            <button class="nav-link" id="realizadas-tab" data-bs-toggle="tab" data-bs-target="#realizadas" type="button" role="tab">
-                Histórico de Realizadas
-            </button>
-        </li>
+        {{-- ALTERAÇÃO AQUI: Apenas o Médico / Coordenador (role_id 2) verá a aba de Realizadas --}}
+        @if(auth()->user()->role_id == 2)
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="realizadas-tab" data-bs-toggle="tab" data-bs-target="#realizadas" type="button" role="tab">
+                    Histórico de Realizadas
+                </button>
+            </li>
+        @endif
     </ul>
 
     {{-- Conteúdo das Abas --}}
@@ -215,51 +218,53 @@ td, th {
             </table>
         </div>
 
-        {{-- ABA 2: HISTÓRICO DE REALIZADAS --}}
-        <div class="tab-pane fade" id="realizadas" role="tabpanel">
-            <table class="modern-table table align-middle">
-                <thead>
-                    <tr>
-                        <th>CONSULTA</th>
-                        <th>GESTANTE</th>
-                        <th class="d-none d-md-table-cell">DATA/HORA</th>
-                        <th>AÇÕES</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @forelse ($realizadas as $item)
+        @if(auth()->user()->role_id == 2)
+            {{-- ABA 2: HISTÓRICO DE REALIZADAS --}}
+            <div class="tab-pane fade" id="realizadas" role="tabpanel">
+                <table class="modern-table table align-middle">
+                    <thead>
                         <tr>
-                            <td>{{ $item->tipo_consulta }}</td>
-                            <td>{{ $item->gestante->nome }}</td>
-                            <td class="d-none d-md-table-cell">
-                                {{ \Carbon\Carbon::parse($item->data)->format('d/m/Y') }} às {{ \Carbon\Carbon::parse($item->horario)->format('H:i') }}
-                            </td>
-                            
-                            <td class="text-nowrap">
-                                <a href="{{ route('consulta.show', $item->id) }}" class="btn btn-edit me-2">
-                                    <span class="material-symbols-outlined align-middle">visibility</span> 
-                                    Detalhar
-                                </a>
-                                @can('delete', $item)
-                                    <a nohref style="cursor:pointer" onclick="showRemoveModal('{{ $item->id }}', '{{ $item->tipo_consulta }} - {{ $item->gestante->nome }}')" class="btn btn-delete"> 
-                                        <span class="material-symbols-outlined align-middle">delete</span> 
-                                        Excluir
+                            <th>CONSULTA</th>
+                            <th>GESTANTE</th>
+                            <th class="d-none d-md-table-cell">DATA/HORA</th>
+                            <th>AÇÕES</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @forelse ($realizadas as $item)
+                            <tr>
+                                <td>{{ $item->tipo_consulta }}</td>
+                                <td>{{ $item->gestante->nome }}</td>
+                                <td class="d-none d-md-table-cell">
+                                    {{ \Carbon\Carbon::parse($item->data)->format('d/m/Y') }} às {{ \Carbon\Carbon::parse($item->horario)->format('H:i') }}
+                                </td>
+                                
+                                <td class="text-nowrap">
+                                    <a href="{{ route('consulta.show', $item->id) }}" class="btn btn-edit me-2">
+                                        <span class="material-symbols-outlined align-middle">visibility</span> 
+                                        Detalhar
                                     </a>
-                                    <form action="{{route('consulta.destroy', $item->id)}}" method="POST" id="form_{{$item->id}}">
-                                        @csrf
-                                        @method('delete')
-                                    </form>
-                                @endcan
-                            </td>
-                        </tr>
-                    @empty
-                        <tr>
-                            <td colspan="5" class="text-center py-4 text-white-50">Nenhuma consulta realizada no histórico.</td>
-                        </tr>
-                    @endforelse
-                </tbody>
-            </table>
-        </div>
+                                    @can('delete', $item)
+                                        <a nohref style="cursor:pointer" onclick="showRemoveModal('{{ $item->id }}', '{{ $item->tipo_consulta }} - {{ $item->gestante->nome }}')" class="btn btn-delete"> 
+                                            <span class="material-symbols-outlined align-middle">delete</span> 
+                                            Excluir
+                                        </a>
+                                        <form action="{{route('consulta.destroy', $item->id)}}" method="POST" id="form_{{$item->id}}">
+                                            @csrf
+                                            @method('delete')
+                                        </form>
+                                    @endcan
+                                </td>
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="5" class="text-center py-4 text-white-50">Nenhuma consulta realizada no histórico.</td>
+                            </tr>
+                        @endforelse
+                    </tbody>
+                </table>
+            </div>
+        @endif
 
     </div>
 </div>

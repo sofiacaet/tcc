@@ -15,7 +15,7 @@ class PermissionSeeder extends Seeder
     {
         $data = [
             // PROFESSOR - CURSO
-            ["role_id" => 1, "resource_id" => 1, "permission" => 0],
+            ["role_id" => 1, "resource_id" => 1, "permission" => 1],
             ["role_id" => 1, "resource_id" => 2, "permission" => 0],
             ["role_id" => 1, "resource_id" => 3, "permission" => 0],
             ["role_id" => 1, "resource_id" => 4, "permission" => 0],
