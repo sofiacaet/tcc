@@ -118,15 +118,22 @@ body {
 <form action="{{route('exame.store')}}" method="POST" enctype="multipart/form-data">
     @csrf
 
-    {{-- NOME --}}
-    <div class="row mb-3">
+     {{-- TIPO DE EXAME --}}
+    <div class="row">
         <div class="col">
-            <div class="form-floating">
-                <input type="text" class="form-control" name="nome" placeholder="Nome" value="{{ old('nome') }}"/>
-                <label for="nome">Nome</label>
+            <div class="form-floating mb-4">
+                <select name="tipo_exame" id="tipo_exame" class="form-select">
+                    <option value="" disabled selected>Selecione o tipo de exame</option>
+                    <option value="Exame de Sangue" @if(old('tipo_exame') == 'Exame de Sangue') selected @endif>Exame de Sangue</option>
+                    <option value="Exame de Urina" @if(old('tipo_exame') == 'Exame de Urina') selected @endif>Exame de Urina</option>
+                    <option value="Exame de Imagem" @if(old('tipo_exame') == 'Exame de Imagem') selected @endif>Exame de Imagem</option>
+                    <option value="Exame Ginecológico" @if(old('tipo_exame') == 'Exame Ginecológico') selected @endif>Exame Ginecológico</option>
+                </select>
+                <label for="tipo_exame">Tipo de Exame</label>
             </div>
         </div>
     </div>
+    
 
     {{-- GESTANTE --}}
     <div class="row mb-3">
@@ -144,32 +151,7 @@ body {
         </div>
     </div>
 
-    {{-- KCAL E REF --}}
-    <div class="row mb-3">
-        <div class="col-md-6">
-            <div class="form-floating">
-                <input type="number" class="form-control" name="kcal_dia" placeholder="Calorias" value="{{ old('kcal_dia') }}"/>
-                <label for="kcal_dia">Calorias por dia</label>
-            </div>
-        </div>
-        <div class="col-md-6">
-            <div class="form-floating">
-                <input type="number" class="form-control" name="ref_dia" placeholder="Refeicoes" value="{{ old('ref_dia') }}"/>
-                <label for="ref_dia">Refeições por dia</label>
-            </div>
-        </div>
-    </div>
-
-    {{-- OBSERVACOES --}}
-    <div class="row mb-4">
-        <div class="col-md-4">
-            <div class="form-floating">
-                <input type="text" class="form-control" name="observacoes" placeholder="Observacoes" value="{{ old('observacoes') }}"/>
-                <label for="observacoes">Observações</label>
-            </div>
-        </div>
-       
-    </div>
+    
 
     {{-- BOTÕES --}}
     <div class="row mt-4">

@@ -13,25 +13,52 @@ class ExameController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+        public function index()
     {
         Gate::authorize('viewAny', Exame::class);
 
-        // COORDENADOR = role_id 2 → vê todos
-        if (auth()->user()->role_id == 2) {
-            $exames = Exame::all();
-        } 
-        // PROFESSOR = role_id 1 → vê somente o gestante com o mesmo email do login
-        else {
-            $email = auth()->user()->email;
-            $exames = Exame::whereHas('gestante', function ($q) use ($email) {
-            $q->where('email', $email);
-            })->get();
+        $roleId = auth()->user()->role_id;
+        $email  = auth()->user()->email;
+
+        if ($roleId == 2) {
+            // Coordenador / Médico vê todos os exames do sistema, separados por status
+            $solicitados = Exame::where('status', 'Solicitado')->get();
+            $recebidos   = Exame::where('status', 'Recebido')->get();
+        } else {
+            // Gestante / Professor vê apenas os exames vinculados ao seu e-mail
+            $solicitados = Exame::where('status', 'Solicitado')
+                ->whereHas('gestante', function ($q) use ($email) {
+                    $q->where('email', $email);
+                })->get();
+
+            $recebidos = Exame::where('status', 'Recebido')
+                ->whereHas('gestante', function ($q) use ($email) {
+                    $q->where('email', $email);
+                })->get();
         }
 
-        return view('exame.index', compact('exames'));
+        return view('exame.index', compact('solicitados', 'recebidos'));
     }
 
+
+        public function uploadDocumento(Request $request, $id)
+    {
+        $exame = Exame::findOrFail($id);
+
+        if ($request->hasFile('documento')) {
+            $extensao_arq = $request->file('documento')->getClientOriginalExtension();
+            $name = $exame->id . '_' . time() . '.' . $extensao_arq;
+            
+            $request->file('documento')->storeAs('documentos', $name, ['disk' => 'public']);
+            
+            // Ao salvar o arquivo, altera o documento e MUDAR O STATUS para 'Recebido'
+            $exame->documento = 'documentos/' . $name;
+            $exame->status = 'Recebido'; // <--- AQUI! Removido a marcação de comentário (//)
+            $exame->save();
+        }
+
+        return redirect()->back()->with('success', 'Exame enviado com sucesso!');
+    }
     /**
      * Show the form for creating a new resource.
      */
@@ -52,11 +79,8 @@ class ExameController extends Controller
 
         if(isset($gestante)) {
             $exame = new Exame();
-            $exame->nome = mb_strtoupper($request->nome, 'UTF-8');
-            $exame->kcal_dia = $request->kcal_dia;
-            $exame->ref_dia = $request->ref_dia;
-            $exame->observacoes = $request->observacoes;
-           
+            $exame->tipo_exame = mb_strtoupper($request->tipo_exame, 'UTF-8');
+            $exame->status = 'Solicitado';
             $exame->gestante()->associate($gestante);
             $exame->save();
 
@@ -100,10 +124,7 @@ class ExameController extends Controller
         $gestante = Gestante::find($request->gestante);
 
         if(isset($gestante) && isset($exame)) {
-            $exame->nome = mb_strtoupper($request->nome, 'UTF-8');
-            $exame->kcal_dia = $request->kcal_dia;
-            $exame->ref_dia = $request->ref_dia;
-            $exame->observacoes = $request->observacoes;
+            $exame->tipo_exame = mb_strtoupper($request->tipo_exame, 'UTF-8');
            
             $exame->gestante()->associate($gestante);
 

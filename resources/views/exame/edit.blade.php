@@ -1,7 +1,7 @@
 @extends('templates/main',
 [
     'titulo'=>"Sistema Pre-Natal",
-    'cabecalho' => 'Alterar Gestante',
+    'cabecalho' => 'Alterar Exame',
     'rota' => '',
     'relatorio' => '',
 ])
@@ -115,19 +115,26 @@ body {
 
 {{-- FORMULÁRIO --}}
 <div class="form-card">
-<form action="{{route('exame.update', $exame->id)}}" method="POST" enctype="multipart/form-data">
+<form action="{{route('exame.update', $exame->id)}}" method="POST">
     @csrf
     @method('PUT')
 
-    {{-- NOME --}}
-    <div class="row mb-3">
+     {{-- TIPO DE EXAME --}}
+    <div class="row">
         <div class="col">
-            <div class="form-floating">
-                <input type="text" class="form-control" name="nome" placeholder="Nome" value="{{ $exame->nome }}"/>
-                <label for="nome">Nome</label>
+            <div class="form-floating mb-4">
+                <select name="tipo_exame" id="tipo_exame" class="form-select">
+                    <option value="" disabled>Selecione o tipo de exame</option>
+                    <option value="Exame de Sangue" {{$exame->tipo_exame == 'Exame de Sangue' ? 'selected' : ''}}>Exame de Sangue</option>
+                    <option value="Exame de Urina" {{$exame->tipo_exame == 'Exame de Urina' ? 'selected' : ''}}>Exame de Urina</option>
+                    <option value="Exame de Imagem" {{$exame->tipo_exame == 'Exame de Imagem' ? 'selected' : ''}}>Exame de Imagem</option>
+                    <option value="Exame Ginecológico" {{$exame->tipo_exame == 'Exame Ginecológico' ? 'selected' : ''}}>Exame Ginecológico</option>
+                </select>
+                <label for="tipo_exame">Tipo de Exame</label>
             </div>
         </div>
     </div>
+
 
     {{-- GESTANTE --}}
     <div class="row mb-3">
@@ -145,31 +152,9 @@ body {
         </div>
     </div>
 
-    {{-- KCAL E REF --}}
-    <div class="row mb-3">
-        <div class="col-md-6">
-            <div class="form-floating">
-                <input type="number" class="form-control" name="kcal_dia" placeholder="Calorias" value="{{ $exame->kcal_dia }}"/>
-                <label for="kcal_dia">Calorias por dia</label>
-            </div>
-        </div>
-        <div class="col-md-6">
-            <div class="form-floating">
-                <input type="number" class="form-control" name="ref_dia" placeholder="Refeicoes" value="{{ $exame->ref_dia }}"/>
-                <label for="ref_dia">Refeições por dia</label>
-            </div>
-        </div>
-    </div>
+    
 
-    {{-- OBSERVACOES --}}
-    <div class="row mb-4">
-        <div class="col-md-4">
-            <div class="form-floating">
-                <input type="text" class="form-control" name="observacoes" placeholder="Observacoes" value="{{ $exame->observacoes }}"/>
-                <label for="observacoes">Observações</label>
-            </div>
-        </div>
-    </div>
+    
 
     {{-- BOTÕES --}}
     <div class="row mt-4">

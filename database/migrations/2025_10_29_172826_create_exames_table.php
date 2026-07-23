@@ -13,13 +13,11 @@ return new class extends Migration
     {
         Schema::create('exames', function (Blueprint $table) {
             $table->id();
-            $table->string('nome');
-            $table->unsignedTinyInteger('ref_dia');
-            $table->unsignedInteger('kcal_dia');
-            $table->text('observacoes')->nullable();
-           
+            $table->string('tipo_exame');
             $table->unsignedBigInteger('gestante_id');
             $table->foreign('gestante_id')->references('id')->on('gestantes');
+            $table->string('status')->default('Solicitado'); // 'Solicitado' ou 'Recebido'
+            $table->string('documento')->nullable();
 
             $table->softDeletes();
             $table->timestamps();

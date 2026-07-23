@@ -167,11 +167,8 @@
                     
                     <td>
                         <table class="inner-table">
-                            <tr><td class="label table-label">NOME:</td><td style="width: 305px;">{{ $exame->nome }}</td></tr>
+                            <tr><td class="label">TIPO DE EXAME:</td><td>{{ $exame->tipo_exame }}</td></tr>
                             <tr><td class="label">NOME DA GESTANTE:</td><td>{{ $exame->gestante->nome }}</td></tr>
-                            <tr><td class="label">CALORIAS POR DIA:</td><td>{{ $exame->kcal_dia}}</td></tr>
-                            <tr><td class="label">REFEICOES POR DIA:</td><td>{{ $exame->ref_dia }}</td></tr>
-                            <tr><td class="label">OBSERVAÇÕES:</td><td>{{ $exame->observacoes }}</td></tr>
                         </table>
                     </td>
                 </tr>

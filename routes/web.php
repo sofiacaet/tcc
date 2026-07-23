@@ -22,6 +22,8 @@ Route::get('/report/gestante', [GestanteController::class, 'report'])->name('rep
 
 Route::resource('/exame', ExameController::class)->middleware(['auth', 'verified']);
 Route::get('/report/exame', [ExameController::class, 'report'])->name('report.exame')->middleware(['auth', 'verified']);
+Route::put('/exame/{id}/upload', [ExameController::class, 'uploadDocumento'])->name('exame.upload')->middleware(['auth', 'verified']);
+
 
 Route::get('/dashboard', function () {
     return view('dashboard');
