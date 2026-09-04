@@ -18,11 +18,11 @@
 
 /* FUNDO */
 body {
-    background: linear-gradient(135deg, #75c8ff 0%, #4dabf8 50%, #193b68 100%);
+    background-color: #c5dede;
     min-height: 100vh;
     padding: 22px;
     overflow: hidden;
-    color: #fff;
+    color: #275553; 
 }
 
 /* PARTICULAS NUTRICIONAIS */

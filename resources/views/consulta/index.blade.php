@@ -19,11 +19,11 @@
 
 /* FUNDO */
 body {
-    background: linear-gradient(135deg, #75c8ff 0%, #4dabf8 50%, #193b68 100%);
+    background-color: #c5dede;
     min-height: 100vh;
     padding: 22px;
-    overflow: auto;
-    color: #fff;
+    overflow: hidden;
+    color: #275553; 
 }
 
 /* NOVOS BOTÕES SUPERIORES MODERNOS */
