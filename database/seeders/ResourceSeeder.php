@@ -27,11 +27,18 @@ class ResourceSeeder extends Seeder
             ["name" => "gestante.edit"],       // 9
             ["name" => "gestante.delete"],     // 10
 
-             ["name" => "exame.index"],      // 6
-            ["name" => "exame.create"],     // 7
-            ["name" => "exame.show"],       // 8
-            ["name" => "exame.edit"],       // 9
-            ["name" => "exame.delete"],     // 10
+             ["name" => "exame.index"],      // 11
+            ["name" => "exame.create"],     // 12
+            ["name" => "exame.show"],       // 13
+            ["name" => "exame.edit"],       // 14
+            ["name" => "exame.delete"],     // 15
+
+            // ORIENTAÇÕES 
+            ["name" => "orientacao.index"],    // 16
+            ["name" => "orientacao.create"],   // 17
+            ["name" => "orientacao.show"],     // 18
+            ["name" => "orientacao.edit"],     // 19
+            ["name" => "orientacao.delete"],   // 20
         ];
         DB::table('resources')->insert($data);
     }

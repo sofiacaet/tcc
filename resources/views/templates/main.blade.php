@@ -69,6 +69,15 @@
                         </li>
                     @endcan
 
+                    @can('viewAny', App\Models\Orientacao::class)
+                        <li class="nav-item me-2">
+                            <a href="{{ route('orientacao.index') }}" class="nav-link d-inline-flex align-items-center text-white">
+                                <span class="material-symbols-outlined" style="font-size: 40px;">chat</span>
+                                <span class="ps-1">Orientações</span>
+                            </a>
+                        </li>
+                    @endcan
+
                     <li class="nav-item dropdown pe-3">
                        <a class="nav-link dropdown-toggle d-inline-flex align-items-center text-white" data-bs-toggle="dropdown" href="#">
                             <span class="material-symbols-outlined text-white" style="font-size: 40px;">account_circle</span>

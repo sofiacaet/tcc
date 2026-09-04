@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\GestanteController;
 use App\Http\Controllers\ConsultaController;
 use App\Http\Controllers\ExameController;
+use App\Http\Controllers\OrientacaoController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -23,6 +24,8 @@ Route::get('/report/gestante', [GestanteController::class, 'report'])->name('rep
 Route::resource('/exame', ExameController::class)->middleware(['auth', 'verified']);
 Route::get('/report/exame', [ExameController::class, 'report'])->name('report.exame')->middleware(['auth', 'verified']);
 Route::put('/exame/{id}/upload', [ExameController::class, 'uploadDocumento'])->name('exame.upload')->middleware(['auth', 'verified']);
+
+Route::resource('/orientacao', OrientacaoController::class)->middleware(['auth', 'verified']);
 
 
 Route::get('/dashboard', function () {
