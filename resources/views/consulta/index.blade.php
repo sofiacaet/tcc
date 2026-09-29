@@ -124,6 +124,11 @@ td, th {
 
 .btn-delete:hover { background: var(--danger); color: #fff; }
 
+.nav-tabs .nav-link {
+    color: #275553 !important;
+    font-weight: 500;
+}
+
 </style>
 
 

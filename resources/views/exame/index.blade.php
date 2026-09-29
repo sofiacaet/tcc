@@ -163,6 +163,11 @@ td, th {
 .modal-backdrop {
     z-index: 1050 !important;
 }
+
+.nav-tabs .nav-link {
+    color: #275553 !important;
+    font-weight: 500;
+}
 </style>
 
 {{-- Grupo de Botões Alinhados à Direita --}}
