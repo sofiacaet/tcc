@@ -69,6 +69,7 @@ class OrientacaoController extends Controller
             'mensagem'    => $request->mensagem,
         ]);
 
-        return redirect()->route('orientacao.index')->with('success', 'Mensagem enviada com sucesso!');
+        return redirect()->route('orientacao.index', ['gestante_id' => $gestanteId])
+                         ->with('success', 'Mensagem enviada com sucesso!');
     }
 }

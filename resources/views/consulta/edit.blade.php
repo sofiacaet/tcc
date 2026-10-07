@@ -10,118 +10,142 @@
 
 <style>
 :root{
-    --green: #4197d9;
-    --green-strong: #70a1de;
-    --green-light: #195a71;
-    --danger: #ff5c5c;
+    /* Cores: Tons de verde/teal da nova identidade */
+    --green: #2b7a78;         
+    --green-strong: #1d5250;  
+    --green-light: #489996;   
+    --danger: #e63946;        
 }
 
-/* FUNDO */
+/* FUNDO PRINCIPAL */
 body {
-    background: linear-gradient(135deg, #75c8ff 0%, #4dabf8 50%, #193b68 100%);
+    background-color: #c5dede;
     min-height: 100vh;
     padding: 22px;
     overflow: auto;
-    color: #fff;
+    color: #275553; 
 }
 
-/* PARTÍCULAS NUTRICIONAIS FLUTUANDO */
-.nutri {
-    position: absolute;
-    font-size: 26px;
-    opacity: 0.85;
-    animation: floatNutri 14s linear infinite;
-    pointer-events: none;
-    filter: drop-shadow(0 3px 6px rgba(0,0,0,0.25));
-}
-
-@keyframes floatNutri {
-    0% { transform: translateY(110vh) rotate(0deg) scale(0.9); opacity: .2; }
-    40% { opacity: 1; }
-    100% { transform: translateY(-20vh) rotate(360deg) scale(1.3); opacity: 0; }
-}
-
-/* CARD FORM */
+/* CARD GLASS (Igual aos outros formulários) */
 .form-card {
-    background: rgba(255,255,255,0.16);
+    background: rgba(255,255,255,0.25);
     backdrop-filter: blur(14px);
     padding: 28px;
-    border-radius: 18px;
-    box-shadow: 0 12px 40px rgba(0,0,0,0.22);
+    border-radius: 16px;
+    box-shadow: 0 12px 30px rgba(39, 85, 83, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.4);
     margin-top: 18px;
 }
 
-/* INPUTS */
+/* TÍTULOS DE SEÇÃO */
+.texto-info {
+    color: var(--green-strong);
+    font-weight: 700;
+}
 
-
-.form-floating > .form-control {
-    background: rgba(255, 255, 255, 0.90) !important; /* QUASE BRANCO */
+/* INPUTS ADAPTADOS PARA O TEMA CLARO */
+.form-floating > .form-control, 
+.form-select {
+    background: rgba(255, 255, 255, 0.65) !important;
     border: 2px solid transparent;
-    color: #333;
+    color: #275553;
     border-radius: 12px !important;
     transition: .25s;
     font-weight: 600;
 }
 
-.form-floating .form-control::placeholder {
-    color: #666 !important;
+.form-floating .form-control::placeholder { 
+    color: #5c8180 !important; 
 }
 
-.form-floating > .form-control:focus {
+.form-floating > .form-control:focus, 
+.form-select:focus {
     border-color: var(--green-light);
-    background: rgba(255, 255, 255, 1) !important; /* 100% branco ao focar */
-    box-shadow: 0 0 12px rgb(88, 185, 254);
-    color: #222;
+    background: rgba(255, 255, 255, 0.95) !important;
+    box-shadow: 0 0 12px rgba(43, 122, 120, 0.25);
+    color: #1d5250;
 }
 
-/* LABEL */
+/* ESTILO PARA INPUTS DESABILITADOS (Campos travados de agendamento) */
+.form-control:disabled, .form-select:disabled {
+    background: rgba(255, 255, 255, 0.35) !important;
+    color: #5c8180 !important;
+    border: 1px dashed rgba(39, 85, 83, 0.2);
+}
+
+/* LABEL DOS INPUTS */
 .form-floating label {
-    color: #195a71 !important;
+    color: #275553 !important;
     font-weight: 700;
-    text-shadow: 0 0 2px rgba(255,255,255,0.4);
 }
 
-.texto-info {
-    color: #195a71;
-    font-weight: 700;
-    text-shadow: 0 0 2px rgba(255,255,255,0.4);
-}
-
-/* BOTÕES */
-.btn-custom-back {
-    border: 2px solid #e7eee9;
+/* ESTILIZAÇÃO DO INPUT GROUP (Gestante bloqueada) */
+.input-group-text.custom-group {
+    background: linear-gradient(90deg, rgba(43, 122, 120, 0.6), rgba(72, 153, 150, 0.6));
     color: #fff;
+    border: none;
+    border-radius: 12px 0 0 12px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
+.input-group > .form-select {
+    border-radius: 0 12px 12px 0 !important;
+}
+
+/* BOTÕES ADAPTADOS AO TEMA */
+.btn-custom-back {
+    border: 2px solid #275553;
+    color: #275553;
+    background: transparent;
     border-radius: 28px;
     padding: 8px 20px;
+    font-weight: 700;
     transition: .2s;
-    background: rgba(255,255,255,0.10);
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    text-decoration: none;
 }
 
 .btn-custom-back:hover {
-    background: rgba(255,255,255,0.30);
+    background: #275553;
+    color: #fff;
+    transform: translateY(-2px);
 }
 
 .btn-custom-confirm {
-    border: 2px solid var(--green-light);
+    border: 2px solid var(--green);
     background: var(--green);
     border-radius: 28px;
     padding: 8px 22px;
     color: #fff;
     font-weight: 700;
     transition: .2s;
-    box-shadow: 0 0 10px rgb(88, 185, 254);
+    box-shadow: 0 4px 15px rgba(43, 122, 120, 0.2);
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
 }
 
 .btn-custom-confirm:hover {
     background: var(--green-strong);
-    box-shadow: 0 0 18px rgb(88, 185, 254);
+    border-color: var(--green-strong);
+    color: #ffffff;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(29, 82, 80, 0.3);
+}
+
+/* RESPONSIVO */
+@media (max-width: 576px) {
+    .form-card { padding: 18px; }
+    .btn-custom-back, .btn-custom-confirm { 
+        width: 100%; 
+        margin-bottom: 10px; 
+        justify-content: center;
+    }
 }
 </style>
-
-
-
-
-
 
 <div class="form-card">
 
@@ -146,11 +170,11 @@ body {
     </div>
 
     {{-- GESTANTE (BLOQUEADO) --}}
-    <div class="row mb-3">
+    <div class="row mb-4">
         <div class="col">
             <div class="input-group">
-                <span class="input-group-text bg-secondary text-white">Gestante</span>
-                <select class="form-select form-control" disabled>
+                <span class="input-group-text custom-group">Gestante</span>
+                <select class="form-select" disabled>
                     @foreach ($gestantes as $item)
                         <option value="{{$item->id}}" @if($item->id == $consulta->gestante_id) selected @endif>
                             {{ $item->nome }}
@@ -177,52 +201,51 @@ body {
         </div>
     </div>
 
-    
-
-    <hr class="my-4" style="border-color: rgba(255,255,255,0.2)">
+    <hr class="my-4" style="border-color: rgba(39, 85, 83, 0.2)">
     <h5 class="mb-4 texto-info">Registro Clínico (Atendimento)</h5>
 
     {{-- NOVOS CAMPOS: PESO, PRESSÃO E BATIMENTOS FETAIS --}}
     <div class="row mb-3">
         <div class="col-md-4">
-            <div class="form-floating mb-4">
-                <input type="number" step="0.01" class="form-control" name="peso_atual" placeholder="Peso Atual (kg)" value="{{ old('peso_atual', $consulta->peso_atual) }}" required />
+            <div class="form-floating mb-3 mb-md-0">
+                <input type="number" step="0.01" class="form-control" name="peso_atual"  value="{{ old('peso_atual', $consulta->peso_atual) }}" required />
                 <label for="peso_atual">Peso Atual (kg)</label>
             </div>
         </div>
         <div class="col-md-4">
-            <div class="form-floating mb-4">
-                <input type="text" class="form-control" name="pressao_arterial" placeholder="Ex: 12/8" value="{{ old('pressao_arterial', $consulta->pressao_arterial) }}" required />
+            <div class="form-floating mb-3 mb-md-0">
+                <input type="text" class="form-control" name="pressao_arterial"  value="{{ old('pressao_arterial', $consulta->pressao_arterial) }}" required />
                 <label for="pressao_arterial">Pressão Arterial</label>
             </div>
         </div>
         <div class="col-md-4">
-            <div class="form-floating mb-4">
-                <input type="number" class="form-control" name="batimentos_fetais" placeholder="BCF (bpm)" value="{{ old('batimentos_fetais', $consulta->batimentos_fetais) }}" required />
+            <div class="form-floating mb-3 mb-md-0">
+                <input type="number" class="form-control" name="batimentos_fetais"  value="{{ old('batimentos_fetais', $consulta->batimentos_fetais) }}" required />
                 <label for="batimentos_fetais">Batimentos Fetais (bpm)</label>
             </div>
         </div>
     </div>
 
     {{-- NOVO CAMPO: EVOLUÇÃO CLÍNICA --}}
-    <div class="row">
+    <div class="row mt-1">
         <div class="col">
             <div class="form-floating mb-4">
-                <textarea class="form-control" name="evolucao_clinica" placeholder="Evolução Clínica / Anotações" style="height: 120px; background: rgba(255, 255, 255, 0.90) !important;" required>{{ old('evolucao_clinica', $consulta->evolucao_clinica) }}</textarea>
+                <textarea class="form-control" name="evolucao_clinica" style="height: 120px;" required>{{ old('evolucao_clinica', $consulta->evolucao_clinica) }}</textarea>
                 <label for="evolucao_clinica">Evolução Clínica / Anotações Médicas</label>
             </div>
         </div>
     </div>
 
     {{-- BOTÕES --}}
-    <div class="row mt-4">
-        <div class="col d-flex gap-3">
+    <div class="row mt-2">
+        <div class="col d-flex flex-wrap gap-3">
             <a href="{{route('consulta.index')}}" class="btn btn-custom-back">
                 <span class="material-symbols-outlined align-middle">arrow_back</span> Voltar
             </a> 
 
-            <button type="submit" class="btn btn-custom-back ms-auto">
-                <span class="material-symbols-outlined align-middle">check_circle</span> Registrar
+            {{-- CORRIGIDO: Este botão estava com a classe 'btn-custom-back' errada no seu código original --}}
+            <button type="submit" class="btn btn-custom-confirm ms-auto">
+                <span class="material-symbols-outlined align-middle">check_circle</span> Registrar Atendimento
             </button>
         </div>
     </div>

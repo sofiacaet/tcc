@@ -9,11 +9,12 @@
 @section('conteudo')
 
 <style>
-:root {
-    --green: #4197d9;
-    --green-strong: #70a1de;
-    --green-light: #195a71;
-    --danger: #ff5c5c;
+:root{
+    /* Cores: Tons de verde/teal da nova identidade */
+    --green: #2b7a78;         
+    --green-strong: #1d5250;  
+    --green-light: #489996;   
+    --danger: #e63946;        
 }
 
 /* FUNDO */
@@ -58,13 +59,13 @@ body {
 }
 
 .btn-print-top {
-    background: rgba(255, 255, 255, 0.12);
-    border: 2px solid rgba(255, 255, 255, 0.25);
+    background: var(--green);
+    border: 2px solid var(--green);
     color: #fff;
 }
 .btn-print-top:hover {
-    background: rgba(255, 255, 255, 0.25);
-    border-color: rgba(255, 255, 255, 0.5);
+    background: var(--green-strong);
+    border-color: var(--green-strong);
     color: #fff;
     transform: translateY(-2px);
     box-shadow: 0 6px 20px rgba(0,0,0,0.2);
@@ -115,8 +116,8 @@ td, th {
 
 /* BOTÕES DE AÇÃO NA TABELA */
 .btn-edit {
-    border: 2px solid #7fffc0;
-    color: #7fffc0;
+    border: 2px solid #2b7a78;
+    color: #2b7a78;
     background: transparent;
     border-radius: 28px;
     padding: 6px 14px;

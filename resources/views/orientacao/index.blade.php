@@ -212,7 +212,6 @@
 </div>
 
 <script>
-    // Rola o chat automaticamente para a mensagem mais recente ao carregar
     document.addEventListener("DOMContentLoaded", function() {
         var chatBox = document.getElementById("chatMessages");
         if(chatBox) {

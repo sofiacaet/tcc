@@ -2,18 +2,19 @@
 [
     'titulo'=>"Sistema Pre-Natal",
     'cabecalho' => 'Lista de Gestantes',
-    'rota' => 'gestante.create',
-    'relatorio' => 'report.gestante',
+    'rota' => '',
+    'relatorio' => '',
     'class' => App\Models\Gestante::class,
 ])
 @section('conteudo')
 
 <style>
 :root{
-    --green: #21867d;
-    --green-strong: #70a1de;
-    --green-light: #44df91;
-    --danger: #f52424;
+    /* Cores: Tons de verde/teal da nova identidade */
+    --green: #2b7a78;         
+    --green-strong: #1d5250;  
+    --green-light: #489996;   
+    --danger: #e63946;        
 }
 
 /* FUNDO */
@@ -108,11 +109,61 @@ td, th {
 }
 
 .btn-delete:hover { background: var(--danger); color: #fff; }
+
+.btn-action-top {
+    backdrop-filter: blur(10px);
+    border-radius: 14px;
+    padding: 12px 26px;
+    font-size: 0.95rem;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+}
+
+/* Estilo específico do Imprimir (Glass Clean) */
+.btn-print-top {
+    background: var(--green);
+    border: 2px solid var(--green);
+    color: #fff;
+}
+.btn-print-top:hover {
+    background: var(--green-strong);
+   border-color: var(--green-strong);
+    color: #fff;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+}
+
+
 </style>
 
 
 
-{{-- CARD PRINCIPAL --}}
+
+{{-- Grupo de Botões Alinhados à Direita --}}
+<div class="d-flex justify-content-end gap-3 mb-3">
+    
+    {{-- Botão de Impressão --}}
+    <a href="{{ route('report.gestante') }}" class="btn-action-top btn-print-top" target="_blank">
+        <span class="material-symbols-outlined">print</span>
+        Imprimir Relatório
+    </a>
+
+    {{-- Botão de Adicionar Gestante --}}
+    @can('create', App\Models\Gestante::class)
+        <a href="{{ route('gestante.create') }}" class="btn-action-top btn-print-top">
+            <span class="material-symbols-outlined">person_add</span>
+            Nova Gestante
+        </a>
+    @endcan
+    
+</div>
+
 <div class="table-wrapper">
     <table class="modern-table table align-middle">
         <thead>
