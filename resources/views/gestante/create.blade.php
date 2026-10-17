@@ -120,7 +120,6 @@ input[type="file"].form-control:focus {
 .btn-custom-confirm:hover {
     background: var(--green-strong);
     border-color: var(--green-strong);
-    color: #ffffff;
     transform: translateY(-2px);
     box-shadow: 0 6px 20px rgba(29, 82, 80, 0.3);
 }
@@ -189,7 +188,7 @@ input[type="file"].form-control:focus {
         </div>
     </div>
 
-    {{-- DATA DE NASCIMENTO,  CPF E ESTADO CIVIL --}}
+    {{-- DATA DE NASCIMENTO, CPF E ESTADO CIVIL --}}
     <div class="row mb-4">
         <div class="col-md-4">
             <div class="form-floating mb-3 mb-md-0">
@@ -200,7 +199,7 @@ input[type="file"].form-control:focus {
 
         <div class="col-md-4">
             <div class="form-floating mb-3 mb-md-0">
-                <input type="text" class="form-control" name="cpf" placeholder="CPF" value="{{ old('cpf') }}">
+                <input type="text" class="form-control" name="cpf" placeholder="CPF" value="{{ old('cpf') }}" maxlength="14">
                 <label for="cpf">CPF</label>
             </div>
         </div>
@@ -228,7 +227,7 @@ input[type="file"].form-control:focus {
             </a> 
 
             <button type="submit" class="btn btn-custom-confirm ms-auto">
-                <span class="material-symbols-outlined align-middle">check_circle</span> Confirmar
+                <span class="material-symbols-outlined align-middle">check_circle</span> Cadastrar Paciente
             </button>
         </div>
     </div>

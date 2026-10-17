@@ -20,6 +20,7 @@ Route::get('/report/consulta', [ConsultaController::class, 'report'])->name('rep
 
 Route::resource('/gestante', GestanteController::class)->middleware(['auth', 'verified']);
 Route::get('/report/gestante', [GestanteController::class, 'report'])->name('report.gestante')->middleware(['auth', 'verified']);
+Route::patch('/gestante/{id}/status', [GestanteController::class, 'updateStatus'])->name('gestante.status')->middleware(['auth', 'verified']);
 
 Route::resource('/exame', ExameController::class)->middleware(['auth', 'verified']);
 Route::get('/report/exame', [ExameController::class, 'report'])->name('report.exame')->middleware(['auth', 'verified']);

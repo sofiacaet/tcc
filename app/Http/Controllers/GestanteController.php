@@ -13,18 +13,18 @@ class GestanteController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+     public function index()
     {
         Gate::authorize('viewAny', Gestante::class);
 
-        // COORDENADOR = role_id 2 → vê todos
+        // COORDENADOR = role_id 2 → vê todos, ordenado alfabeticamente
         if (auth()->user()->role_id == 2) {
-            $gestantes = Gestante::all();
+            $gestantes = Gestante::orderBy('nome', 'asc')->get();
         } 
-        // PROFESSOR = role_id 1 → vê somente o gestante com o mesmo email do login
+        // PROFESSOR = role_id 1 → vê somente o gestante com o mesmo email do login, ordenado alfabeticamente
         else {
             $email = auth()->user()->email;
-            $gestantes = Gestante::where('email', $email)->get();
+            $gestantes = Gestante::where('email', $email)->orderBy('nome', 'asc')->get();
         }
 
         return view('gestante.index', compact('gestantes'));
@@ -45,7 +45,10 @@ class GestanteController extends Controller
     public function store(Request $request)
     {
         Gate::authorize('create', Gestante::class);
-      
+
+        $request->validate([
+            'cpf' => 'nullable|max:14',
+        ]);
 
 
             $gestante = new Gestante();
@@ -57,6 +60,7 @@ class GestanteController extends Controller
             $gestante->cpf = $request->cpf;
             $gestante->estado_civil = $request->estado_civil;
             $gestante->peso_atual = $request->peso_atual;
+            $gestante->status = 'Em acompanhamento';
             $gestante->save();
 
             if($request->hasFile('foto')) {
@@ -77,7 +81,14 @@ class GestanteController extends Controller
      */
     public function show(string $id)
     {
-        Gate::authorize('view', Gestante::class);
+        // 1. Busca a gestante específica no banco de dados
+        $gestante = Gestante::findOrFail($id);
+        
+        // 2. Passa a VARIÁVEL $gestante para a Policy avaliar se o usuário pode vê-la
+        Gate::authorize('view', $gestante);
+
+        // 3. Retorna a tela enviando os dados da paciente
+        return view('gestante.show', compact('gestante'));
     }
 
     /**
@@ -103,6 +114,10 @@ class GestanteController extends Controller
         $gestante = Gestante::find($id);
         Gate::authorize('update', $gestante);
 
+        $request->validate([
+            'cpf' => 'nullable|max:14',
+        ]);
+
        
             $gestante->nome = mb_strtoupper($request->nome, 'UTF-8');
             $gestante->email = $request->email;
@@ -112,6 +127,9 @@ class GestanteController extends Controller
             $gestante->cpf = $request->cpf;
             $gestante->estado_civil = $request->estado_civil;
             $gestante->peso_atual = $request->peso_atual;
+            if($request->has('status')){
+            $gestante->status = $request->status;
+        }
             
 
             if($request->hasFile('foto')) {
@@ -127,6 +145,31 @@ class GestanteController extends Controller
         return redirect()->route('gestante.index');
     }
 
+   public function updateStatus(Request $request, $id)
+    {
+        $gestante = Gestante::findOrFail($id);
+        Gate::authorize('update', $gestante);
+        
+        // Garante que o status e o motivo venham corretamente
+        $request->validate([
+            'status' => 'required|in:Em acompanhamento,Arquivada',
+            'motivo_arquivamento' => 'required_if:status,Arquivada|nullable|string|max:255',
+        ]);
+
+        $gestante->status = $request->status;
+
+        if ($request->status === 'Arquivada') {
+            $gestante->motivo_arquivamento = $request->motivo_arquivamento;
+        } else {
+            // Se for reativada, limpa o motivo
+            $gestante->motivo_arquivamento = null;
+        }
+        
+        $gestante->save();
+
+        // Redireciona de volta para a tela principal (sem filtro de URL)
+        return redirect()->route('gestante.index');
+    }
     /**
      * Remove the specified resource from storage.
      */

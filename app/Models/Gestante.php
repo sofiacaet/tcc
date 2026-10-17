@@ -3,11 +3,25 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use \Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Gestante extends Model
 {
     use SoftDeletes;
+
+    // AQUI: Liberamos os campos para serem salvos, INCLUINDO o 'status'
+    protected $fillable = [
+        'nome', 
+        'email', 
+        'telefone', 
+        'altura', 
+        'data_nascimento', 
+        'cpf', 
+        'estado_civil', 
+        'peso_atual',
+        'status', // <-- Nosso novo campo adicionado aqui!
+        'motivo_arquivamento'
+    ];
 
     protected static function booted()
     {
@@ -28,7 +42,7 @@ class Gestante extends Model
         return $this->hasMany('\App\Models\Consulta', 'gestante_id');
     }
 
-     public function exames() {
+    public function exames() {
         return $this->hasMany('\App\Models\Exame', 'gestante_id');
     }
 }

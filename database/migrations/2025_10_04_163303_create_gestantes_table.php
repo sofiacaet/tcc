@@ -21,6 +21,8 @@ return new class extends Migration
             $table->string('cpf', 14)->unique();
             $table->string('estado_civil');
             $table->decimal('peso_atual', 5, 2);//
+            $table->string('status')->default('Em acompanhamento');
+            $table->text('motivo_arquivamento')->nullable(); // <-- Adicionado aqui
 
             // linhas adicionadas
             $table->string('foto')->nullable();

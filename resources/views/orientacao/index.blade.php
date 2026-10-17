@@ -121,7 +121,7 @@
                 <span>Pacientes</span>
             </div>
 
-            @forelse($gestantes as $g)
+            @forelse($gestantes->where('status', 'Em acompanhamento') as $g)
                 @if($g)
                     <a href="{{ route('orientacao.index', ['gestante_id' => $g->id]) }}" 
                        class="gestante-item {{ isset($gestanteSelecionada) && $gestanteSelecionada->id == $g->id ? 'active' : '' }}">

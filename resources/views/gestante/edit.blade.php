@@ -150,9 +150,9 @@ input[type="file"].form-control:focus {
                 <input class="form-control" type="file" name="foto"/>
             </div>
             
-            {{-- SE A GESTANTE JÁ TIVER FOTO, MOSTRAR UM AVISO OU MINIATURA (Opcional, mas recomendado num Edit) --}}
+            {{-- SE A GESTANTE JÁ TIVER FOTO, MOSTRAR UM AVISO --}}
             @if($gestante->foto)
-                <small class="text-muted ms-2 mt-1 d-block">
+                <small class="text-muted ms-2 mt-1 d-block" style="color: #5c8180 !important;">
                     * Deixe em branco se não quiser alterar a foto atual.
                 </small>
             @endif
@@ -208,7 +208,8 @@ input[type="file"].form-control:focus {
 
         <div class="col-md-4">
             <div class="form-floating mb-3 mb-md-0">
-                <input type="text" class="form-control" name="cpf" placeholder="CPF" value="{{ $gestante->cpf }}">
+                {{-- AQUI: Adicionado maxlength="14" para impedir digitação de muitos caracteres e evitar o erro do banco! --}}
+                <input type="text" class="form-control" name="cpf" placeholder="CPF" value="{{ $gestante->cpf }}" maxlength="14">
                 <label for="cpf">CPF</label>
             </div>
         </div>
