@@ -53,6 +53,102 @@
         .transition {
             transition: all 0.2s ease-in-out;
         }
+
+
+        /* Estilos do Dropdown de Notificações */
+        .notification-dropdown {
+            width: 350px;
+            padding: 0;
+            border: 1px solid rgba(0,0,0,0.1);
+            border-radius: 4px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            margin-top: 10px;
+        }
+        
+        /* Triângulo apontando para cima */
+        .notification-dropdown::before {
+            content: "";
+            position: absolute;
+            top: -8px;
+            right: 12px;
+            border-left: 8px solid transparent;
+            border-right: 8px solid transparent;
+            border-bottom: 8px solid #fff;
+        }
+
+        .notification-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 15px;
+            border-bottom: 1px solid #eee;
+            background: #fff;
+            border-top-left-radius: 4px;
+            border-top-right-radius: 4px;
+        }
+
+        .notification-title {
+            font-weight: bold;
+            font-size: 14px;
+            color: #333;
+            margin: 0;
+        }
+
+        .notification-actions {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .btn-notif-action {
+            background: none;
+            border: none;
+            padding: 2px 4px;
+            display: inline-flex;
+            align-items: center;
+            color: #555;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+        .btn-notif-action:hover {
+            color: #000;
+            background-color: #f8f9fa;
+        }
+
+        .notification-body {
+            min-height: 250px;
+            background: #fff;
+            max-height: 350px;
+            overflow-y: auto;
+            border-bottom-left-radius: 4px;
+            border-bottom-right-radius: 4px;
+        }
+
+        .notification-empty {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 200px;
+            color: #555;
+            font-size: 14px;
+        }
+
+        /* Item de notificação caso tenha mensagens */
+        .notif-item {
+            padding: 12px 15px;
+            border-bottom: 1px solid #f5f5f5;
+            text-decoration: none;
+            color: #333;
+            display: block;
+            transition: 0.2s;
+        }
+        .notif-item:hover {
+            background: #f8f9fa;
+        }
+        .notif-item.unread {
+            background: #eaf3f3; /* Fundo para não lida */
+        }
     </style>
 </head>
 <body>
@@ -112,14 +208,63 @@
                     </li>
                 @endcan
 
+                <!-- NOTIFICAÇÕES (Transformado em li.nav-item para seguir a mesma identidade dos outros botões) -->
+                <li class="nav-item dropdown">
+                    <button class="nav-link text-white-90 hover-white d-flex align-items-center gap-2 px-3 py-2 rounded-pill transition border-0 bg-transparent w-100 text-start" type="button" data-bs-toggle="dropdown" aria-expanded="false" id="bellDropdown">
+                        <div class="position-relative d-inline-flex align-items-center">
+                            <span class="material-symbols-outlined" style="font-size: 22px;">notifications</span>
+                            
+                            {{-- Bolinha com o número de notificações não lidas --}}
+                            @if(auth()->user()->unreadNotifications->count() > 0)
+                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style="font-size: 9px; margin-left: -5px; margin-top: 2px;">
+                                    {{ auth()->user()->unreadNotifications->count() }}
+                                </span>
+                            @endif
+                        </div>
+                        
+                    </button>
+
+                    <!-- O PAINEL DE NOTIFICAÇÕES -->
+                    <div class="dropdown-menu dropdown-menu-end notification-dropdown shadow-lg mt-2" aria-labelledby="bellDropdown">
+                        
+                        <div class="notification-header">
+                            <h6 class="notification-title">Notificações</h6>
+                            <div class="notification-actions">
+                                {{-- Botão Fechar --}}
+                                <button class="btn-notif-action" title="Fechar" onclick="document.getElementById('bellDropdown').click()">
+                                    <span class="material-symbols-outlined" style="font-size: 18px;">close</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="notification-body">
+                            @if(auth()->user()->unreadNotifications->isEmpty())
+                                {{-- MENSAGEM VAZIA --}}
+                                <div class="notification-empty">
+                                    Você não tem nenhuma notificação
+                                </div>
+                            @else
+                                {{-- LISTA DE NOTIFICAÇÕES --}}
+                                @foreach(auth()->user()->unreadNotifications as $notification)
+                                    <a href="{{ $notification->data['url'] ?? '#' }}" class="notif-item unread">
+                                        <strong>{{ $notification->data['titulo'] }}</strong><br>
+                                        <small class="text-muted">{{ $notification->data['mensagem'] }}</small>
+                                    </a>
+                                @endforeach
+                            @endif
+                        </div>
+
+                    </div>
+                </li>
+
                 <!-- Menu do Usuário -->
                 <li class="nav-item dropdown ms-md-2 mt-2 mt-md-0">
                     <a class="nav-link dropdown-toggle bg-white text-dark-green fw-bold px-3 py-2 rounded-pill d-flex align-items-center gap-2 shadow-sm" 
-                       data-bs-toggle="dropdown" 
-                       href="#" 
-                       role="button" 
-                       aria-expanded="false"
-                       style="color: #275553; background-color: #ffffff;">
+                        data-bs-toggle="dropdown" 
+                        href="#" 
+                        role="button" 
+                        aria-expanded="false"
+                        style="color: #275553; background-color: #ffffff;">
                         <span class="material-symbols-outlined" style="font-size: 22px; color: #275553;">account_circle</span>
                         @auth
                             <span>{{ Auth::user() ? explode(" ", Auth::user()->name)[0] : 'Anônimo' }}</span>

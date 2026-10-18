@@ -5,20 +5,41 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Exame;
 use App\Models\Gestante;
+use App\Models\User; // <-- Adicionado para procurar os utilizadores
+use App\Notifications\ExameSolicitado; // <-- Adicionado para notificar a gestante
+use App\Notifications\ExameEnviado; // <-- Adicionado para notificar os médicos
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Notification; // <-- Adicionado para enviar para múltiplos médicos
 
 class ExameController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-        public function index()
+    public function index()
     {
         Gate::authorize('viewAny', Exame::class);
 
-        $roleId = auth()->user()->role_id;
-        $email  = auth()->user()->email;
+        $user   = auth()->user();
+        $roleId = $user->role_id;
+        $email  = $user->email;
+
+        // =========================================================================
+        // MARCAR NOTIFICAÇÕES COMO LIDAS
+        // =========================================================================
+        if ($roleId == 2) {
+            // Se for Médico/Coordenador, limpa as notificações de resultados recebidos
+            $user->unreadNotifications()
+                 ->where('type', 'App\Notifications\ExameEnviado')
+                 ->update(['read_at' => now()]);
+        } else {
+            // Se for Gestante, limpa as notificações de novos exames solicitados
+            $user->unreadNotifications()
+                 ->where('type', 'App\Notifications\ExameSolicitado')
+                 ->update(['read_at' => now()]);
+        }
+        // =========================================================================
 
         if ($roleId == 2) {
             // Coordenador / Médico vê todos os exames do sistema, separados por status
@@ -40,8 +61,7 @@ class ExameController extends Controller
         return view('exame.index', compact('solicitados', 'recebidos'));
     }
 
-
-        public function uploadDocumento(Request $request, $id)
+    public function uploadDocumento(Request $request, $id)
     {
         $exame = Exame::findOrFail($id);
 
@@ -53,12 +73,21 @@ class ExameController extends Controller
             
             // Ao salvar o arquivo, altera o documento e MUDAR O STATUS para 'Recebido'
             $exame->documento = 'documentos/' . $name;
-            $exame->status = 'Recebido'; // <--- AQUI! Removido a marcação de comentário (//)
+            $exame->status = 'Recebido';
             $exame->save();
+
+            // =========================================================================
+            // DISPARO DE NOTIFICAÇÃO: EXAME ENVIADO
+            // A gestante submeteu o ficheiro, notifica todos os médicos
+            // =========================================================================
+            $medicos = User::where('role_id', 2)->get();
+            Notification::send($medicos, new ExameEnviado());
+            // =========================================================================
         }
 
         return redirect()->back()->with('success', 'Exame enviado com sucesso!');
     }
+
     /**
      * Show the form for creating a new resource.
      */
@@ -84,7 +113,15 @@ class ExameController extends Controller
             $exame->gestante()->associate($gestante);
             $exame->save();
 
-            
+            // =========================================================================
+            // DISPARO DE NOTIFICAÇÃO: EXAME SOLICITADO
+            // O médico criou o pedido, notifica a gestante associada
+            // =========================================================================
+            $usuarioGestante = User::where('email', $gestante->email)->first();
+            if ($usuarioGestante) {
+                $usuarioGestante->notify(new ExameSolicitado());
+            }
+            // =========================================================================
         }
 
         return redirect()->route('exame.index');
@@ -128,7 +165,6 @@ class ExameController extends Controller
            
             $exame->gestante()->associate($gestante);
 
-            
             $exame->save();
         }
 

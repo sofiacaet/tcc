@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Consulta;
 use App\Models\Gestante;
+use App\Models\User; // <-- Adicionado para buscar a conta de login da gestante
+use App\Notifications\ConsultaMarcada; // <-- Adicionado para disparar a notificação
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
@@ -18,26 +20,37 @@ class ConsultaController extends Controller
     {
         Gate::authorize('viewAny', Consulta::class);
 
-    if (auth()->user()->role_id == 2) {
-        // Coordenador vê tudo, mas separado por status
-        $agendadas = Consulta::where('status', 'Agendada')->get();
-        $realizadas = Consulta::where('status', 'Realizada')->get();
-    } else {
-        // Professor vê apenas o dele, separado por status
-        $email = auth()->user()->email;
-        
-        $agendadas = Consulta::where('status', 'Agendada')
-            ->whereHas('gestante', function ($q) use ($email) {
-                $q->where('email', $email);
-            })->get();
+        $user = auth()->user();
 
-        $realizadas = Consulta::where('status', 'Realizada')
-            ->whereHas('gestante', function ($q) use ($email) {
-                $q->where('email', $email);
-            })->get();
-    }
+        // =========================================================================
+        // MARCAR NOTIFICAÇÕES COMO LIDAS
+        // Limpa a bolinha vermelha de "Nova Consulta" assim que o usuário acessa a lista
+        // =========================================================================
+        $user->unreadNotifications()
+             ->where('type', 'App\Notifications\ConsultaMarcada')
+             ->update(['read_at' => now()]);
+        // =========================================================================
 
-    return view('consulta.index', compact('agendadas', 'realizadas'));
+        if ($user->role_id == 2) {
+            // Coordenador vê tudo, mas separado por status
+            $agendadas = Consulta::where('status', 'Agendada')->get();
+            $realizadas = Consulta::where('status', 'Realizada')->get();
+        } else {
+            // Professor/Gestante vê apenas o dele, separado por status
+            $email = $user->email;
+            
+            $agendadas = Consulta::where('status', 'Agendada')
+                ->whereHas('gestante', function ($q) use ($email) {
+                    $q->where('email', $email);
+                })->get();
+
+            $realizadas = Consulta::where('status', 'Realizada')
+                ->whereHas('gestante', function ($q) use ($email) {
+                    $q->where('email', $email);
+                })->get();
+        }
+
+        return view('consulta.index', compact('agendadas', 'realizadas'));
 
     }
 
@@ -69,11 +82,22 @@ class ConsultaController extends Controller
             
             $consulta->gestante()->associate($gestante);
             $consulta->save();
+
+            // =========================================================================
+            // DISPARO DE NOTIFICAÇÃO: CONSULTA MARCADA
+            // O médico agendou a consulta, notifica a conta da gestante associada
+            // =========================================================================
+            $usuarioGestante = User::where('email', $gestante->email)->first();
+            if ($usuarioGestante) {
+                $usuarioGestante->notify(new ConsultaMarcada());
+            }
+            // =========================================================================
         }
+        
         return redirect()->route('consulta.index');
     }
 
-        /**
+    /**
      * Display the specified resource.
      */
     public function show(string $id)
@@ -113,22 +137,22 @@ class ConsultaController extends Controller
     public function update(Request $request, string $id)
     {
        $consulta = Consulta::find($id);
-    Gate::authorize('update', $consulta);
+       Gate::authorize('update', $consulta);
 
-    if(isset($consulta)) {
-        // Atualiza e salva os novos dados clínicos informados no registro
-        $consulta->peso_atual = $request->peso_atual;
-        $consulta->pressao_arterial = $request->pressao_arterial;
-        $consulta->batimentos_fetais = $request->batimentos_fetais;
-        $consulta->evolucao_clinica = $request->evolucao_clinica;
-        
-        // Altera o status mudando de Agendada para Realizada
-        $consulta->status = 'Realizada';
-        
-        $consulta->save();
-    }
+        if(isset($consulta)) {
+            // Atualiza e salva os novos dados clínicos informados no registro
+            $consulta->peso_atual = $request->peso_atual;
+            $consulta->pressao_arterial = $request->pressao_arterial;
+            $consulta->batimentos_fetais = $request->batimentos_fetais;
+            $consulta->evolucao_clinica = $request->evolucao_clinica;
+            
+            // Altera o status mudando de Agendada para Realizada
+            $consulta->status = 'Realizada';
+            
+            $consulta->save();
+        }
 
-    return redirect()->route('consulta.index');
+        return redirect()->route('consulta.index');
     }
 
     /**
