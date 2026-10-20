@@ -20,7 +20,7 @@ body {
     background-color: #c5dede;
     min-height: 100vh;
     padding: 22px;
-    overflow-x: hidden;
+    overflow: auto;
     color: #275553; 
 }
 

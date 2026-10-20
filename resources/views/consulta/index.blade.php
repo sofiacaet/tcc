@@ -23,7 +23,7 @@ body {
     background-color: #c5dede;
     min-height: 100vh;
     padding: 22px;
-    overflow: hidden;
+    overflow: auto;
     color: #275553; 
 }
 

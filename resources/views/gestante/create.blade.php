@@ -120,6 +120,7 @@ input[type="file"].form-control:focus {
 .btn-custom-confirm:hover {
     background: var(--green-strong);
     border-color: var(--green-strong);
+    color: #ffffff;
     transform: translateY(-2px);
     box-shadow: 0 6px 20px rgba(29, 82, 80, 0.3);
 }
