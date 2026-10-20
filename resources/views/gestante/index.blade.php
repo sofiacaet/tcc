@@ -213,7 +213,7 @@ td, th {
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="5" class="text-center py-4 text-muted fw-bold">Nenhuma gestante em acompanhamento no momento.</td>
+                            <td colspan="6" class="text-center py-4 text-muted fw-bold">Nenhuma gestante em acompanhamento no momento.</td>
                         </tr>
                     @endforelse
                 </tbody>

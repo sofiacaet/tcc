@@ -48,12 +48,14 @@ class GestanteController extends Controller
 
         $request->validate([
             'cpf' => 'nullable|max:14',
+            'dum' => 'required|date|before_or_equal:today',
         ]);
 
 
             $gestante = new Gestante();
             $gestante->nome = mb_strtoupper($request->nome, 'UTF-8');
             $gestante->email = $request->email;
+            $gestante->dum = $request->dum;
             $gestante->telefone = $request->telefone;
             $gestante->altura = $request->altura;
             $gestante->data_nascimento = $request->data_nascimento;
@@ -116,11 +118,13 @@ class GestanteController extends Controller
 
         $request->validate([
             'cpf' => 'nullable|max:14',
+            'dum' => 'required|date|before_or_equal:today',
         ]);
 
        
             $gestante->nome = mb_strtoupper($request->nome, 'UTF-8');
             $gestante->email = $request->email;
+            $gestante->dum = $request->dum;
             $gestante->telefone = $request->telefone;
             $gestante->altura = $request->altura;
             $gestante->data_nascimento = $request->data_nascimento;

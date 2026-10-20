@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Carbon\Carbon;
 
 class Gestante extends Model
 {
@@ -13,6 +14,7 @@ class Gestante extends Model
     protected $fillable = [
         'nome', 
         'email', 
+        'dum',
         'telefone', 
         'altura', 
         'data_nascimento', 
@@ -20,7 +22,12 @@ class Gestante extends Model
         'estado_civil', 
         'peso_atual',
         'status', // <-- Nosso novo campo adicionado aqui!
-        'motivo_arquivamento'
+        'motivo_arquivamento',
+        'foto',
+    ];
+
+    protected $casts = [
+        'dum' => 'date',
     ];
 
     protected static function booted()
@@ -44,5 +51,47 @@ class Gestante extends Model
 
     public function exames() {
         return $this->hasMany('\App\Models\Exame', 'gestante_id');
+    }
+
+    public function getInfoGestacaoAttribute()
+    {
+        if (!$this->dum) {
+            return null;
+        }
+
+        $dum = Carbon::parse($this->dum);
+        $hoje = Carbon::today();
+
+        if ($dum->isFuture()) {
+            return null;
+        }
+
+        $diasTotais = $dum->diffInDays($hoje);
+        $semanas = (int) floor($diasTotais / 7);
+        $dias = (int) ($diasTotais % 7);
+
+        // Define o trimestre
+        if ($semanas < 14) {
+            $trimestre = '1º trimestre';
+        } elseif ($semanas < 28) {
+            $trimestre = '2º trimestre';
+        } else {
+            $trimestre = '3º trimestre';
+        }
+
+        // Progresso em % (baseado nas 40 semanas / 280 dias padrão)
+        $progresso = min(100, round(($diasTotais / 280) * 100));
+
+        $textoSemana = "Semana {$semanas}";
+        $textoDias = $dias > 0 ? " + {$dias} " . ($dias == 1 ? 'dia' : 'dias') : '';
+
+        return [
+            'semanas' => $semanas,
+            'dias' => $dias,
+            'texto_curto' => $textoSemana,
+            'texto_completo' => "{$textoSemana}{$textoDias}",
+            'trimestre' => $trimestre,
+            'progresso' => $progresso,
+        ];
     }
 }

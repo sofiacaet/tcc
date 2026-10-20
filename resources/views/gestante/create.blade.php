@@ -189,23 +189,30 @@ input[type="file"].form-control:focus {
         </div>
     </div>
 
-    {{-- DATA DE NASCIMENTO, CPF E ESTADO CIVIL --}}
+    {{-- DATA DE NASCIMENTO, DUM, CPF E ESTADO CIVIL --}}
     <div class="row mb-4">
-        <div class="col-md-4">
+        <div class="col-md-3">
             <div class="form-floating mb-3 mb-md-0">
                 <input type="date" class="form-control" name="data_nascimento" value="{{ old('data_nascimento') }}">
                 <label for="data_nascimento">Data de Nascimento</label>
             </div>
         </div>
 
-        <div class="col-md-4">
+        <div class="col-md-3">
+            <div class="form-floating mb-3 mb-md-0">
+                <input type="date" class="form-control" name="dum" value="{{ old('dum') }}" required>
+                <label for="dum">DUM (Última Menstruação)</label>
+            </div>
+        </div>
+
+        <div class="col-md-3">
             <div class="form-floating mb-3 mb-md-0">
                 <input type="text" class="form-control" name="cpf" placeholder="CPF" value="{{ old('cpf') }}" maxlength="14">
                 <label for="cpf">CPF</label>
             </div>
         </div>
 
-        <div class="col-md-4">
+        <div class="col-md-3">
             <div class="form-floating">
                 <select class="form-select" name="estado_civil">
                     <option value="">Selecione</option>
@@ -219,7 +226,7 @@ input[type="file"].form-control:focus {
             </div>
         </div>
     </div>
-
+    
     {{-- BOTÕES --}}
     <div class="row mt-2">
         <div class="col d-flex flex-wrap gap-3">

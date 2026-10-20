@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('nome');
             $table->string('email')->unique();//
+            $table->date('dum')->nullable();
             $table->string('telefone');//
             $table->decimal('altura', 4, 2);//4 digitos (total), 2 deles dps da virgula
             $table->date('data_nascimento');
