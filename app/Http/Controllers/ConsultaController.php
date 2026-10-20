@@ -61,7 +61,7 @@ class ConsultaController extends Controller
     public function create()
     {
         Gate::authorize('create', Consulta::class);
-        $gestantes = Gestante::all();
+        $gestantes = Gestante::where('status', 'Em acompanhamento')->orderBy('nome')->get();
         return view('consulta.create', compact('gestantes'));
     }
 
@@ -119,13 +119,18 @@ class ConsultaController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+   public function edit(string $id)
     {
         $consulta = Consulta::find($id);
         Gate::authorize('update', $consulta);
 
         if(isset($consulta)) {
-            $gestantes = Gestante::all();
+            // CORREÇÃO: Puxa as ativas + a dona da consulta (caso tenha sido arquivada depois)
+            $gestantes = Gestante::where('status', 'Em acompanhamento')
+                                 ->orWhere('id', $consulta->gestante_id)
+                                 ->orderBy('nome')
+                                 ->get();
+                                 
             return view('consulta.edit', compact(['consulta', 'gestantes']));
         }
         return redirect()->route('consulta.index');

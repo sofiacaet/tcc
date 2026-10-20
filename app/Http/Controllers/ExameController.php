@@ -94,7 +94,7 @@ class ExameController extends Controller
     public function create()
     {
         Gate::authorize('create', Exame::class);
-        $gestantes = Gestante::all();
+        $gestantes = Gestante::where('status', 'Em acompanhamento')->orderBy('nome')->get();
         return view('exame.create', compact('gestantes'));
     }
 
@@ -144,7 +144,12 @@ class ExameController extends Controller
         Gate::authorize('update', $exame);
 
         if(isset($exame)) {
-            $gestantes = Gestante::all();
+            // CORREÇÃO: Puxa as ativas + a dona do exame (caso tenha sido arquivada depois)
+            $gestantes = Gestante::where('status', 'Em acompanhamento')
+                                 ->orWhere('id', $exame->gestante_id)
+                                 ->orderBy('nome')
+                                 ->get();
+                                 
             return view('exame.edit', compact(['exame', 'gestantes']));
         }
 

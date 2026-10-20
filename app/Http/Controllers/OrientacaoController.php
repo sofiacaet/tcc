@@ -24,7 +24,7 @@ class OrientacaoController extends Controller
 
         if ($roleId == 2) {
             // MÉDICO / COORDENADOR
-            $gestantes = Gestante::orderBy('nome', 'asc')->get();
+            $gestantes = Gestante::where('status', 'Em acompanhamento')->orderBy('nome', 'asc')->get();
             
             // Pega a gestante selecionada na URL ou a primeira da lista
             $gestanteSelecionadaId = $request->get('gestante_id', $gestantes->first()?->id);
