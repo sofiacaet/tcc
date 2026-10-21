@@ -6,14 +6,13 @@ use App\Http\Controllers\GestanteController;
 use App\Http\Controllers\ConsultaController;
 use App\Http\Controllers\ExameController;
 use App\Http\Controllers\OrientacaoController;
+use App\Http\Controllers\HomeController;
 
 Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/home', function () {
-    return view('home');
-})->name('home')->middleware(['auth', 'verified']);
+Route::get('/home', [HomeController::class, 'index'])->name('home')->middleware(['auth', 'verified']);
 
 Route::resource('/consulta', ConsultaController::class)->middleware(['auth', 'verified']);
 Route::get('/report/consulta', [ConsultaController::class, 'report'])->name('report.consulta')->middleware(['auth', 'verified']);

@@ -156,12 +156,12 @@
     <div class="container-fluid px-4 py-1">
         
         <!-- Logo & Título -->
-        <a href="{{ route('home') }}" class="navbar-brand d-flex align-items-center gap-3">
+        <div class="navbar-brand d-flex align-items-center gap-3">
             <div class="d-flex align-items-center justify-content-center bg-white rounded-circle shadow-sm" style="width: 44px; height: 44px;">
                 <span class="material-symbols-outlined" style="color: #275553; font-size: 26px;">child_care</span>
             </div>
             <span class="fs-4 fw-bold text-white tracking-wide">Gestapguá</span>
-        </a>
+        </div>
 
         <!-- Botão Mobile / Toggler -->
         <button class="navbar-toggler border-0 shadow-none text-white p-2" type="button" data-bs-toggle="collapse" data-bs-target="#itens">
@@ -170,7 +170,13 @@
 
         <!-- Itens da Navegação -->
         <div class="collapse navbar-collapse" id="itens">
-            <ul class="navbar-nav ms-auto align-items-center gap-1 mt-3 mt-md-0">
+            <ul class="navbar-nav mx-auto align-items-center gap-1 mt-3 mt-md-0">
+                <li class="nav-item">
+                    <a href="{{ route('home') }}" class="nav-link text-white-90 hover-white d-flex align-items-center gap-2 px-3 py-2 rounded-pill transition">
+                        <span class="material-symbols-outlined" style="font-size: 22px;">home</span>
+                        <span class="fw-medium text-sm">Início</span>
+                    </a>
+                </li>
 
                 @can('viewAny', App\Models\Gestante::class)
                     <li class="nav-item">
@@ -207,6 +213,9 @@
                         </a>
                     </li>
                 @endcan
+            </ul>
+
+            <ul class="navbar-nav align-items-center gap-1">
 
                 <!-- NOTIFICAÇÕES (Transformado em li.nav-item para seguir a mesma identidade dos outros botões) -->
                 <li class="nav-item dropdown">
