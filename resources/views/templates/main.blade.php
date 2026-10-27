@@ -181,8 +181,17 @@
                 @can('viewAny', App\Models\Gestante::class)
                     <li class="nav-item">
                         <a href="{{ route('gestante.index') }}" class="nav-link text-white-90 hover-white d-flex align-items-center gap-2 px-3 py-2 rounded-pill transition">
-                            <span class="material-symbols-outlined" style="font-size: 22px;">pregnant_woman</span>
-                            <span class="fw-medium text-sm">Gestantes</span>
+                            
+                            @if(auth()->user()->role_id == 2)
+                                {{-- VISÃO DO MÉDICO --}}
+                                <span class="material-symbols-outlined" style="font-size: 22px;">pregnant_woman</span>
+                                <span class="fw-medium text-sm">Gestantes</span>
+                            @else
+                                {{-- VISÃO DA GESTANTE --}}
+                                <span class="material-symbols-outlined" style="font-size: 22px;">person</span>
+                                <span class="fw-medium text-sm">Meu Perfil</span>
+                            @endif
+                            
                         </a>
                     </li>
                 @endcan

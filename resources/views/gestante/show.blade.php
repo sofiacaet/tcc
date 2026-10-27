@@ -1,6 +1,7 @@
 @extends('templates/main', [
     'titulo' => "Sistema Pre-Natal",
-    'cabecalho' => 'Dados da Gestante',
+    // Se for o médico (2), mostra 'Dados da Gestante'. Se for ela mesma, mostra 'Meu Perfil'
+    'cabecalho' => auth()->check() && auth()->user()->role_id == 2 ? 'Dados da Gestante' : 'Meu Perfil',
     'rota' => '',       
     'relatorio' => '',  
     'class' => App\Models\Gestante::class,
@@ -224,15 +225,16 @@ body {
         </div>
     @endif
 
-    {{-- BOTÃO VOLTAR --}}
-    <div class="row mt-4">
-        <div class="col">
-            <a href="{{ route('gestante.index') }}" class="btn btn-custom-back">
-                <span class="material-symbols-outlined align-middle">arrow_back</span> Voltar para a Lista
-            </a>
+    {{-- BOTÃO VOLTAR (Aparece apenas para Médico/Coordenador - role_id 2) --}}
+    @if(auth()->check() && auth()->user()->role_id == 2)
+        <div class="row mt-4">
+            <div class="col">
+                <a href="{{ route('gestante.index') }}" class="btn btn-custom-back">
+                    <span class="material-symbols-outlined align-middle">arrow_back</span> Voltar para a Lista
+                </a>
+            </div>
         </div>
-    </div>
-
+    @endif
 </div>
 
 @endsection

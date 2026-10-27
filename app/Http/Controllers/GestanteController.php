@@ -17,17 +17,22 @@ class GestanteController extends Controller
     {
         Gate::authorize('viewAny', Gestante::class);
 
-        // COORDENADOR = role_id 2 → vê todos, ordenado alfabeticamente
+        // COORDENADOR/MÉDICO = role_id 2 → vê todos em formato de tabela
         if (auth()->user()->role_id == 2) {
             $gestantes = Gestante::orderBy('nome', 'asc')->get();
+            
+            return view('gestante.index', compact('gestantes'));
         } 
-        // PROFESSOR = role_id 1 → vê somente o gestante com o mesmo email do login, ordenado alfabeticamente
+        // GESTANTE = role_id 1 → vê somente o seu próprio perfil
         else {
             $email = auth()->user()->email;
-            $gestantes = Gestante::where('email', $email)->orderBy('nome', 'asc')->get();
-        }
+            
+            // Usamos first() em vez de get() porque queremos apenas 1 registro (o perfil dela), e não uma lista
+            $gestante = Gestante::where('email', $email)->first();
 
-        return view('gestante.index', compact('gestantes'));
+            // Redireciona direto para a tela de visualização do perfil dela
+            return view('gestante.show', compact('gestante'));
+        }
     }
 
     /**
