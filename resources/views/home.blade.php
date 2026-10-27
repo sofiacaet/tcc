@@ -17,10 +17,11 @@
         --border-suave: #c8dad7;
         --texto-main: #183332;
         --texto-muted: #53706e;
+        
     }
 
     body, .main-content {
-        background-color: var(--bg-verde-claro) !important;
+        background-color: var(--border-suave) !important;
     }
 
     /* Topo do Painel */
@@ -309,9 +310,6 @@
         <h4 class="fw-bold mb-1">
             Área da Paciente - {{ $gestante->nome ?? auth()->user()->name }}
         </h4>
-        <p class="mb-0 text-white-50 small">
-            Acompanhamento centralizado do pré-natal digital.
-        </p>
     </div>
 
     {{-- INDICADORES DA GESTANTE --}}

@@ -46,7 +46,7 @@ body {
 
 /* CAIXINHAS DE INFORMAÇÃO */
 .info-box {
-    background: rgba(255, 255, 255, 0.65); 
+    background-color: #ffffff;
     border-radius: 12px;
     padding: 12px 16px;
     margin-bottom: 20px;
