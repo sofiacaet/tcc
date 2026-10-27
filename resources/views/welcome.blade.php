@@ -23,12 +23,13 @@
 <body class="bg-[#254d4b] text-[#f2f7f7] antialiased"> 
 
     <!-- Cabeçalho Único -->
-    <nav class="bg-[#275553] sticky top-0 z-50 border-b border-white/10 shadow-md">
-        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+    <nav class="bg-[#275553] sticky top-0 z-50 border-b border-white/10 shadow-md" style="height: 80px;">
+        <div class="max-w-7xl mx-auto px-6 h-full flex justify-between items-center">
             <!-- Logo -->
             <div class="flex items-center gap-3">
-                <div class="w-10 h-10 rounded-full bg-white flex items-center justify-center text-[#275553] shadow-sm">
-                    <i data-lucide="baby" class="w-6 h-6"></i>
+                <div class="w-10 h-10 rounded-full bg-white flex items-center justify-center text-[#275553] shadow-sm"  style="width: 44px; height: 44px;">
+                    <i data-lucide="baby" style="width: 24px; height: 24px; color: #275553;"></i>
+                   
                 </div>
                 <div>
                     <span class="text-2xl font-bold text-white block leading-none">Gestapguá</span>

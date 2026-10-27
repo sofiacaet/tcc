@@ -158,7 +158,7 @@
         <!-- Logo & Título -->
         <div class="navbar-brand d-flex align-items-center gap-3">
             <div class="d-flex align-items-center justify-content-center bg-white rounded-circle shadow-sm" style="width: 44px; height: 44px;">
-                <span class="material-symbols-outlined" style="color: #275553; font-size: 26px;">child_care</span>
+                <i data-lucide="baby" style="width: 24px; height: 24px; color: #275553;"></i>
             </div>
             <span class="fs-4 fw-bold text-white tracking-wide">Gestapguá</span>
         </div>
@@ -390,5 +390,10 @@
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 <script src="{{ asset('assets/js/jquery-3.6.0.min.js') }}"></script>
+
+<script src="https://unpkg.com/lucide@latest"></script>
+<script>
+    lucide.createIcons();
+</script>
 @yield('script')
 </html>
