@@ -49,14 +49,9 @@
                             Dashboard
                         </a>
                     @else
-                        <a href="{{ route('login') }}" class="text-sm font-medium text-white/90 hover:text-white transition">
+                        <a href="{{ route('login') }}" class="bg-white hover:bg-teal-50 text-[#275553] px-5 py-2 rounded-full font-bold text-sm transition shadow-sm">
                             Login
                         </a>
-                        @if (Route::has('register'))
-                            <a href="{{ route('register') }}" class="bg-white hover:bg-teal-50 text-[#275553] px-5 py-2 rounded-full font-bold text-sm transition shadow-sm">
-                                Cadastrar
-                            </a>
-                        @endif
                     @endauth
                 @endif
             </div>
@@ -75,8 +70,8 @@
                     Acompanhe sua gestação de forma digital, segura e personalizada. Tudo que você precisa em um só lugar.
                 </p>
                 <div class="flex flex-wrap gap-4 pt-2">
-                    @if (Route::has('register'))
-                        <a href="{{ route('register') }}" class="bg-[#3d7a7a] hover:bg-[#326464] text-white px-8 py-3.5 rounded-full font-medium transition shadow-md flex items-center gap-2">
+                    @if (Route::has('login'))
+                        <a href="{{ route('login') }}" class="bg-[#3d7a7a] hover:bg-[#326464] text-white px-8 py-3.5 rounded-full font-medium transition shadow-md flex items-center gap-2">
                             <span>Acessar o serviço digital</span>
                             <i data-lucide="arrow-right" class="w-4 h-4"></i>
                         </a>
@@ -286,8 +281,8 @@
                         <i data-lucide="user-plus" class="w-8 h-8"></i>
                         <span class="absolute -bottom-2 bg-[#3d7a7a] text-white text-xs w-6 h-6 rounded-full flex items-center justify-center font-bold">1</span>
                     </div>
-                    <h3 class="font-bold text-[#2d5c5c] text-sm mb-1">Cadastre-se</h3>
-                    <p class="text-xs text-gray-600 max-w-[200px]">Crie sua conta de forma simples e rápida.</p>
+                    <h3 class="font-bold text-[#2d5c5c] text-sm mb-1">Acesse sua conta</h3>
+                    <p class="text-xs text-gray-600 max-w-[200px]">Entre no sistema para iniciar o seu acompanhamento pré-natal.</p>
                 </div>
 
                 <div class="flex flex-col items-center">
@@ -324,7 +319,7 @@
     <footer class="bg-[#254d4b] text-white text-xs py-10">
         <div class="max-w-7xl mx-auto px-6 text-center space-y-4">
            
-            <p class="text-gray-200/90 text-xs">Programa de apoio ao pré-natal para as comunidades insulares do Município de Paranaguá - PR.</p>
+            <p class="text-gray-200/90 text-xs">Projeto para o acompanhamento gestacional nas Ilhas do município de Paranaguá - PR</p>
             
            
         </div>
