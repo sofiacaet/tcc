@@ -12,7 +12,7 @@
         --petroleo: #275553;
         --petroleo-dark: #1b3d3b;
         --petroleo-subtle: #dbe7e5;
-        --bg-verde-claro: #eef5f4;
+        --bg-verde-claro: #ffffff;
         --bg-verde-card: #e2eceb;
         --border-suave: #c8dad7;
         --texto-main: #183332;
@@ -26,8 +26,8 @@
 
     /* Topo do Painel */
     .header-panel {
-        background-color: var(--petroleo);
-        color: #ffffff;
+        background-color: var(--bg-verde-claro);
+        color: #1d5250;
         border-radius: 12px;
         padding: 24px 28px;
         box-shadow: 0 4px 12px rgba(39, 85, 83, 0.08);
@@ -35,7 +35,7 @@
 
     /* Cards Informativos (KPIs) */
     .stat-card {
-        background-color: var(--bg-verde-card);
+        background-color: var(--petroleo);
         border: 1px solid var(--border-suave);
         border-radius: 12px;
         padding: 20px;
@@ -134,14 +134,14 @@
     /* Progresso da Gestante */
     .progress-bar-container {
         height: 12px;
-        background-color: var(--petroleo-subtle);
+        background-color: var(  --texto-muted);
         border-radius: 20px;
         overflow: hidden;
     }
 
     .progress-bar-fill {
         height: 100%;
-        background-color: var(--petroleo);
+        background-color: var(   --bg-verde-claro);
         border-radius: 20px;
     }
 
@@ -165,9 +165,6 @@
         <h4 class="fw-bold mb-1">
             Painel Clínico - Dr(a). {{ explode(' ', auth()->user()->name)[0] }}
         </h4>
-        <p class="mb-0 text-white-50 small">
-            Acompanhamento e gestão de pacientes do programa pré-natal.
-        </p>
     </div>
 
     {{-- INDICADORES --}}
@@ -175,8 +172,8 @@
         <div class="col-12 col-md-4">
             <div class="stat-card d-flex align-items-center justify-content-between">
                 <div>
-                    <span class="d-block text-uppercase fw-bold fs-8" style="color: var(--texto-muted);">Pacientes Ativas</span>
-                    <h2 class="fw-bold mb-0" style="color: var(--petroleo);">{{ $totalGestantes ?? 0 }}</h2>
+                    <span class="d-block text-uppercase fw-bold fs-8" style="color: var(--bg-verde-claro);">Pacientes Ativas</span>
+                    <h2 class="fw-bold mb-0" style="color: var(--bg-verde-claro);">{{ $totalGestantes ?? 0 }}</h2>
                 </div>
                 <div class="stat-icon">
                     <span class="material-symbols-outlined fs-3">groups</span>
@@ -187,8 +184,8 @@
         <div class="col-12 col-md-4">
             <div class="stat-card d-flex align-items-center justify-content-between">
                 <div>
-                    <span class="d-block text-uppercase fw-bold fs-8" style="color: var(--texto-muted);">Consultas Agendadas</span>
-                    <h2 class="fw-bold mb-0" style="color: var(--petroleo);">{{ $consultasAgendadas ?? 0 }}</h2>
+                    <span class="d-block text-uppercase fw-bold fs-8" style="color: var(--bg-verde-claro);">Consultas Agendadas</span>
+                    <h2 class="fw-bold mb-0" style="color: var(--bg-verde-claro);">{{ $consultasAgendadas ?? 0 }}</h2>
                 </div>
                 <div class="stat-icon">
                     <span class="material-symbols-outlined fs-3">event</span>
@@ -199,8 +196,8 @@
         <div class="col-12 col-md-4">
             <div class="stat-card d-flex align-items-center justify-content-between">
                 <div>
-                    <span class="d-block text-uppercase fw-bold fs-8" style="color: var(--texto-muted);">Exames Recebidos</span>
-                    <h2 class="fw-bold mb-0" style="color: var(--petroleo);">{{ $examesRecebidos ?? 0 }}</h2>
+                    <span class="d-block text-uppercase fw-bold fs-8" style="color: var(--bg-verde-claro);">Exames Recebidos</span>
+                    <h2 class="fw-bold mb-0" style="color: var(--bg-verde-claro);">{{ $examesRecebidos ?? 0 }}</h2>
                 </div>
                 <div class="stat-icon">
                     <span class="material-symbols-outlined fs-3">lab_research</span>
@@ -260,7 +257,6 @@
                             </div>
                             <span>Agendar Nova Consulta</span>
                         </div>
-                        <span class="material-symbols-outlined fs-5">arrow_forward</span>
                     </a>
                 @endif
 
@@ -272,7 +268,6 @@
                             </div>
                             <span>Central de Orientações</span>
                         </div>
-                        <span class="material-symbols-outlined fs-5">arrow_forward</span>
                     </a>
                 @endif
             </div>
@@ -318,17 +313,17 @@
             @php $info = $gestante->info_gestacao; @endphp
             <div class="col-12 col-md-4">
                 <div class="stat-card">
-                    <span class="d-block text-uppercase fw-bold fs-8 mb-1" style="color: var(--texto-muted);">Idade Gestacional</span>
-                    <h4 class="fw-bold mb-0" style="color: var(--petroleo);">{{ $info['texto_completo'] ?? '-' }}</h4>
-                    <small class="text-muted">{{ $info['trimestre'] ?? '' }}</small>
+                    <span class="d-block text-uppercase fw-bold fs-8 mb-1" style="color: var( --bg-verde-claro);">Idade Gestacional</span>
+                    <h4 class="fw-bold mb-0" style="color: var( --bg-verde-claro);">{{ $info['texto_completo'] ?? '-' }}</h4>
+                    <small style="color: var( --bg-verde-claro);">{{ $info['trimestre'] ?? '' }}</small>
                 </div>
             </div>
 
             <div class="col-12 col-md-4">
                 <div class="stat-card d-flex flex-column justify-content-center">
                     <div class="d-flex justify-content-between align-items-center mb-2">
-                        <span class="text-uppercase fw-bold fs-8" style="color: var(--texto-muted);">Progresso</span>
-                        <span class="fw-bold" style="color: var(--petroleo);">{{ $info['progresso'] ?? 0 }}%</span>
+                        <span class="text-uppercase fw-bold fs-8" style="color: var( --bg-verde-claro);">Progresso</span>
+                        <span class="fw-bold" style="color: var( --bg-verde-claro);">{{ $info['progresso'] ?? 0 }}%</span>
                     </div>
                     <div class="progress-bar-container">
                         <div class="progress-bar-fill" style="width: {{ $info['progresso'] ?? 0 }}%;"></div>
@@ -352,8 +347,8 @@
         <div class="col-12 col-md-4">
             <div class="stat-card d-flex align-items-center justify-content-between">
                 <div>
-                    <span class="d-block text-uppercase fw-bold fs-8" style="color: var(--texto-muted);">Exames Solicitados</span>
-                    <h2 class="fw-bold mb-0" style="color: var(--petroleo);">{{ $examesPendentes ?? 0 }}</h2>
+                    <span class="d-block text-uppercase fw-bold fs-8" style="color: var( --bg-verde-claro);">Exames Solicitados</span>
+                    <h2 class="fw-bold mb-0" style="color: var( --bg-verde-claro);">{{ $examesPendentes ?? 0 }}</h2>
                 </div>
                 <div class="stat-icon">
                     <span class="material-symbols-outlined fs-3">clinical_notes</span>
@@ -365,9 +360,9 @@
     {{-- CONTEÚDO PRINCIPAL DA GESTANTE --}}
     <div class="row g-4 mb-4">
         
-        {{-- PRÓXIMA CONSULTA --}}
+        {{-- PRÓXIMA CONSULTA (Ocupa 7 colunas) --}}
         <div class="col-12 col-lg-7">
-            <div class="content-box">
+            <div class="content-box h-100">
                 <h5 class="fw-bold mb-3" style="color: var(--texto-main);">Próxima Consulta</h5>
                 
                 @if(isset($proximaConsulta) && $proximaConsulta)
@@ -394,63 +389,60 @@
             </div>
         </div>
 
-        {{-- ATALHOS DA GESTANTE --}}
+        {{-- DICA DE SAÚDE (Ocupa as 5 colunas restantes ao lado) --}}
         <div class="col-12 col-lg-5">
-            <div class="d-flex flex-column gap-3">
-                <h5 class="fw-bold mb-1" style="color: var(--texto-main);">Ações Rápidas</h5>
-
-                @if(Route::has('orientacao.index'))
-                    <a href="{{ route('orientacao.index') }}" class="btn-shortcut">
-                        <div class="d-flex align-items-center gap-3">
-                            <div class="shortcut-icon">
-                                <span class="material-symbols-outlined fs-5">chat</span>
-                            </div>
-                            <span>Contato com Equipe Médica</span>
-                        </div>
-                        <span class="material-symbols-outlined fs-5">arrow_forward</span>
-                    </a>
-                @endif
-
-                @if(Route::has('exame.index') || Route::has('exames.index'))
-                    <a href="{{ Route::has('exame.index') ? route('exame.index') : route('exames.index') }}" class="btn-shortcut">
-                        <div class="d-flex align-items-center gap-3">
-                            <div class="shortcut-icon">
-                                <span class="material-symbols-outlined fs-5">folder</span>
-                            </div>
-                            <span>Meus Exames</span>
-                        </div>
-                        <span class="material-symbols-outlined fs-5">arrow_forward</span>
-                    </a>
-                @endif
+            {{-- Fundo principal igual ao da consulta (padrão da class content-box) --}}
+            <div class="content-box h-100" style="border-left: 4px solid var(--green);">
+                <div class="d-flex align-items-center gap-2 mb-3">
+                    <span class="material-symbols-outlined fs-4" style="color: var(--green-strong);">lightbulb</span>
+                    <h5 class="fw-bold mb-0" style="color: var(--texto-main);">Dica da Semana</h5>
+                </div>
+                {{-- Fundo do texto: um verde bem suave e elegante com borda sutil --}}
+                <div class="orientacao-container" style="background: rgba(43, 122, 120, 0.1); border-radius: 12px; padding: 16px; border: 1px solid rgba(43, 122, 120, 0.2);">
+                    <p class="mb-0 fw-medium" style="color: #1d5250;">
+                        Lembre-se de manter a hidratação em dia! Beber pelo menos 2 a 3 litros de água diariamente ajuda no desenvolvimento do líquido amniótico e reduz o inchaço.
+                    </p>
+                </div>
             </div>
         </div>
 
     </div>
 
-    {{-- ÚLTIMA ORIENTAÇÃO --}}
+    {{-- NOVO: ALERTA DE SINTOMAS --}}
     <div class="row">
         <div class="col-12">
-            <div class="content-box">
-                <h5 class="fw-bold mb-3" style="color: var(--texto-main);">Última Orientação Médica</h5>
-                @if(isset($ultimaOrientacao) && $ultimaOrientacao)
-                    <div class="orientacao-container">
-                        <div class="d-flex justify-content-between align-items-center mb-2">
-                            <strong style="color: var(--petroleo);">{{ $ultimaOrientacao->user->name ?? 'Equipe Médica' }}</strong>
-                            <small class="text-muted">{{ \Carbon\Carbon::parse($ultimaOrientacao->created_at)->format('d/m/Y H:i') }}</small>
+            <div class="content-box" style="background-color: rgba(230, 57, 70, 0.05); border: 1px dashed var(--danger);">
+                <div class="d-flex align-items-center gap-2 mb-3">
+                    <span class="material-symbols-outlined fs-4" style="color: var(--danger);">warning</span>
+                    <h5 class="fw-bold mb-0" style="color: var(--danger);">Sinais de Alerta</h5>
+                </div>
+                <p class="text-secondary mb-2">Procure a maternidade ou unidade de saúde mais próxima se apresentar algum dos seguintes sintomas:</p>
+                <div class="row g-2">
+                    <div class="col-12 col-md-6 col-lg-3">
+                        <div class="p-2 rounded text-center fw-semibold" style="background: white; border: 1px solid rgba(230, 57, 70, 0.2); color: var(--texto-main);">
+                            Sangramento
                         </div>
-                        <p class="mb-0 text-secondary">
-                            {{ $ultimaOrientacao->mensagem ?? $ultimaOrientacao->texto ?? $ultimaOrientacao->descricao }}
-                        </p>
                     </div>
-                @else
-                    <p class="text-muted mb-0">Nenhuma orientação registrada recentemente.</p>
-                @endif
+                    <div class="col-12 col-md-6 col-lg-3">
+                        <div class="p-2 rounded text-center fw-semibold" style="background: white; border: 1px solid rgba(230, 57, 70, 0.2); color: var(--texto-main);">
+                            Perda de Líquido
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-3">
+                        <div class="p-2 rounded text-center fw-semibold" style="background: white; border: 1px solid rgba(230, 57, 70, 0.2); color: var(--texto-main);">
+                            Forte Dor de Cabeça
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-3">
+                        <div class="p-2 rounded text-center fw-semibold" style="background: white; border: 1px solid rgba(230, 57, 70, 0.2); color: var(--texto-main);">
+                            Febre Alta
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
 @endif
-
-</div>
 
 @endsection
