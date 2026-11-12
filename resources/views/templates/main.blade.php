@@ -184,7 +184,7 @@
                             
                             @if(auth()->user()->role_id == 2)
                                 {{-- VISÃO DO MÉDICO --}}
-                                <span class="material-symbols-outlined" style="font-size: 22px;">pregnant_woman</span>
+                                <span class="material-symbols-outlined" style="font-size: 22px;">person</span>
                                 <span class="fw-medium text-sm">Gestantes</span>
                             @else
                                 {{-- VISÃO DA GESTANTE --}}
