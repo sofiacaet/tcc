@@ -197,16 +197,24 @@ input[type="file"].form-control:focus {
         </div>
     </div>
 
-    {{-- DATA DE NASCIMENTO, CPF E ESTADO CIVIL --}}
+    {{-- DUM , DATA DE NASCIMENTO, CPF E ESTADO CIVIL --}}
     <div class="row mb-4">
-        <div class="col-md-4">
+        <div class="col-md-3">
+            <div class="form-floating mb-3 mb-md-0">
+                {{-- ADICIONADO CAMPO DUM QUE ESTAVA FALTANDO E CAUSANDO O ERRO --}}
+                <input type="date" class="form-control" name="dum" value="{{ old('dum', $gestante->dum ? \Carbon\Carbon::parse($gestante->dum)->format('Y-m-d') : '') }}">
+                <label for="dum">DUM (Última Menstruação)</label>
+            </div>
+        </div>
+
+        <div class="col-md-3">
             <div class="form-floating mb-3 mb-md-0">
                 <input type="date" class="form-control" name="data_nascimento" value="{{ $gestante->data_nascimento }}">
                 <label for="data_nascimento">Data de Nascimento</label>
             </div>
         </div>
 
-        <div class="col-md-4">
+        <div class="col-md-3">
             <div class="form-floating mb-3 mb-md-0">
                 {{-- AQUI: Adicionado maxlength="14" para impedir digitação de muitos caracteres e evitar o erro do banco! --}}
                 <input type="text" class="form-control" name="cpf" placeholder="CPF" value="{{ $gestante->cpf }}" maxlength="14">
@@ -214,7 +222,7 @@ input[type="file"].form-control:focus {
             </div>
         </div>
 
-        <div class="col-md-4">
+        <div class="col-md-3">
             <div class="form-floating mb-3 mb-md-0">
                 <select class="form-select" name="estado_civil">
                     <option value="Solteira" {{ $gestante->estado_civil == 'Solteira' ? 'selected' : '' }}>Solteira</option>
