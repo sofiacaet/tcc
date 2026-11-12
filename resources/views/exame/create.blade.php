@@ -143,7 +143,7 @@ body {
         <div class="col">
             <div class="form-floating mb-4">
                 <select name="tipo_exame" id="tipo_exame" class="form-select">
-                    <option value="" disabled selected>Selecione o tipo de exame</option>
+                    <option value="" disabled selected>Selecione</option>
                     <option value="Exame de Sangue" @if(old('tipo_exame') == 'Exame de Sangue') selected @endif>Exame de Sangue</option>
                     <option value="Exame de Urina" @if(old('tipo_exame') == 'Exame de Urina') selected @endif>Exame de Urina</option>
                     <option value="Exame de Imagem" @if(old('tipo_exame') == 'Exame de Imagem') selected @endif>Exame de Imagem</option>

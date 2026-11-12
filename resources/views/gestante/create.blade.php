@@ -215,7 +215,7 @@ input[type="file"].form-control:focus {
         <div class="col-md-3">
             <div class="form-floating">
                 <select class="form-select" name="estado_civil">
-                    <option value="">Selecione</option>
+                     <option value="" disabled selected>Selecione</option>
                     <option value="Solteira" {{ old('estado_civil') == 'Solteira' ? 'selected' : '' }}>Solteira</option>
                     <option value="Casada" {{ old('estado_civil') == 'Casada' ? 'selected' : '' }}>Casada</option>
                     <option value="União Estável" {{ old('estado_civil') == 'União Estável' ? 'selected' : '' }}>União Estável</option>

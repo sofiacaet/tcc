@@ -128,7 +128,7 @@ body {
         <div class="col">
             <div class="form-floating mb-4">
                 <select name="tipo_consulta" id="tipo_consulta" class="form-select">
-                    <option value="" disabled selected>Selecione o tipo de consulta</option>
+                    <option value="" disabled selected>Selecione</option>
                     <option value="Primeira Consulta" @if(old('tipo_consulta') == 'Primeira Consulta') selected @endif>1ª Consulta</option>
                     <option value="Consulta de Rotina" @if(old('tipo_consulta') == 'Consulta de Rotina') selected @endif>Consulta de Rotina</option>
                     <option value="Consulta de Retorno" @if(old('tipo_consulta') == 'Consulta de Retorno') selected @endif>Consulta de Retorno (Exames)</option>
