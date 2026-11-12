@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Notification; // <-- Adicionado para notificar m�
 
 class OrientacaoController extends Controller
 {
-    public function index(Request $request)
+   public function index(Request $request)
     {
         Gate::authorize('viewAny', Orientacao::class);
 
@@ -21,6 +21,12 @@ class OrientacaoController extends Controller
              ->where('type', 'App\Notifications\NovaMensagemChat')
              ->update(['read_at' => now()]);
         $roleId = $user->role_id;
+
+        // Inicializamos as variáveis para não dar erro no compact() da view
+        $medicos = collect();
+        $medicoSelecionado = null;
+        $gestanteSelecionada = null;
+        $gestantes = collect();
 
         if ($roleId == 2) {
             // MÉDICO / COORDENADOR
@@ -40,12 +46,20 @@ class OrientacaoController extends Controller
             $gestanteSelecionada = Gestante::where('email', $user->email)->first();
             $gestantes           = collect([$gestanteSelecionada]); // Apenas ela na lista
             
+            // ---> AQUI ESTÁ A CORREÇÃO: Buscando os médicos para a View da Gestante <---
+            $medicos = User::where('role_id', 2)->orderBy('name', 'asc')->get();
+            
+            $medicoSelecionadoId = $request->get('medico_id', $medicos->first()?->id);
+            $medicoSelecionado = $medicos->where('id', $medicoSelecionadoId)->first();
+
+            // Como as mensagens são por "Gestante", puxamos as mensagens vinculadas a ela
             $orientacoes = $gestanteSelecionada 
                 ? Orientacao::with('user')->where('gestante_id', $gestanteSelecionada->id)->oldest()->get()
                 : collect();
         }
 
-        return view('orientacao.index', compact('orientacoes', 'gestantes', 'gestanteSelecionada'));
+        // Adicionamos $medicos e $medicoSelecionado no compact
+        return view('orientacao.index', compact('orientacoes', 'gestantes', 'gestanteSelecionada', 'medicos', 'medicoSelecionado'));
     }
     
     public function store(Request $request)

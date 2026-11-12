@@ -28,9 +28,9 @@ body {
 
 /* CONTAINER PRINCIPAL DO CHAT */
 .chat-container {
-    background-color: #c5dede; /* Mesmo verde do fundo */
+    background-color: #c5dede; 
     border-radius: 16px;
-    box-shadow: 0 12px 40px rgba(0,0,0,0.22); /* Sombreamento escuro igual da tabela */
+    box-shadow: 0 12px 40px rgba(0,0,0,0.22); 
     border: 1px solid rgba(255, 255, 255, 0.4);
     overflow: hidden;
     min-height: 550px;
@@ -52,10 +52,10 @@ body {
     color: #fff !important; 
 }
 
-/* Painel Esquerdo - Lista de Pacientes */
+/* Painel Esquerdo - Lista de Pacientes/Médicos */
 .gestantes-list {
     border-right: 1px solid rgba(255, 255, 255, 0.3);
-    background-color: #c5dede; /* Mesmo verde do fundo */
+    background-color: #c5dede; 
     height: 550px;
     overflow-y: auto;
 }
@@ -92,7 +92,7 @@ body {
     flex: 1;
     padding: 20px;
     overflow-y: auto;
-    background-color: #c5dede; /* Mesmo verde do fundo */
+    background-color: #c5dede; 
     display: flex;
     flex-direction: column;
 }
@@ -156,7 +156,7 @@ body {
 }
 
 .btn-petroleo:hover {
-    background-color: #143a39; /* Apenas escurece um pouco no hover */
+    background-color: #143a39; 
     color: #ffffff;
 }
 </style>
@@ -164,17 +164,22 @@ body {
 <div class="chat-container">
     <div class="row g-0">
         
-        {{-- COLUNA DA ESQUERDA: LISTA DE PACIENTES (APARECE APENAS PARA O MÉDICO) --}}
-        @if(auth()->user()->role_id == 2)
-            <div class="col-md-4 col-lg-3 gestantes-list">
-                <div class="p-3 border-bottom d-flex align-items-center gap-3" style="background-color: #ffffffa6;">
-                    <span class="material-symbols-outlined" style="color: var(--green-strong); font-size: 28px;">groups</span>
-                    <div>
-                        <h6 class="mb-0 fw-bold" style="color: var(--green-strong);">Pacientes</h6>
-                    </div>
+        {{-- COLUNA DA ESQUERDA: LISTA DE CONTATOS --}}
+        <div class="col-md-4 col-lg-3 gestantes-list">
+            <div class="p-3 border-bottom d-flex align-items-center gap-3" style="background-color: #ffffffa6;">
+                <span class="material-symbols-outlined" style="color: var(--green-strong); font-size: 28px;">
+                    {{ auth()->user()->role_id == 2 ? 'groups' : 'medical_services' }}
+                </span>
+                <div>
+                    <h6 class="mb-0 fw-bold" style="color: var(--green-strong);">
+                        {{ auth()->user()->role_id == 2 ? 'Pacientes' : 'Equipe Médica' }}
+                    </h6>
                 </div>
+            </div>
 
-                @forelse($gestantes->where('status', 'Em acompanhamento') as $g)
+            @if(auth()->user()->role_id == 2)
+                {{-- Visão do Médico: Lista as Gestantes --}}
+                @forelse($gestantes as $g)
                     @if($g)
                         <a href="{{ route('orientacao.index', ['gestante_id' => $g->id]) }}" 
                            class="gestante-item {{ isset($gestanteSelecionada) && $gestanteSelecionada->id == $g->id ? 'active' : '' }}">
@@ -186,14 +191,28 @@ body {
                         Nenhuma gestante cadastrada.
                     </div>
                 @endforelse
-            </div>
-        @endif
+            @else
+                {{-- Visão da Gestante: Lista os Médicos --}}
+                @forelse($medicos as $m)
+                    @if($m)
+                        <a href="{{ route('orientacao.index', ['medico_id' => $m->id]) }}" 
+                           class="gestante-item {{ isset($medicoSelecionado) && $medicoSelecionado->id == $m->id ? 'active' : '' }}">
+                            <div class="fw-bold">Dr(a). {{ $m->name }}</div>
+                        </a>
+                    @endif
+                @empty
+                    <div class="p-3 text-center text-muted">
+                        Nenhum médico disponível.
+                    </div>
+                @endforelse
+            @endif
+        </div>
 
         {{-- COLUNA DA DIREITA: CONVERSA E ENVIO --}}
-        {{-- Se for médico (2) ocupa o resto da tela (col-md-8 col-lg-9). Se for paciente, ocupa a tela TODA (col-12) --}}
-        <div class="{{ auth()->user()->role_id == 2 ? 'col-md-8 col-lg-9' : 'col-12' }} chat-box">
+        <div class="col-md-8 col-lg-9 chat-box">
             
-            @if($gestanteSelecionada)
+            {{-- Verifica se uma conversa foi selecionada --}}
+            @if((auth()->user()->role_id == 2 && isset($gestanteSelecionada)) || (auth()->user()->role_id != 2 && isset($medicoSelecionado)))
                 
                 {{-- Cabeçalho da Conversa --}}
                 <div class="p-3 border-bottom  d-flex align-items-center justify-content-between" style="background-color: #ffffffa6; height: 61px; ">
@@ -201,7 +220,7 @@ body {
                         @if(auth()->user()->role_id == 2)
                             <h6 class="mb-0 fw-bold" style="color: #275553;">{{ $gestanteSelecionada->nome }}</h6>   
                         @else
-                            <h6 class="mb-0 fw-bold" style="color: #275553;">Equipe Médica - Gestapguá</h6>
+                            <h6 class="mb-0 fw-bold" style="color: #275553;">Dr(a). {{ $medicoSelecionado->name }}</h6>
                         @endif
                     </div>
                 </div>
@@ -228,7 +247,9 @@ body {
                     @empty
                         <div class="text-center text-muted my-5">
                             <span class="material-symbols-outlined fs-1 text-black-50">forum</span>
-                            <p class="mt-2">Nenhuma orientação ou mensagem registrada com este paciente.</p>
+                            <p class="mt-2">
+                                {{ auth()->user()->role_id == 2 ? 'Nenhuma orientação ou mensagem registrada com este paciente.' : 'Inicie uma conversa com a equipe médica.' }}
+                            </p>
                         </div>
                     @endforelse
                 </div>
@@ -238,7 +259,11 @@ body {
                     <div class="chat-input-area">
                         <form action="{{ route('orientacao.store') }}" method="POST" class="d-flex gap-2">
                             @csrf
-                            <input type="hidden" name="gestante_id" value="{{ $gestanteSelecionada->id }}">
+                            
+                            {{-- Se for médico, passa a gestante selecionada. Se for gestante, não precisa passar ID de gestante pois a controller descobre pelo email do usuário logado --}}
+                            @if(auth()->user()->role_id == 2)
+                                <input type="hidden" name="gestante_id" value="{{ $gestanteSelecionada->id }}">
+                            @endif
                             
                             <textarea 
                                 name="mensagem" 
@@ -258,7 +283,7 @@ body {
             @else
                 <div class="d-flex flex-column align-items-center justify-content-center h-100 text-muted">
                     <span class="material-symbols-outlined fs-1">person_search</span>
-                    <p class="mt-2">Selecione uma gestante ao lado para visualizar as orientações.</p>
+                    <p class="mt-2">Selecione uma opção ao lado para visualizar as orientações.</p>
                 </div>
             @endif
         </div>
