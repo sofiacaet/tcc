@@ -22,7 +22,7 @@
             width: 100%;
             height: 100%;
             /* Fundo ocupando a tela toda com a cor verde clara */
-            background-color: #f2f7f7;
+            background-color: #c5dede;
             font-family: 'Plus Jakarta Sans', sans-serif;
         }
 
@@ -222,11 +222,9 @@
 
                 <button type="submit" class="btn-submit">
                     Enviar Link de Recuperação
-                    <i data-lucide="arrow-right" style="width: 18px; height: 18px;"></i>
                 </button>
                 
                 <a href="{{ route('login') }}" class="back-link">
-                    <i data-lucide="arrow-left" style="width: 16px; height: 16px;"></i>
                     Voltar para o Login
                 </a>
             </form>
