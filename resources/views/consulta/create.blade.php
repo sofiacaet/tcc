@@ -68,7 +68,7 @@ body {
 
 /* ESTILIZAÇÃO DO INPUT GROUP (Gestante) */
 .input-group-text.custom-group {
-    background: linear-gradient(90deg, var(--green), var(--green-light));
+    background:  var(--green);
     color: #fff;
     border: none;
     border-radius: 12px 0 0 12px;
@@ -151,6 +151,20 @@ body {
                         </option>
                     @endforeach
                 </select>
+            </div>
+        </div>
+    </div>
+
+     {{-- LOCAL DA CONSULTA --}}
+    <div class="row">
+        <div class="col">
+            <div class="form-floating mb-4">
+                <select name="local" id="local" class="form-select" required>
+                    <option value="" disabled selected>Selecione o Local</option>
+                    <option value="UBS Emir Roth (Ilha dos Valadares)" @if(old('local') == 'UBS Emir Roth (Ilha dos Valadares)') selected @endif>UBS Emir Roth (Ilha dos Valadares)</option>
+                    <option value="Hospital Regional do Litoral (HRL)" @if(old('local') == 'Hospital Regional do Litoral (HRL)') selected @endif>Hospital Regional do Litoral (HRL)</option>
+                </select>
+                <label for="local">Local da Consulta</label>
             </div>
         </div>
     </div>

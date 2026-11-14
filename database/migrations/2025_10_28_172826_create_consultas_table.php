@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('consultas', function (Blueprint $table) {
             $table->id();
             $table->string('tipo_consulta');
+            $table->string('local');
             $table->date('data');
             $table->time('horario');
            

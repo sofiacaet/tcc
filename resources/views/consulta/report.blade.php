@@ -80,6 +80,7 @@
             <tr>
                 <th>Consulta</th>
                 <th>Nome da Gestante</th>
+                <th>Local</th>
                 <th>Data</th>
                 <th>Horário</th>
                
@@ -90,6 +91,7 @@
                 <tr>
                     <td>{{ $consulta->tipo_consulta }}</td>
                     <td>{{ $consulta->gestante->nome }}</td>
+                    <td>{{ $consulta->local ?? 'Não informado' }}</td>
                     <td>{{ \Carbon\Carbon::parse($consulta->data)->format('d/m/Y') }}</td>
                     <td>{{ \Carbon\Carbon::parse($consulta->horario)->format('H:i') }}</td>
                    

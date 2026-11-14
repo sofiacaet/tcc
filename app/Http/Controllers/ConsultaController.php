@@ -77,6 +77,7 @@ class ConsultaController extends Controller
         if(isset($gestante)) {
             $consulta = new Consulta();
             $consulta->tipo_consulta = mb_strtoupper($request->tipo_consulta, 'UTF-8');
+            $consulta->local = $request->local;
             $consulta->data = $request->data;
             $consulta->horario = $request->horario;
             

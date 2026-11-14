@@ -102,17 +102,23 @@ body {
     
     <h5 class="mb-4 texto-info">Dados do Agendamento</h5>
     
-    <div class="row">
-        <div class="col-md-6">
+   <div class="row">
+        <div class="col-md-4">
             <div class="info-box">
                 <span class="info-label">Gestante</span>
                 <div class="info-value">{{ $consulta->gestante->nome }}</div>
             </div>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-4">
             <div class="info-box">
                 <span class="info-label">Tipo de Consulta</span>
                 <div class="info-value">{{ $consulta->tipo_consulta }}</div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="info-box">
+                <span class="info-label">Local da Consulta</span>
+                <div class="info-value">{{ $consulta->local ?? 'Não informado' }}</div>
             </div>
         </div>
     </div>

@@ -184,6 +184,16 @@ body {
             </div>
         </div>
     </div>
+
+    {{-- LOCAL DA CONSULTA (BLOQUEADO) --}}
+    <div class="row">
+        <div class="col">
+            <div class="form-floating mb-4">
+                <input type="text" class="form-control" id="local" value="{{ $consulta->local }}" disabled />
+                <label for="local">Local da Consulta</label>
+            </div>
+        </div>
+    </div>
     
     {{-- DATA E HORÁRIO (BLOQUEADOS) --}}
     <div class="row">

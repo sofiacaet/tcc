@@ -183,6 +183,7 @@ td, th {
                     <tr>
                         <th>CONSULTA</th>
                         <th class="d-none d-md-table-cell">NOME DA GESTANTE</th>
+                        <th class="d-none d-md-table-cell">LOCAL</th>
                         <th class="d-none d-md-table-cell">DATA/HORA</th>
                         <th>AÇÕES</th>
                     </tr>
@@ -192,6 +193,7 @@ td, th {
                         <tr>
                             <td>{{ $item->tipo_consulta }}</td>
                             <td class="d-none d-md-table-cell">{{ $item->gestante->nome }}</td>
+                            <td class="d-none d-md-table-cell">{{ $item->local ?? 'Não informado' }}</td>
                             <td class="d-none d-md-table-cell">
                                 {{ \Carbon\Carbon::parse($item->data)->format('d/m/Y') }} às {{ \Carbon\Carbon::parse($item->horario)->format('H:i') }}
                             </td>
@@ -232,6 +234,7 @@ td, th {
                         <tr>
                             <th>CONSULTA</th>
                             <th>GESTANTE</th>
+                            <th class="d-none d-md-table-cell">LOCAL</th>
                             <th class="d-none d-md-table-cell">DATA/HORA</th>
                             <th>AÇÕES</th>
                         </tr>
@@ -241,6 +244,7 @@ td, th {
                             <tr>
                                 <td>{{ $item->tipo_consulta }}</td>
                                 <td>{{ $item->gestante->nome }}</td>
+                                <td class="d-none d-md-table-cell">{{ $item->local ?? 'Não informado' }}</td>
                                 <td class="d-none d-md-table-cell">
                                     {{ \Carbon\Carbon::parse($item->data)->format('d/m/Y') }} às {{ \Carbon\Carbon::parse($item->horario)->format('H:i') }}
                                 </td>
