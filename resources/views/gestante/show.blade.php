@@ -187,7 +187,7 @@ body {
                 <div class="info-value">{{ $gestante->peso_atual ? number_format($gestante->peso_atual, 2, ',', '.') . ' kg' : 'Não informado' }}</div>
             </div>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-3">
             <div class="info-box">
                 <span class="info-label">DUM (Última Menstruação)</span>
                 <div class="info-value">
@@ -195,7 +195,15 @@ body {
                 </div>
             </div>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-3">
+            <div class="info-box">
+                <span class="info-label">Data Provável do Parto</span>
+                <div class="info-value">
+                    {{ $gestante->info_gestacao['dpp'] ?? 'Não calculada' }}
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
             <div class="info-box">
                 <span class="info-label">Idade Gestacional</span>
                 <div class="info-value">
@@ -203,7 +211,7 @@ body {
                 </div>
             </div>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-3">
             <div class="info-box">
                 <span class="info-label">Trimestre</span>
                 <div class="info-value">
@@ -211,7 +219,7 @@ body {
                 </div>
             </div>
         </div>
-    </div>
+        
 
     {{-- MOTIVO DE ARQUIVAMENTO (Caso o acesso venha da aba de arquivadas, a justificativa continua aparecendo) --}}
     @if($gestante->status === 'Arquivada')

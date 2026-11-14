@@ -181,6 +181,9 @@
                             <tr><td class="label">CPF:</td><td>{{ $gestante->cpf }}</td></tr>
                             <tr><td class="label">ESTADO CIVIL:</td><td>{{ $gestante->estado_civil }}</td></tr>
                             <tr><td class="label">PESO ATUAL:</td><td>{{ $gestante->peso_atual }}</td></tr>
+                            <tr><td class="label">DUM:</td><td>{{ $gestante->dum ? \Carbon\Carbon::parse($gestante->dum)->format('d/m/Y') : 'Não informada' }}</td></tr>
+                            <tr><td class="label">IDADE GESTACIONAL:</td><td>{{ $gestante->info_gestacao['texto_completo'] ?? 'Não calculada' }} ({{ $gestante->info_gestacao['trimestre'] ?? '-' }})</td></tr>
+                            <tr><td class="label">DPP (PARTO):</td><td><strong>{{ $gestante->info_gestacao['dpp'] ?? 'Não calculada' }}</strong></td></tr>
                         </table>
                     </td>
                 </tr>

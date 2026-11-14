@@ -84,6 +84,7 @@ class Gestante extends Model
 
         $textoSemana = "Semana {$semanas}";
         $textoDias = $dias > 0 ? " + {$dias} " . ($dias == 1 ? 'dia' : 'dias') : '';
+        $dpp = $dum->copy()->addDays(280)->format('d/m/Y');
 
         return [
             'semanas' => $semanas,
@@ -92,6 +93,7 @@ class Gestante extends Model
             'texto_completo' => "{$textoSemana}{$textoDias}",
             'trimestre' => $trimestre,
             'progresso' => $progresso,
+            'dpp' => $dpp,
         ];
     }
 }
