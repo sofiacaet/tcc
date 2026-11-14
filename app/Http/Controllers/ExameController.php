@@ -101,6 +101,9 @@ class ExameController extends Controller
     /**
      * Store a newly created resource in storage.
      */
+   /**
+     * Store a newly created resource in storage.
+     */
     public function store(Request $request)
     {
         Gate::authorize('create', Exame::class);
@@ -111,6 +114,22 @@ class ExameController extends Controller
             $exame->tipo_exame = mb_strtoupper($request->tipo_exame, 'UTF-8');
             $exame->status = 'Solicitado';
             $exame->gestante()->associate($gestante);
+
+            // =========================================================================
+            // UPLOAD DA GUIA DO MÉDICO
+            // =========================================================================
+            if ($request->hasFile('documento_guia')) {
+                $extensao = $request->file('documento_guia')->getClientOriginalExtension();
+                // Usa time() + id da gestante para garantir um nome único provisório antes de salvar
+                $nomeArquivo = 'guia_' . $gestante->id . '_' . time() . '.' . $extensao;
+                
+                $request->file('documento_guia')->storeAs('exames/guias', $nomeArquivo, ['disk' => 'public']);
+                
+                // Salva o caminho no banco de dados na nova coluna
+                $exame->documento_guia = 'exames/guias/' . $nomeArquivo; 
+            }
+            // =========================================================================
+
             $exame->save();
 
             // =========================================================================
@@ -180,16 +199,23 @@ class ExameController extends Controller
      * Remove the specified resource from storage.
      */
     public function destroy(string $id)
-    {
-        $exame = Exame::find($id);
-        Gate::authorize('delete', $exame);
+{
+    $exame = Exame::find($id);
+    Gate::authorize('delete', $exame);
 
-        if(isset($exame)) {
-            $exame->delete();
+    if (isset($exame)) {
+        if ($exame->documento) {
+            Storage::disk('public')->delete($exame->documento);
+        }
+        if ($exame->documento_guia) {
+            Storage::disk('public')->delete($exame->documento_guia);
         }
 
-        return redirect()->route('exame.index');
+        $exame->delete();
     }
+
+    return redirect()->route('exame.index');
+}
 
     public function report() {
          // COORDENADOR vê todos

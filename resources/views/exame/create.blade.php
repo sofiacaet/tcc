@@ -68,7 +68,7 @@ body {
 
 /* ESTILIZAÇÃO DO INPUT GROUP (Gestante) */
 .input-group-text.custom-group {
-    background: linear-gradient(90deg, var(--green), var(--green-light));
+    background: var(--green);
     color: #fff;
     border: none;
     border-radius: 12px 0 0 12px;
@@ -131,6 +131,30 @@ body {
         justify-content: center;
     }
 }
+
+/* Adicione junto aos seletores de .form-control e .form-select */
+.file-custom { 
+    background: rgba(255, 255, 255, 0.65) !important;
+    border: 2px solid transparent;
+    color: #275553;
+    border-radius: 12px !important;
+    transition: .25s;
+    font-weight: 600;
+    padding: 12px 15px;
+}
+
+.file-custom:focus {
+    border-color: var(--green-light);
+    background: rgba(255, 255, 255, 0.95) !important;
+    box-shadow: 0 0 12px rgba(43, 122, 120, 0.25);
+    outline: none;
+    color: #1d5250;
+}
+
+.custom-label {
+    color: #275553 !important;
+    font-weight: 700;
+}
 </style>
 
 {{-- FORMULÁRIO --}}
@@ -142,7 +166,7 @@ body {
     <div class="row">
         <div class="col">
             <div class="form-floating mb-4">
-                <select name="tipo_exame" id="tipo_exame" class="form-select">
+                <select name="tipo_exame" id="tipo_exame" class="form-select" required>
                     <option value="" disabled selected>Selecione</option>
                     <option value="Exame de Sangue" @if(old('tipo_exame') == 'Exame de Sangue') selected @endif>Exame de Sangue</option>
                     <option value="Exame de Urina" @if(old('tipo_exame') == 'Exame de Urina') selected @endif>Exame de Urina</option>
@@ -159,7 +183,8 @@ body {
         <div class="col">
             <div class="input-group">
                 <span class="input-group-text custom-group">Gestante</span>
-                <select name="gestante" class="form-select">
+                <select name="gestante" class="form-select" required>
+                <option value="" disabled selected>Selecione a Gestante</option>
                     @foreach ($gestantes as $item)
                         <option value="{{$item->id}}" @if($item->id == old('gestante')) selected @endif>
                             {{ $item->nome }}
@@ -167,6 +192,18 @@ body {
                     @endforeach
                 </select>
             </div>
+        </div>
+    </div>
+
+   {{-- ANEXO DA LIBERAÇÃO / GUIA DO EXAME --}}
+    <div class="row mb-4">
+        <div class="col">
+            <label for="documento_guia" class="custom-label mb-2 d-block">
+                <span class="material-symbols-outlined align-middle fs-5 me-1">upload_file</span>
+                Anexar Guia
+            </label>
+            <input type="file" name="documento_guia" id="documento_guia" class="form-control file-custom" required accept=".pdf, image/*">
+            
         </div>
     </div>
 

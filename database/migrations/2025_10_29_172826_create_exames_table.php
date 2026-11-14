@@ -18,6 +18,7 @@ return new class extends Migration
             $table->foreign('gestante_id')->references('id')->on('gestantes');
             $table->string('status')->default('Solicitado'); // 'Solicitado' ou 'Recebido'
             $table->string('documento')->nullable();
+            $table->string('documento_guia')->nullable();
 
             $table->softDeletes();
             $table->timestamps();

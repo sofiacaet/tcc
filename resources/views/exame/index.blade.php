@@ -128,15 +128,15 @@ td, th {
 .btn-edit:hover { background: var(--green); color: #fff; }
 
 .btn-upload {
-    border: 2px solid #195a71;
-    color: #195a71;
+    border: 2px solid #2b7a78;
+    color: #2b7a78;
     background: rgba(255,255,255,0.15);
     border-radius: 28px;
     padding: 6px 14px;
     font-weight: 700;
     transition: .2s;
 }
-.btn-upload:hover { background: #195a71; color: #ffffff; }
+.btn-upload:hover { background: #2b7a78; color: #ffffff; }
 
 .btn-delete {
     border: 2px solid var(--danger);
@@ -221,6 +221,7 @@ td, th {
                     <tr>
                         <th>EXAME</th>
                         <th class="d-none d-md-table-cell">NOME DA GESTANTE</th>
+                        <th>GUIA MÉDICA</th>
                         <th>AÇÕES</th>
                     </tr>
                 </thead>
@@ -229,6 +230,24 @@ td, th {
                         <tr>
                             <td>{{ $item->tipo_exame }}</td>
                             <td class="d-none d-md-table-cell">{{ $item->gestante->nome }}</td>
+
+                            <td class="text-nowrap">
+                                @if($item->documento_guia)
+                                    {{-- Opção 1: Abrir em nova guia --}}
+                                    <a href="{{ asset('storage/' . $item->documento_guia) }}" target="_blank" class="btn btn-edit me-2" title="Abrir em nova guia">
+                                        <span class="material-symbols-outlined align-middle">visibility</span> 
+                                        Ver Guia
+                                    </a>
+
+                                    {{-- Opção 2: Baixar diretamente --}}
+                                    <a href="{{ asset('storage/' . $item->documento_guia) }}" download class="btn btn-upload" title="Salvar no dispositivo">
+                                        <span class="material-symbols-outlined align-middle">download</span> 
+                                        Baixar
+                                    </a>
+                                @else
+                                    <span class="text-muted small">Sem guia</span>
+                                @endif
+                            </td>
                             <td class="text-nowrap">
                                 @if(auth()->user()->role_id != 2)
                                     {{-- Anexar Documento (Abre Modal) --}}
@@ -260,7 +279,7 @@ td, th {
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="3" class="text-center py-4 text-white-50">Nenhum exame solicitado no momento.</td>
+                            <td colspan="4" class="text-center py-4 text-secondary">Nenhum exame solicitado no momento.</td>
                         </tr>
                     @endforelse
                 </tbody>
