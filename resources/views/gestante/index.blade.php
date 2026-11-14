@@ -96,17 +96,21 @@ td, th {
 }
 
 .btn-status-dropdown {
-    border: 2px solid var(--green-strong);
-    color: var(--green-strong);
+    border: 2px solid var(--green);
+    color: var(--green);
     background: transparent;
     border-radius: 28px;
     padding: 6px 14px;
     font-weight: 700;
     transition: .2s;
 }
-.btn-status-dropdown:hover, .btn-status-dropdown:focus { 
-    background: var(--green-strong); 
-    color: #fff; 
+.btn-status-dropdown:hover, 
+.btn-status-dropdown:focus,
+.btn-status-dropdown:active { 
+    background-color: var(--green-strong) !important; 
+    border-color: var(--green-strong) !important;
+    color: #fff !important; 
+    transform: translateY(-2px);
 }
 
 .btn-actions-menu {

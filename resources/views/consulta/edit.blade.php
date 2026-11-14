@@ -81,7 +81,7 @@ body {
 
 /* ESTILIZAÇÃO DO INPUT GROUP (Gestante bloqueada) */
 .input-group-text.custom-group {
-    background: linear-gradient(90deg, rgba(43, 122, 120, 0.6), rgba(72, 153, 150, 0.6));
+    background:  rgba(43, 122, 120, 0.6);
     color: #fff;
     border: none;
     border-radius: 12px 0 0 12px;
@@ -108,9 +108,12 @@ body {
     text-decoration: none;
 }
 
-.btn-custom-back:hover {
-    background: #275553;
-    color: #fff;
+.btn-custom-back:hover,
+.btn-custom-back:focus,
+.btn-custom-back:active {
+    background: var(--green-strong) !important;
+    border-color: var(--green-strong) !important;
+    color: #fff !important;
     transform: translateY(-2px);
 }
 
@@ -128,13 +131,16 @@ body {
     gap: 5px;
 }
 
-.btn-custom-confirm:hover {
-    background: var(--green-strong);
-    border-color: var(--green-strong);
-    color: #ffffff;
+.btn-custom-confirm:hover,
+.btn-custom-confirm:focus,
+.btn-custom-confirm:active {
+    background: var(--green-strong) !important;
+    border-color: var(--green-strong) !important;
+    color: #fff !important;
     transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(29, 82, 80, 0.3);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.2);
 }
+
 
 /* RESPONSIVO */
 @media (max-width: 576px) {

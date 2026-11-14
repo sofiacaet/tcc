@@ -105,11 +105,8 @@ table.modern-table tbody tr {
 }
 
 table.modern-table tbody tr:hover {
-    transform: translateY(-4px) scale(1.01);
-    background: rgba(255,255,255,0.34);
-    box-shadow: 0 10px 30px rgba(0,0,0,0.18), 0 0 12px rgb(88, 185, 254) inset;
+    background: rgba(255,255,255,0.35);
 }
-
 td, th {
     padding: 14px 18px !important;
 }
@@ -125,7 +122,15 @@ td, th {
     transition: .2s;
     text-decoration: none;
 }
-.btn-edit:hover { background: var(--green); color: #fff; }
+
+.btn-edit:hover,
+.btn-edit:focus,
+.btn-edit:active { 
+    background-color: var(--green-strong) !important; 
+    border-color: var(--green-strong) !important;
+    color: #fff !important; 
+    transform: translateY(-2px);
+}
 
 .btn-upload {
     border: 2px solid #2b7a78;
@@ -136,7 +141,14 @@ td, th {
     font-weight: 700;
     transition: .2s;
 }
-.btn-upload:hover { background: #2b7a78; color: #ffffff; }
+.btn-upload:hover,
+.btn-upload:focus,
+.btn-upload:active { 
+    background-color: var(--green-strong) !important; 
+    border-color: var(--green-strong) !important;
+    color: #fff !important; 
+    transform: translateY(-2px);
+}
 
 .btn-delete {
     border: 2px solid var(--danger);
@@ -147,7 +159,14 @@ td, th {
     font-weight: 700;
     transition: .2s;
 }
-.btn-delete:hover { background: var(--danger); color: #fff; }
+.btn-delete:hover,
+.btn-delete:focus,
+.btn-delete:active { 
+    background-color: var(--danger) !important; 
+    border-color: var(--danger) !important;
+    color: #fff !important; 
+    transform: translateY(-2px);
+}
 
 /* MODAL DE UPLOAD DE DOCUMENTO */
 .modal-content {
@@ -220,7 +239,7 @@ td, th {
                 <thead>
                     <tr>
                         <th>EXAME</th>
-                        <th class="d-none d-md-table-cell">NOME DA GESTANTE</th>
+                        <th class="d-none d-md-table-cell">GESTANTE</th>
                         <th>GUIA MÉDICA</th>
                         <th>AÇÕES</th>
                     </tr>
@@ -293,7 +312,7 @@ td, th {
                 <thead>
                     <tr>
                         <th>EXAME</th>
-                        <th class="d-none d-md-table-cell">NOME DA GESTANTE</th>
+                        <th class="d-none d-md-table-cell">GESTANTE</th>
                         <th>DOCUMENTO</th>
                         <th>AÇÕES</th>
                     </tr>

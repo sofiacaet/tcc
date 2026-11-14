@@ -91,9 +91,7 @@ table.modern-table tbody tr {
 }
 
 table.modern-table tbody tr:hover {
-    transform: translateY(-4px) scale(1.01);
-    background: rgba(255,255,255,0.34);
-    box-shadow: 0 10px 30px rgba(0,0,0,0.18), 0 0 12px rgb(88, 185, 254) inset;
+    background: rgba(255,255,255,0.35);
 }
 
 td, th {
@@ -102,8 +100,8 @@ td, th {
 
 /* BOTÕES */
 .btn-edit {
-    border: 2px solid var(--green-light);
-    color: var(--green-light);
+    border: 2px solid var(--green);
+    color: var(--green);
     background: transparent;
     border-radius: 28px;
     padding: 6px 14px;
@@ -111,7 +109,14 @@ td, th {
     transition: .2s;
 }
 
-.btn-edit:hover { background: var(--green); color: #fff; }
+.btn-edit:hover,
+.btn-edit:focus,
+.btn-edit:active { 
+    background-color: var(--green-strong) !important; 
+    border-color: var(--green-strong) !important;
+    color: #fff !important; 
+    transform: translateY(-2px);
+}
 
 .btn-delete {
     border: 2px solid var(--danger);
@@ -123,7 +128,14 @@ td, th {
     transition: .2s;
 }
 
-.btn-delete:hover { background: var(--danger); color: #fff; }
+.btn-delete:hover,
+.btn-delete:focus,
+.btn-delete:active { 
+    background-color: var(--danger) !important; 
+    border-color: var(--danger) !important;
+    color: #fff !important; 
+    transform: translateY(-2px);
+}
 
 .nav-tabs .nav-link {
     color: #275553 !important;
@@ -182,7 +194,7 @@ td, th {
                 <thead>
                     <tr>
                         <th>CONSULTA</th>
-                        <th class="d-none d-md-table-cell">NOME DA GESTANTE</th>
+                        <th class="d-none d-md-table-cell">GESTANTE</th>
                         <th class="d-none d-md-table-cell">LOCAL</th>
                         <th class="d-none d-md-table-cell">DATA/HORA</th>
                         <th>AÇÕES</th>

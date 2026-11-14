@@ -91,9 +91,12 @@ body {
     gap: 5px;
 }
 
-.btn-custom-back:hover {
-    background: #275553;
-    color: #fff;
+.btn-custom-back:hover,
+.btn-custom-back:focus,
+.btn-custom-back:active {
+    background: var(--green-strong) !important;
+    border-color: var(--green-strong) !important;
+    color: #fff !important;
     transform: translateY(-2px);
 }
 </style>
