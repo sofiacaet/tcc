@@ -157,7 +157,7 @@
     <hr>
      <h3 style="text-align:center; margin-top:10px;">Relatório de Exames</h3>
 
-    <div class="texto-restrito-baixo" style="position: absolute; bottom: 1px;"> DOCUMENTO GERADO PELO SISTEMA PRÉ-NATAL </div>
+    <div class="texto-restrito-baixo" style="position: absolute; bottom: 1px;"> DOCUMENTO GERADO PELO SISTEMA DE PRÉ-NATAL </div>
 
     <div class="identification-header">IDENTIFICAÇÃO</div>
     @foreach($exames as $exame)
