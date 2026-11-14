@@ -45,7 +45,8 @@ class OrientacaoPolicy
      */
     public function delete(User $user, Orientacao $orientacao): bool
     {
-        return PermissionController::isAuthorized('orientacao.delete');
+        return PermissionController::isAuthorized('orientacao.delete') 
+               && $user->id === $orientacao->user_id;
     }
 
     /**

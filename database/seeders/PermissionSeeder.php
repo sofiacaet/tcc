@@ -38,7 +38,7 @@ class PermissionSeeder extends Seeder
             ["role_id" => 1, "resource_id" => 17, "permission" => 1], // orientacao.create (Enviar mensagem)
             ["role_id" => 1, "resource_id" => 18, "permission" => 1], // orientacao.show (Ver detalhes)
             ["role_id" => 1, "resource_id" => 19, "permission" => 0], // orientacao.edit
-            ["role_id" => 1, "resource_id" => 20, "permission" => 0], // orientacao.delete
+            ["role_id" => 1, "resource_id" => 20, "permission" => 1], // orientacao.delete
             
             //  COORDENADOR - CURSO
             ["role_id" => 2, "resource_id" => 1, "permission" => 1],

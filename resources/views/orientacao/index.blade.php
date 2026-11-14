@@ -1,6 +1,6 @@
 @extends('templates/main', [
     'titulo' => "Sistema Pré-Natal",
-    'cabecalho' => 'Orientações e Observações',
+    'cabecalho' => 'Chat de Orientações',
     'rota' => '',
     'relatorio' => '',
     'class' => App\Models\Orientacao::class,
@@ -159,6 +159,33 @@ body {
     background-color: #143a39; 
     color: #ffffff;
 }
+
+/* Botão de excluir mensagem */
+.btn-delete-msg {
+    background: transparent;
+    border: none;
+    padding: 0;
+    margin-left: 8px;
+    cursor: pointer;
+    opacity: 0.7;
+    transition: opacity 0.2s, transform 0.2s;
+    display: inline-flex;
+    align-items: center;
+    text-decoration: none !important;
+}
+
+.btn-delete-msg:hover {
+    opacity: 1;
+    transform: scale(1.15);
+}
+
+.message-me .btn-delete-msg {
+    color: #ffffff;
+}
+
+.message-other .btn-delete-msg {
+    color: var(--danger);
+}
 </style>
 
 <div class="chat-container">
@@ -238,20 +265,38 @@ body {
                                 <small class="fw-bold me-3">
                                     {{ $isMe ? 'Você' : $item->user->name . ' (' . ($isMedico ? 'Médico' : 'Gestante') . ')' }}
                                 </small>
-                                <small class="text-muted" style="font-size: 0.75rem;">
-                                    {{ \Carbon\Carbon::parse($item->created_at)->format('d/m/Y H:i') }}
-                                </small>
+                                
+                                <div class="d-flex align-items-center">
+                                    <small class="text-muted" style="font-size: 0.75rem;">
+                                        {{ \Carbon\Carbon::parse($item->created_at)->format('d/m/Y H:i') }}
+                                    </small>
+
+                                    {{-- BOTÃO EXCLUIR (Apenas para o autor da mensagem) --}}
+                                   @can('delete', $item)
+                                        <a nohref style="cursor:pointer" 
+                                            onclick="abrirModalExcluirChat('{{ $item->id }}', '{{ \Illuminate\Support\Str::limit(addslashes(str_replace(["\r", "\n"], ' ', $item->mensagem)), 40) }}')" 
+                                            class="btn-delete-msg" 
+                                            title="Apagar mensagem">
+                                                <span class="material-symbols-outlined" style="font-size: 16px;">delete</span>
+                                        </a>
+
+                                        <form action="{{ route('orientacao.destroy', $item->id) }}" method="POST" id="form_{{ $item->id }}" class="d-none">
+                                            @csrf
+                                            @method('DELETE')
+                                        </form>
+                                    @endcan
+                                </div>
                             </div>
                             <div style="white-space: pre-line;">{{ $item->mensagem }}</div>
                         </div>
-                    @empty
-                        <div class="text-center text-muted my-5">
-                            <span class="material-symbols-outlined fs-1 text-black-50">forum</span>
-                            <p class="mt-2">
-                                {{ auth()->user()->role_id == 2 ? 'Nenhuma orientação ou mensagem registrada com este paciente.' : 'Inicie uma conversa com a equipe médica.' }}
-                            </p>
-                        </div>
-                    @endforelse
+                        @empty
+                            <div class="text-center text-muted my-5">
+                                <span class="material-symbols-outlined fs-1 text-black-50">forum</span>
+                                <p class="mt-2">
+                                    {{ auth()->user()->role_id == 2 ? 'Nenhuma orientação ou mensagem registrada com este paciente.' : 'Inicie uma conversa com a equipe médica.' }}
+                                </p>
+                            </div>
+                        @endforelse
                 </div>
 
                 {{-- Área de Envio de Mensagem --}}
@@ -298,6 +343,17 @@ body {
             chatBox.scrollTop = chatBox.scrollHeight;
         }
     });
+
+    function abrirModalExcluirChat(id, texto) {
+        // 1. Altera o título do modal padrão apenas nesta tela
+        var modalTitle = document.querySelector('#removeModal .modal-title');
+        if (modalTitle) {
+            modalTitle.textContent = 'Tem certeza que deseja apagar esta mensagem?';
+        }
+
+        // 2. Chama a função original do template para abrir o modal e vincular o form
+        showRemoveModal(id, texto);
+    }
 </script>
 
 @endsection

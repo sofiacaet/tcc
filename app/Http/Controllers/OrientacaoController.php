@@ -114,4 +114,54 @@ class OrientacaoController extends Controller
         return redirect()->route('orientacao.index', ['gestante_id' => $gestanteId])
                          ->with('success', 'Mensagem enviada com sucesso!');
     }
+
+   public function destroy(string $id)
+    {
+        $orientacao = Orientacao::findOrFail($id);
+
+        // Valida na OrientacaoPolicy se o usuário tem permissão e se é o autor da mensagem
+        Gate::authorize('delete', $orientacao);
+
+        $gestanteId = $orientacao->gestante_id;
+        $user = auth()->user();
+
+        // =========================================================================
+        // REMOVE A NOTIFICAÇÃO NÃO LIDA DO DESTINATÁRIO
+        // =========================================================================
+        if ($user->role_id == 2) {
+            // Se o médico apagou, remove a notificação não lida da gestante
+            $gestanteDestino = Gestante::find($gestanteId);
+            if ($gestanteDestino) {
+                $usuarioGestante = User::where('email', $gestanteDestino->email)->first();
+                if ($usuarioGestante) {
+                    $usuarioGestante->unreadNotifications()
+                        ->where('type', 'App\Notifications\NovaMensagemChat')
+                        ->latest()
+                        ->first()
+                        ?->delete();
+                }
+            }
+        } else {
+            // Se a gestante apagou, remove a notificação não lida dos médicos
+            $medicos = User::where('role_id', 2)->get();
+            foreach ($medicos as $medico) {
+                $medico->unreadNotifications()
+                    ->where('type', 'App\Notifications\NovaMensagemChat')
+                    ->latest()
+                    ->first()
+                    ?->delete();
+            }
+        }
+        // =========================================================================
+
+        $orientacao->delete();
+
+        if ($user->role_id == 2) {
+            return redirect()->route('orientacao.index', ['gestante_id' => $gestanteId])
+                             ->with('success', 'Mensagem excluída com sucesso!');
+        }
+
+        return redirect()->route('orientacao.index')
+                         ->with('success', 'Mensagem excluída com sucesso!');
+    }
 }
