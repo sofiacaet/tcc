@@ -9,7 +9,7 @@
 @section('conteudo')
 
 <style>
-:root{
+:root {
     /* Cores: Tons de verde/teal da nova identidade */
     --green: #2b7a78;         
     --green-strong: #1d5250;  
@@ -26,6 +26,8 @@ body {
     color: #275553; 
 }
 
+/* Remove a linha <hr> abaixo do cabeçalho do template */
+
 /* CONTAINER PRINCIPAL DO CHAT */
 .chat-container {
     background-color: #c5dede; 
@@ -33,11 +35,16 @@ body {
     box-shadow: 0 12px 40px rgba(0,0,0,0.22); 
     border: 1px solid rgba(255, 255, 255, 0.4);
     overflow: hidden;
-    min-height: 550px;
-    margin-top: 18px;
+    height: calc(100vh - 185px); 
+    min-height: 430px;
+    margin-top: 10px;
 }
 
-/* CABEÇALHOS E RODAPÉ - GRADIENTE VERDE DA TABELA */
+.chat-container > .row {
+    height: 100%;
+}
+
+/* CABEÇALHOS E RODAPÉ - GRADIENTE VERDE */
 .chat-header-gradient {
     background: linear-gradient(90deg, var(--green), var(--green-light));
     color: #fff !important;
@@ -56,7 +63,14 @@ body {
 .gestantes-list {
     border-right: 1px solid rgba(255, 255, 255, 0.3);
     background-color: #c5dede; 
-    height: 550px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Área interna apenas dos itens que vão rolar */
+.gestantes-scroll {
+    flex: 1;
     overflow-y: auto;
 }
 
@@ -85,7 +99,7 @@ body {
 .chat-box {
     display: flex;
     flex-direction: column;
-    height: 550px;
+    height: 100%;
 }
 
 .chat-messages {
@@ -134,8 +148,10 @@ body {
 
 /* Área de Envio de Mensagens */
 .chat-input-area {
-    padding: 15px;
-    border-top: none;
+    padding: 12px 15px;
+    border-top: 1px solid rgba(255, 255, 255, 0.3);
+    background-color: #c5dede;
+    flex-shrink: 0;
 }
 
 .chat-input-area textarea {
@@ -186,6 +202,17 @@ body {
 .message-other .btn-delete-msg {
     color: var(--danger);
 }
+
+/* Estilização discreta das barras de rolagem */
+.gestantes-scroll::-webkit-scrollbar,
+.chat-messages::-webkit-scrollbar {
+    width: 6px;
+}
+.gestantes-scroll::-webkit-scrollbar-thumb,
+.chat-messages::-webkit-scrollbar-thumb {
+    background-color: rgba(43, 122, 120, 0.4);
+    border-radius: 10px;
+}
 </style>
 
 <div class="chat-container">
@@ -193,7 +220,8 @@ body {
         
         {{-- COLUNA DA ESQUERDA: LISTA DE CONTATOS --}}
         <div class="col-md-4 col-lg-3 gestantes-list">
-            <div class="p-3 border-bottom d-flex align-items-center gap-3" style="background-color: #ffffffa6;">
+            {{-- Cabeçalho Fixo --}}
+            <div class="p-3 border-bottom d-flex align-items-center gap-3" style="background-color: #ffffffa6; height: 61px; flex-shrink: 0;">
                 <span class="material-symbols-outlined" style="color: var(--green-strong); font-size: 28px;">
                     {{ auth()->user()->role_id == 2 ? 'groups' : 'medical_services' }}
                 </span>
@@ -204,35 +232,38 @@ body {
                 </div>
             </div>
 
-            @if(auth()->user()->role_id == 2)
-                {{-- Visão do Médico: Lista as Gestantes --}}
-                @forelse($gestantes as $g)
-                    @if($g)
-                        <a href="{{ route('orientacao.index', ['gestante_id' => $g->id]) }}" 
-                           class="gestante-item {{ isset($gestanteSelecionada) && $gestanteSelecionada->id == $g->id ? 'active' : '' }}">
-                            <div class="fw-bold">{{ $g->nome }}</div>
-                        </a>
-                    @endif
-                @empty
-                    <div class="p-3 text-center text-muted">
-                        Nenhuma gestante cadastrada.
-                    </div>
-                @endforelse
-            @else
-                {{-- Visão da Gestante: Lista os Médicos --}}
-                @forelse($medicos as $m)
-                    @if($m)
-                        <a href="{{ route('orientacao.index', ['medico_id' => $m->id]) }}" 
-                           class="gestante-item {{ isset($medicoSelecionado) && $medicoSelecionado->id == $m->id ? 'active' : '' }}">
-                            <div class="fw-bold">Dr(a). {{ $m->name }}</div>
-                        </a>
-                    @endif
-                @empty
-                    <div class="p-3 text-center text-muted">
-                        Nenhum médico disponível.
-                    </div>
-                @endforelse
-            @endif
+            {{-- Lista com Rolagem Independente --}}
+            <div class="gestantes-scroll">
+                @if(auth()->user()->role_id == 2)
+                    {{-- Visão do Médico: Lista as Gestantes --}}
+                    @forelse($gestantes as $g)
+                        @if($g)
+                            <a href="{{ route('orientacao.index', ['gestante_id' => $g->id]) }}" 
+                               class="gestante-item {{ isset($gestanteSelecionada) && $gestanteSelecionada->id == $g->id ? 'active' : '' }}">
+                                <div class="fw-bold">{{ $g->nome }}</div>
+                            </a>
+                        @endif
+                    @empty
+                        <div class="p-3 text-center text-muted">
+                            Nenhuma gestante cadastrada.
+                        </div>
+                    @endforelse
+                @else
+                    {{-- Visão da Gestante: Lista os Médicos --}}
+                    @forelse($medicos as $m)
+                        @if($m)
+                            <a href="{{ route('orientacao.index', ['medico_id' => $m->id]) }}" 
+                               class="gestante-item {{ isset($medicoSelecionado) && $medicoSelecionado->id == $m->id ? 'active' : '' }}">
+                                <div class="fw-bold">Dr(a). {{ $m->name }}</div>
+                            </a>
+                        @endif
+                    @empty
+                        <div class="p-3 text-center text-muted">
+                            Nenhum médico disponível.
+                        </div>
+                    @endforelse
+                @endif
+            </div>
         </div>
 
         {{-- COLUNA DA DIREITA: CONVERSA E ENVIO --}}
@@ -242,7 +273,7 @@ body {
             @if((auth()->user()->role_id == 2 && isset($gestanteSelecionada)) || (auth()->user()->role_id != 2 && isset($medicoSelecionado)))
                 
                 {{-- Cabeçalho da Conversa --}}
-                <div class="p-3 border-bottom  d-flex align-items-center justify-content-between" style="background-color: #ffffffa6; height: 61px; ">
+                <div class="p-3 border-bottom d-flex align-items-center justify-content-between" style="background-color: #ffffffa6; height: 61px; flex-shrink: 0;">
                     <div>
                         @if(auth()->user()->role_id == 2)
                             <h6 class="mb-0 fw-bold" style="color: #275553;">{{ $gestanteSelecionada->nome }}</h6>   
@@ -272,12 +303,12 @@ body {
                                     </small>
 
                                     {{-- BOTÃO EXCLUIR (Apenas para o autor da mensagem) --}}
-                                   @can('delete', $item)
+                                    @can('delete', $item)
                                         <a nohref style="cursor:pointer" 
-                                            onclick="abrirModalExcluirChat('{{ $item->id }}', '{{ \Illuminate\Support\Str::limit(addslashes(str_replace(["\r", "\n"], ' ', $item->mensagem)), 40) }}')" 
-                                            class="btn-delete-msg" 
-                                            title="Apagar mensagem">
-                                                <span class="material-symbols-outlined" style="font-size: 16px;">delete</span>
+                                           onclick="abrirModalExcluirChat('{{ $item->id }}', '{{ \Illuminate\Support\Str::limit(addslashes(str_replace(["\r", "\n"], ' ', $item->mensagem)), 40) }}')" 
+                                           class="btn-delete-msg" 
+                                           title="Apagar mensagem">
+                                            <span class="material-symbols-outlined" style="font-size: 16px;">delete</span>
                                         </a>
 
                                         <form action="{{ route('orientacao.destroy', $item->id) }}" method="POST" id="form_{{ $item->id }}" class="d-none">
@@ -289,14 +320,14 @@ body {
                             </div>
                             <div style="white-space: pre-line;">{{ $item->mensagem }}</div>
                         </div>
-                        @empty
-                            <div class="text-center text-muted my-5">
-                                <span class="material-symbols-outlined fs-1 text-black-50">forum</span>
-                                <p class="mt-2">
-                                    {{ auth()->user()->role_id == 2 ? 'Nenhuma orientação ou mensagem registrada com este paciente.' : 'Inicie uma conversa com a equipe médica.' }}
-                                </p>
-                            </div>
-                        @endforelse
+                    @empty
+                        <div class="text-center text-muted my-auto">
+                            <span class="material-symbols-outlined fs-1 text-black-50">forum</span>
+                            <p class="mt-2">
+                                {{ auth()->user()->role_id == 2 ? 'Nenhuma orientação ou mensagem registrada com este paciente.' : 'Inicie uma conversa com a equipe médica.' }}
+                            </p>
+                        </div>
+                    @endforelse
                 </div>
 
                 {{-- Área de Envio de Mensagem --}}
@@ -305,7 +336,6 @@ body {
                         <form action="{{ route('orientacao.store') }}" method="POST" class="d-flex gap-2">
                             @csrf
                             
-                            {{-- Se for médico, passa a gestante selecionada. Se for gestante, não precisa passar ID de gestante pois a controller descobre pelo email do usuário logado --}}
                             @if(auth()->user()->role_id == 2)
                                 <input type="hidden" name="gestante_id" value="{{ $gestanteSelecionada->id }}">
                             @endif
@@ -313,7 +343,7 @@ body {
                             <textarea 
                                 name="mensagem" 
                                 class="form-control" 
-                                rows="2" 
+                                rows="1" 
                                 placeholder="Digite sua mensagem aqui..." 
                                 required
                             ></textarea>
@@ -345,13 +375,11 @@ body {
     });
 
     function abrirModalExcluirChat(id, texto) {
-        // 1. Altera o título do modal padrão apenas nesta tela
         var modalTitle = document.querySelector('#removeModal .modal-title');
         if (modalTitle) {
             modalTitle.textContent = 'Tem certeza que deseja apagar esta mensagem?';
         }
 
-        // 2. Chama a função original do template para abrir o modal e vincular o form
         showRemoveModal(id, texto);
     }
 </script>
