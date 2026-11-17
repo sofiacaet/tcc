@@ -39,9 +39,7 @@
 
             <!-- Navegação & Autenticação -->
             <div class="flex items-center gap-6">
-                <a href="#sobre" class="text-sm font-medium text-white/90 hover:text-white transition">
-                    Sobre o projeto
-                </a>
+                
 
                 @if (Route::has('login'))
                     @auth

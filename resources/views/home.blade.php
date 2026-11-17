@@ -247,7 +247,7 @@
         {{-- ATALHOS E EXAMES --}}
         <div class="col-12 col-lg-4">
             <div class="d-flex flex-column gap-3 mb-4">
-                <h5 class="fw-bold mb-1" style="color: var(--texto-main);">Atalhos Administrativos</h5>
+                <h5 class="fw-bold mb-1" style="color: var(--texto-main);">Ações Rápidas</h5>
                 
                 @if(Route::has('consulta.create'))
                     <a href="{{ route('consulta.create') }}" class="btn-shortcut">
@@ -303,7 +303,7 @@
     {{-- CABEÇALHO DA GESTANTE --}}
     <div class="header-panel mb-4">
         <h4 class="fw-bold mb-1">
-            Área da Paciente - {{ $gestante->nome ?? auth()->user()->name }}
+            Área da Gestante - {{ $gestante->nome ?? auth()->user()->name }}
         </h4>
     </div>
 
