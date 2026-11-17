@@ -223,6 +223,20 @@ body {
                 </div>
             </div>
         </div>
+
+        <div class="col-md-5">
+            <div class="info-box">
+                <span class="info-label">Comunidade Insular</span>
+                <div class="info-value">{{ $gestante->comunidade_insular ?? 'Não informada' }}</div>
+            </div>
+        </div>
+        <div class="col-md-7">
+            <div class="info-box">
+                <span class="info-label">Ponto de Referência</span>
+                <div class="info-value">{{ $gestante->referencia ?? 'Não informado' }}</div>
+            </div>
+        </div>
+    </div>
         
 
     {{-- MOTIVO DE ARQUIVAMENTO (Caso o acesso venha da aba de arquivadas, a justificativa continua aparecendo) --}}

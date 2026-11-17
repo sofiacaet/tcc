@@ -180,6 +180,8 @@
                             <tr><td class="label">DATA DE NASCIMENTO:</td><td>{{ $gestante->data_nascimento }}</td></tr>
                             <tr><td class="label">CPF:</td><td>{{ $gestante->cpf }}</td></tr>
                             <tr><td class="label">ESTADO CIVIL:</td><td>{{ $gestante->estado_civil }}</td></tr>
+                            <tr><td class="label">COMUNIDADE INSULAR:</td><td>{{ $gestante->comunidade_insular ?? 'Não informada' }}</td></tr>
+                            <tr><td class="label">REFERÊNCIA:</td><td>{{ $gestante->referencia ?? 'Não informada' }}</td></tr>
                             <tr><td class="label">PESO ATUAL:</td><td>{{ $gestante->peso_atual }}</td></tr>
                             <tr><td class="label">DUM:</td><td>{{ $gestante->dum ? \Carbon\Carbon::parse($gestante->dum)->format('d/m/Y') : 'Não informada' }}</td></tr>
                             <tr><td class="label">IDADE GESTACIONAL:</td><td>{{ $gestante->info_gestacao['texto_completo'] ?? 'Não calculada' }} ({{ $gestante->info_gestacao['trimestre'] ?? '-' }})</td></tr>

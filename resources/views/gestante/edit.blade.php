@@ -241,6 +241,32 @@ input[type="file"].form-control:focus {
         </div>
     </div>
 
+    {{-- COMUNIDADE INSULAR E REFERÊNCIA --}}
+    <div class="row mb-4">
+        <div class="col-md-5">
+            <div class="form-floating mb-3 mb-md-0">
+                <select class="form-select" name="comunidade_insular">
+                    <option value="" disabled {{ empty(old('comunidade_insular', $gestante->comunidade_insular)) ? 'selected' : '' }}>Selecione a Comunidade</option>
+                    <option value="Amparo" {{ old('comunidade_insular', $gestante->comunidade_insular) == 'Amparo' ? 'selected' : '' }}>Amparo</option>
+                    <option value="São Miguel" {{ old('comunidade_insular', $gestante->comunidade_insular) == 'São Miguel' ? 'selected' : '' }}>São Miguel</option>
+                    <option value="Ponta de Ubá" {{ old('comunidade_insular', $gestante->comunidade_insular) == 'Ponta de Ubá' ? 'selected' : '' }}>Ponta de Ubá</option>
+                    <option value="Teixeira" {{ old('comunidade_insular', $gestante->comunidade_insular) == 'Teixeira' ? 'selected' : '' }}>Teixeira</option>
+                    <option value="Piaçaguera" {{ old('comunidade_insular', $gestante->comunidade_insular) == 'Piaçaguera' ? 'selected' : '' }}>Piaçaguera</option>
+                    <option value="Europinha" {{ old('comunidade_insular', $gestante->comunidade_insular) == 'Europinha' ? 'selected' : '' }}>Europinha</option>
+                    <option value="Eufrasina" {{ old('comunidade_insular', $gestante->comunidade_insular) == 'Eufrasina' ? 'selected' : '' }}>Eufrasina</option>
+                </select>
+                <label for="comunidade_insular">Comunidade Insular</label>
+            </div>
+        </div>
+
+        <div class="col-md-7">
+            <div class="form-floating">
+                <input type="text" class="form-control" name="referencia" value="{{ old('referencia', $gestante->referencia) }}"/>
+                <label for="referencia">Ponto de Referência</label>
+            </div>
+        </div>
+    </div>
+
     {{-- BOTÕES --}}
     <div class="row mt-2">
         <div class="col d-flex flex-wrap gap-3">

@@ -21,6 +21,8 @@ return new class extends Migration
             $table->date('data_nascimento');
             $table->string('cpf', 14)->unique();
             $table->string('estado_civil');
+            $table->string('comunidade_insular')->nullable();
+            $table->string('referencia')->nullable();
             $table->decimal('peso_atual', 5, 2);//
             $table->string('status')->default('Em acompanhamento');
             $table->text('motivo_arquivamento')->nullable(); // <-- Adicionado aqui

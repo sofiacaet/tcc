@@ -83,6 +83,8 @@ class GestanteController extends Controller
             $gestante->data_nascimento = $request->data_nascimento;
             $gestante->cpf = $request->cpf;
             $gestante->estado_civil = $request->estado_civil;
+            $gestante->comunidade_insular = $request->comunidade_insular;
+            $gestante->referencia = $request->referencia;
             $gestante->peso_atual = $request->peso_atual;
             $gestante->status = 'Em acompanhamento';
             $gestante->save();
@@ -185,6 +187,8 @@ class GestanteController extends Controller
             $gestante->data_nascimento = $request->data_nascimento;
             $gestante->cpf = $request->cpf;
             $gestante->estado_civil = $request->estado_civil;
+            $gestante->comunidade_insular = $request->comunidade_insular;
+            $gestante->referencia = $request->referencia;
             $gestante->peso_atual = $request->peso_atual;
             
             if ($request->has('status')) {

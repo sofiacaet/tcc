@@ -19,7 +19,9 @@ class Gestante extends Model
         'altura', 
         'data_nascimento', 
         'cpf', 
-        'estado_civil', 
+        'estado_civil',
+        'comunidade_insular',
+        'referencia', 
         'peso_atual',
         'status', // <-- Nosso novo campo adicionado aqui!
         'motivo_arquivamento',
